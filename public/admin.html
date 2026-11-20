@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard & Editorial Portal | ICMLDE 2026</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="background-color: #070a10;">
+
+  <!-- Header -->
+  <header class="navbar-wrapper">
+    <div class="container navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">⚙️</div>
+        <div class="brand-text">
+          ICMLDE 2026
+          <span>Live Editorial Console</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/" class="btn btn-outline btn-sm">&larr; Public Portal</a>
+        <button id="adminLogoutBtn" class="btn btn-primary btn-sm" style="display: none;">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Section (Visible when not authenticated) -->
+  <section class="section" id="adminLoginSection" style="padding: 5rem 0;">
+    <div class="container" style="max-width: 460px;">
+      <div class="card" style="padding: 2.5rem; text-align: center; border-color: var(--border-highlight);">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
+        <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Editorial Administration</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem;">
+          Sign in to manage live paper submissions, reviewer evaluations, and attendee passes.
+        </p>
+
+        <form id="adminLoginForm">
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">Admin Username</label>
+            <input type="text" id="adminUsername" class="form-control" placeholder="admin" required value="admin">
+          </div>
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">Password</label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="••••••••" required value="icmlde2026_SecretPass!">
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            Sign In to Console
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Section (Visible when authenticated) -->
+  <section class="section" id="adminDashboardSection" style="display: none; padding-top: 2rem;">
+    <div class="container">
+      
+      <!-- Admin Header -->
+      <div class="admin-header">
+        <div>
+          <h2>Conference Management Console</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Live operation center for ICMLDE 2026 (Nov 27–28, 2026).</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-outline btn-sm" onclick="confirmClearDemoData()" style="border-color: rgba(239, 68, 68, 0.4); color: #f87171;">
+            🗑️ Clear / Clean Database
+          </button>
+          <a href="/api/admin/registrations/export" class="btn btn-outline btn-sm">
+            📥 Export Registrations (CSV)
+          </a>
+          <button class="btn btn-primary btn-sm" onclick="loadDashboardData()">
+            🔄 Refresh Data
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Metrics Cards -->
+      <div class="grid-4" style="margin-bottom: 2.5rem;">
+        <div class="stat-card">
+          <div class="stat-value" id="statTotalSubs">0</div>
+          <div class="stat-title">Total Submissions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--success);" id="statAcceptedSubs">0</div>
+          <div class="stat-title">Accepted Papers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--warning);" id="statReviewSubs">0</div>
+          <div class="stat-title">Under Review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--secondary);" id="statTotalRegs">0</div>
+          <div class="stat-title">Confirmed Attendees</div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-nav" style="justify-content: flex-start;">
+        <button class="tab-btn active" id="tabSubmissionsBtn" onclick="switchAdminTab('submissions')">
+          📄 Submissions & Peer Reviews
+        </button>
+        <button class="tab-btn" id="tabRegistrationsBtn" onclick="switchAdminTab('registrations')">
+          🎟️ Registered Delegates (<span id="statTotalRegsBadge">0</span>)
+        </button>
+        <button class="tab-btn" id="tabInquiriesBtn" onclick="switchAdminTab('inquiries')">
+          ✉️ Inquiries & Messages (<span id="statTotalInq">0</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: Submissions -->
+      <div id="adminTabSubmissions">
+        <div class="card" style="padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+            <h3 style="color:#ffffff;">Submitted Manuscripts</h3>
+            <span style="font-size: 0.85rem; color: var(--text-dim);">Live records stored in SQLite database</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Paper ID</th>
+                  <th>Title & Authors</th>
+                  <th>Track</th>
+                  <th>Status</th>
+                  <th>Manuscript</th>
+                  <th>Reviewer Remarks</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="submissionsTableBody">
+                <!-- Loaded dynamically by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Registrations -->
+      <div id="adminTabRegistrations" style="display: none;">
+        <div class="card" style="padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+            <h3 style="color:#ffffff;">Confirmed Conference Delegates</h3>
+            <a href="/api/admin/registrations/export" class="btn btn-outline btn-sm">
+              📥 Download CSV
+            </a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Reg ID</th>
+                  <th>Delegate Name & Contact</th>
+                  <th>Affiliation</th>
+                  <th>Category</th>
+                  <th>Mode</th>
+                  <th>Paper ID</th>
+                  <th>Amount & Payment</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="registrationsTableBody">
+                <!-- Loaded dynamically by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Inquiries -->
+      <div id="adminTabInquiries" style="display: none;">
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="color:#ffffff; margin-bottom: 1.25rem;">Secretariat Inquiries</h3>
+          <div id="inquiriesContainer">
+            <!-- Loaded dynamically by admin.js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Review / Status Update Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+      
+      <h3 style="color: #ffffff; margin-bottom: 0.25rem;">Peer Review Decision & Author Notification</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+        Update review outcome for Paper <strong id="reviewPaperId" style="color:var(--accent);"></strong>
+      </p>
+
+      <div style="background: var(--bg-elevated); padding: 1rem; border-radius: 8px; margin-bottom: 1.25rem;">
+        <div style="font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase;">Title:</div>
+        <div id="reviewPaperTitle" style="color: #ffffff; font-weight: 600; font-size: 0.95rem;"></div>
+      </div>
+
+      <form id="reviewForm">
+        <input type="hidden" id="reviewSubId">
+        
+        <div class="form-group">
+          <label class="form-label">Review Status Decision *</label>
+          <select id="reviewStatusSelect" class="form-control" required>
+            <option value="Under Review">Under Review</option>
+            <option value="Accepted">Accepted (Elsevier Procedia)</option>
+            <option value="Revision Requested">Revision Requested</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Reviewer Comments & Feedback (Dispatched to Corresponding Author) *</label>
+          <textarea id="reviewFeedbackText" class="form-control" style="min-height: 140px;" placeholder="Provide technical evaluation, corrections required, or camera-ready instructions..." required></textarea>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <label style="display:flex; align-items:center; gap:0.5rem; color:#e2e8f0; font-size:0.9rem; cursor:pointer;">
+            <input type="checkbox" id="notifyAuthorCheckbox" checked>
+            <span>📧 Dispatch automatic decision letter to corresponding author email</span>
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline" onclick="closeReviewModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Decision & Send Email</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    function switchAdminTab(tab) {
+      const sub = document.getElementById('adminTabSubmissions');
+      const reg = document.getElementById('adminTabRegistrations');
+      const inq = document.getElementById('adminTabInquiries');
+      const bSub = document.getElementById('tabSubmissionsBtn');
+      const bReg = document.getElementById('tabRegistrationsBtn');
+      const bInq = document.getElementById('tabInquiriesBtn');
+
+      sub.style.display = tab === 'submissions' ? 'block' : 'none';
+      reg.style.display = tab === 'registrations' ? 'block' : 'none';
+      inq.style.display = tab === 'inquiries' ? 'block' : 'none';
+
+      bSub.classList.toggle('active', tab === 'submissions');
+      bReg.classList.toggle('active', tab === 'registrations');
+      bInq.classList.toggle('active', tab === 'inquiries');
+    }
+  </script>
+</body>
+</html>

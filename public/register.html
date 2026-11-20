@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delegate & Author Registration | ICMLDE 2026</title>
+  <meta name="description" content="Register for the 5th International Conference on Machine Learning & Data Engineering (ICMLDE 2026), November 27-28, 2026.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container announcement-inner">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span class="announcement-badge">Registration Open</span>
+        <span>Early Bird Registration Closes: <strong>November 10, 2026</strong> &bull; Conference: <strong>Nov 27–28, 2026</strong></span>
+      </div>
+      <div class="announcement-links">
+        <a href="#form">Go to Form &darr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="navbar-wrapper">
+    <div class="container navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">ML</div>
+        <div class="brand-text">
+          ICMLDE 2026
+          <span>5th Int. Conference</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/papers.html" class="nav-link">Call for Papers</a>
+        <a href="/schedule.html" class="nav-link">Program & Agenda</a>
+        <a href="/register.html" class="nav-link active">Registration</a>
+        <a href="/committee.html" class="nav-link">Committees</a>
+        <a href="/#venue" class="nav-link">Venue</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#form" class="btn btn-primary btn-sm">Register Now</a>
+        <button class="mobile-toggle" id="mobileNavToggle">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="section" style="padding: 4rem 0 3rem; text-align: center;">
+    <div class="container" style="max-width: 850px;">
+      <span class="pill-badge gold" style="margin-bottom: 1rem;">Early Bird Rates Active</span>
+      <h1>Delegate Registration & Pass Booking</h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; margin-top: 0.75rem;">
+        Register to present your accepted Elsevier paper or participate as a scholar or corporate delegate.
+      </p>
+
+      <!-- Currency Switcher -->
+      <div style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 1rem; background: var(--bg-card); padding: 0.5rem 1.25rem; border-radius: 9999px; border: 1px solid var(--border-color);">
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Fee Currency:</span>
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; font-weight: 600; color: #ffffff;">
+          <input type="radio" name="currency" value="INR" checked> ₹ INR (Indian Delegates)
+        </label>
+        <span style="color: var(--border-color);">|</span>
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.35rem; font-weight: 600; color: #ffffff;">
+          <input type="radio" name="currency" value="USD"> $ USD (International Delegates)
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Cards Grid -->
+  <section class="section section-alt" style="padding-top: 3rem;">
+    <div class="container">
+      <div class="grid-4">
+        
+        <!-- Student -->
+        <div class="card pricing-card">
+          <div class="pricing-category">Students Author</div>
+          <div class="pricing-amount">₹11,000 / $300</div>
+          <div class="pricing-sub">Full 2-Day Access &bull; Elsevier Procedia</div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Conference Kit & Certificate</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Elsevier Procedia CS Publication</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> All Keynotes & Workshops Free</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Buffet Lunch & Refreshments</li>
+          </ul>
+          <a href="#form" class="btn btn-outline" onclick="selectCategory('Students Author')">Select Plan</a>
+        </div>
+
+        <!-- Academician -->
+        <div class="card pricing-card featured">
+          <div class="pricing-popular-badge">Official Author Rate</div>
+          <div class="pricing-category">Regular Author</div>
+          <div class="pricing-amount">₹11,500 / $350</div>
+          <div class="pricing-sub">Faculty & Researchers &bull; Scopus Indexed</div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 Accepted Paper Presentation</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Elsevier Procedia CS (Scopus)</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Gala Dinner & Delegate Kit</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Free Workshop Admission</li>
+          </ul>
+          <a href="#form" class="btn btn-primary" onclick="selectCategory('Regular Author')">Select Plan</a>
+        </div>
+
+        <!-- Industry -->
+        <div class="card pricing-card">
+          <div class="pricing-category">Industry Professional</div>
+          <div class="pricing-amount">₹12,500 / $350</div>
+          <div class="pricing-sub">Corporate & Practitioners</div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Industry Panel Access</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Networking Banquet</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> B2B Networking Lounge</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Complete Proceedings Access</li>
+          </ul>
+          <a href="#form" class="btn btn-outline" onclick="selectCategory('Industry Professional')">Select Plan</a>
+        </div>
+
+        <!-- Listener -->
+        <div class="card pricing-card">
+          <div class="pricing-category">Listener / Non-Author</div>
+          <div class="pricing-amount">₹5,000 / $150</div>
+          <div class="pricing-sub">General Attendees & Co-Authors</div>
+          <ul class="pricing-features">
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Attendance to All Sessions</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Certificate of Participation</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Lunch & Tea Refreshments</li>
+            <li><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Non-Presenting Entry</li>
+          </ul>
+          <a href="#form" class="btn btn-outline" onclick="selectCategory('Listener / Non-Author')">Select Plan</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Registration & Payment Form -->
+  <section class="section" id="form">
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header">
+        <span class="section-subtitle">Real-Time Registration</span>
+        <h2>Delegate Registration & Payment</h2>
+        <p class="section-desc">Complete your registration. An official verified QR Pass and email receipt will be generated automatically.</p>
+      </div>
+
+      <!-- Official Bank Account & UPI Details Box -->
+      <div class="card" style="margin-bottom: 2rem; border-color: var(--secondary); background: linear-gradient(145deg, #0f172a, #1e293b);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="color:#ffffff;">🏛️ Official Conference Banking & UPI Details (NEFT / RTGS / IMPS)</h4>
+          <span class="status-badge status-accepted">Verified Account</span>
+        </div>
+        <div id="bankDetailsDisplay">
+          <!-- Populated by register.js from /api/conference-info -->
+          <div style="color:var(--text-muted); font-size:0.9rem;">Loading official banking details...</div>
+        </div>
+        <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.75rem; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+          Please retain your Transaction ID / UTR number and upload the screenshot/receipt below for instant reconciliation.
+        </div>
+      </div>
+
+      <div class="card" style="padding: 2.5rem; border-color: var(--border-highlight);">
+        <form id="registrationForm" enctype="multipart/form-data">
+          
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Name (with Title) *</label>
+              <input type="text" name="full_name" class="form-control" placeholder="Dr. / Prof. / Mr. / Ms." required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" name="email" class="form-control" placeholder="delegate@domain.edu" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Phone Number (with country code) *</label>
+              <input type="text" name="phone" class="form-control" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country of Residence *</label>
+              <input type="text" name="country" class="form-control" placeholder="e.g. India, Germany, USA" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Affiliation / Organization / University *</label>
+            <input type="text" name="affiliation" class="form-control" placeholder="e.g. UPES / IIT / MIT / Enterprise" required>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Registration Category *</label>
+              <select name="category" id="regCategory" class="form-control" required>
+                <option value="Regular Author">Regular Author (₹11,500 / $350)</option>
+                <option value="Students Author">Students Author (₹11,000 / $300)</option>
+                <option value="Industry Professional">Industry Professional (₹12,500 / $350)</option>
+                <option value="2nd Paper, Regular Author">2nd Paper, Regular Author (₹11,000 / $250)</option>
+                <option value="Listener / Non-Author">Listener / Non-Author (₹5,000 / $150)</option>
+                <option value="Workshop (Non-Author)">Workshop Participation Only (₹4,000 / $60)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Mode of Participation *</label>
+              <div style="display: flex; gap: 1.5rem; margin-top: 0.6rem;">
+                <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                  <input type="radio" name="mode" value="In-Person" checked> 🏢 In-Person (Dehradun)
+                </label>
+                <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                  <input type="radio" name="mode" value="Virtual"> 🌐 Virtual (Zoom Live)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Accepted Paper ID (If presenting author)</label>
+            <input type="text" name="paper_id" id="regPaperId" class="form-control" placeholder="e.g. ICMLDE-2026-1042 (Leave blank if attending as listener)">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Payment Mode *</label>
+              <select name="payment_method" class="form-control" required>
+                <option value="Direct NEFT / RTGS / IMPS">Direct NEFT / RTGS / IMPS Bank Transfer</option>
+                <option value="UPI / QR Code Transfer">UPI / QR Code Transfer</option>
+                <option value="International Wire Transfer">International Wire Transfer (SWIFT)</option>
+                <option value="Online Payment Gateway">Online Credit/Debit Card</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transaction Reference / UTR Number *</label>
+              <input type="text" name="transaction_id" class="form-control" placeholder="e.g. UTR192837482910" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Upload Transfer Receipt / Screenshot (.PDF, .PNG, .JPG - Max 10MB)</label>
+            <input type="file" name="paymentProof" class="form-control" accept=".pdf,.png,.jpg,.jpeg">
+          </div>
+
+          <!-- Total Calculation Display -->
+          <div style="background: var(--bg-elevated); padding: 1.5rem; border-radius: 12px; margin: 1.75rem 0; border: 1px dashed var(--primary-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;">Applicable Registration Total</span>
+              <div style="font-size: 0.85rem; color: var(--text-dim);">Includes all sessions, materials, and conference proceedings</div>
+            </div>
+            <div style="text-align: right;">
+              <span id="computedAmountDisplay" style="font-size: 2.25rem; font-weight: 800; color: #ffffff;">₹10,500</span>
+              <input type="hidden" id="hiddenAmountInput" value="INR 10,500">
+            </div>
+          </div>
+
+          <button type="submit" id="submitRegBtn" class="btn btn-accent btn-lg" style="width: 100%;">
+            💳 Submit Registration & Generate Official QR Pass
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Success Modal -->
+  <div class="modal-overlay" id="regSuccessModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeRegModal()">&times;</button>
+      <div id="modalRegDetails">
+        <!-- Populated by register.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 ICMLDE Conference. All rights reserved.</div>
+        <div>November 27th & 28th, 2026 &bull; Dehradun, India</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/register.js"></script>
+  <script>
+    function selectCategory(cat) {
+      const select = document.getElementById('regCategory');
+      if (select) {
+        select.value = cat;
+        select.dispatchEvent(new Event('change'));
+      }
+    }
+  </script>
+</body>
+</html>

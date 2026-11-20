@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conference Program & Schedule | ICMLDE 2026</title>
+  <meta name="description" content="Detailed program schedule for the 5th International Conference on Machine Learning & Data Engineering, November 27-28, 2026.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container announcement-inner">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span class="announcement-badge">Event Schedule</span>
+        <span>Conference Dates: <strong>Friday, Nov 27 & Saturday, Nov 28, 2026</strong></span>
+      </div>
+      <div class="announcement-links">
+        <a href="/register.html">Get Delegate Pass &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="navbar-wrapper">
+    <div class="container navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">ML</div>
+        <div class="brand-text">
+          ICMLDE 2026
+          <span>5th Int. Conference</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/papers.html" class="nav-link">Call for Papers</a>
+        <a href="/schedule.html" class="nav-link active">Program & Agenda</a>
+        <a href="/register.html" class="nav-link">Registration</a>
+        <a href="/committee.html" class="nav-link">Committees</a>
+        <a href="/#venue" class="nav-link">Venue</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/register.html" class="btn btn-primary btn-sm">Register Now</a>
+        <button class="mobile-toggle" id="mobileNavToggle">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="section" style="padding: 4rem 0 2.5rem; text-align: center;">
+    <div class="container" style="max-width: 800px;">
+      <span class="pill-badge cyan" style="margin-bottom: 1rem;">Official Timetable</span>
+      <h1>Conference Program & Agenda</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.75rem;">
+        Two intensive days of visionary keynotes, peer-reviewed oral paper presentations, poster exhibitions, and high-level plenary panels.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tabs Navigation -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="tabs-nav">
+        <button class="tab-btn active" id="btnDay1" onclick="switchDay(1)">
+          🗓️ Day 1: Friday, November 27, 2026
+        </button>
+        <button class="tab-btn" id="btnDay2" onclick="switchDay(2)">
+          🗓️ Day 2: Saturday, November 28, 2026
+        </button>
+      </div>
+
+      <!-- DAY 1 AGENDA -->
+      <div id="day1Schedule" class="agenda-timeline">
+        
+        <div class="agenda-item">
+          <div class="agenda-time">08:30 – 09:30</div>
+          <div class="agenda-details">
+            <h4>Registration, Badge Distribution & Welcome Breakfast</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Main Foyer</span>
+              <span>All Registered In-Person Delegates</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">09:30 – 10:15</div>
+          <div class="agenda-details">
+            <h4 style="color:var(--accent);">Inaugural Ceremony & Presidential Address</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              Lighting of Lamp, Welcome by General Chairs, Address by Dignitaries from MeitY & Vice-Chancellors.
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Grand Auditorium</span>
+              <span>Plenary Session &bull; Live Streamed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--primary-light);">
+          <div class="agenda-time">10:15 – 11:15</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Keynote Address I: Prof. Elena Vance (Cambridge University)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Topic:</strong> "Geometric Deep Learning and the Blueprint for Next-Generation Foundational Reasoning"
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--primary); color:#fff;">Keynote 1</span>
+              <span class="agenda-badge">Auditorium & Zoom 1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">11:15 – 11:45</div>
+          <div class="agenda-details">
+            <h4>Networking High Tea & Poster Gallery Walk</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Exhibition Lawn</span>
+              <span>Posters Displayed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">11:45 – 13:30</div>
+          <div class="agenda-details">
+            <h4>Parallel Technical Oral Sessions (Track 1 & Track 2)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Hall A:</strong> Track 1 - ML & Deep Learning Algorithms (Session Chair: Dr. R. Sharma)<br>
+              <strong>Hall B:</strong> Track 2 - Big Data Lakehouses & Streaming Telemetry (Session Chair: Dr. C. Gomez)<br>
+              <strong>Zoom Hall 1:</strong> Virtual Global Track Presentations
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Parallel Tracks</span>
+              <span>15 min per accepted paper</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">13:30 – 14:30</div>
+          <div class="agenda-details">
+            <h4>Networking Buffet Lunch</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Convention Dining Hall</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--secondary);">
+          <div class="agenda-time">14:30 – 15:30</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Keynote Address II: Dr. Arvind Narayanan (Google DeepMind)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Topic:</strong> "Scaling Autonomous Agent Swarms: Safety, Verification, and Coordination Frontiers"
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--secondary); color:#fff;">Keynote 2</span>
+              <span class="agenda-badge">Grand Auditorium</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">15:30 – 17:15</div>
+          <div class="agenda-details">
+            <h4>Parallel Technical Oral Sessions (Track 3 & Track 5)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Hall A:</strong> Track 3 - Generative AI, RAG & LLMs<br>
+              <strong>Hall B:</strong> Track 5 - Computer Vision, 3D Splatting & Autonomous Robotics
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Parallel Tracks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--accent);">
+          <div class="agenda-time">17:15 – 18:30</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Industry Leadership Panel: "Frontier AI & Enterprise Scalability"</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              Executive panelists from Microsoft Research, AWS AI, NVIDIA, and prominent startups discussing compute scaling, data governance, and open-source models.
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--accent); color:#000;">Plenary Panel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">19:30 – 22:00</div>
+          <div class="agenda-details">
+            <h4 style="color:var(--accent);">Conference Gala Dinner & Himalayan Cultural Night</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              Traditional Uttarakhand music, dinner banquet, and informal research networking.
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Resort Open Amphitheater</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DAY 2 AGENDA -->
+      <div id="day2Schedule" class="agenda-timeline" style="display: none;">
+        
+        <div class="agenda-item">
+          <div class="agenda-time">08:45 – 09:15</div>
+          <div class="agenda-details">
+            <h4>Morning Refreshments & Informal Discussion</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Main Foyer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--primary-light);">
+          <div class="agenda-time">09:15 – 10:15</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Keynote Address III: Prof. Sunita Krishnan (IISc Bangalore)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Topic:</strong> "Real-Time Stream Lakehouses: Architecting Resilient Cyber-Physical Systems"
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--primary); color:#fff;">Keynote 3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--secondary);">
+          <div class="agenda-time">10:15 – 11:15</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Keynote Address IV: Prof. Marc Dupont (ETH Zurich)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Topic:</strong> "Embodied Multimodal Foundation Models for Planetary Exploration & Climate AI"
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--secondary); color:#fff;">Keynote 4</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">11:15 – 11:45</div>
+          <div class="agenda-details">
+            <h4>Tea Break & Interactive Poster Evaluation Session</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Poster Exhibition Area</span>
+              <span>Jury Evaluation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">11:45 – 13:30</div>
+          <div class="agenda-details">
+            <h4>Parallel Technical Oral Sessions (Track 4 & Track 6)</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              <strong>Hall A:</strong> Track 4 - AI in Healthcare, Genomics & Computational Biology<br>
+              <strong>Hall B:</strong> Track 6 - Trustworthy AI, Differential Privacy & Ethics
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Parallel Tracks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">13:30 – 14:30</div>
+          <div class="agenda-details">
+            <h4>Buffet Lunch</h4>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Dining Hall</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item">
+          <div class="agenda-time">14:30 – 16:00</div>
+          <div class="agenda-details">
+            <h4>Doctoral Colloquium & Young Scientist Pitch Session</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              Speed presentations by Ph.D. scholars with mentoring feedback from international senior faculty.
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge">Seminar Hall 2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="agenda-item" style="border-left: 4px solid var(--success);">
+          <div class="agenda-time">16:00 – 17:30</div>
+          <div class="agenda-details">
+            <h4 style="color:#ffffff;">Valedictory Ceremony & Best Paper Awards</h4>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin: 0.25rem 0;">
+              Presentation of Best Paper Awards across all 6 tracks, Cash Grants, Certificate Distribution, and Announcement of ICMLDE 2027.
+            </p>
+            <div class="agenda-meta">
+              <span class="agenda-badge" style="background:var(--success); color:#fff;">Grand Valedictory</span>
+              <span>All Delegates</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 ICMLDE Conference. All rights reserved.</div>
+        <div>November 27th & 28th, 2026 &bull; Dehradun, India</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script>
+    function switchDay(day) {
+      const d1 = document.getElementById('day1Schedule');
+      const d2 = document.getElementById('day2Schedule');
+      const b1 = document.getElementById('btnDay1');
+      const b2 = document.getElementById('btnDay2');
+
+      if (day === 1) {
+        d1.style.display = 'flex';
+        d2.style.display = 'none';
+        b1.classList.add('active');
+        b2.classList.remove('active');
+      } else {
+        d1.style.display = 'none';
+        d2.style.display = 'flex';
+        b1.classList.remove('active');
+        b2.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
