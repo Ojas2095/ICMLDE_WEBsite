@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   initContactForm();
   initQuickTracker();
+  initFaqAccordion();
+  initScrollTop();
+  initSpecialSessionForm();
 });
 
 // Mobile Navigation Toggle
@@ -205,6 +208,88 @@ function initQuickTracker() {
       }
     } catch (err) {
       resultBox.innerHTML = `<p style="color:#f87171;">Failed to connect to backend server.</p>`;
+    }
+  });
+}
+
+// FAQ Accordion Toggle
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const questionBtn = item.querySelector('.faq-question');
+    if (questionBtn) {
+      questionBtn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        // Close others
+        faqItems.forEach(i => i.classList.remove('active'));
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    }
+  });
+}
+
+// Scroll to top button
+function initScrollTop() {
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// Special Session Proposal Form
+function initSpecialSessionForm() {
+  const form = document.getElementById('specialSessionForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Submitting Proposal...</span>';
+
+    const payload = {
+      session_title: form.querySelector('[name="session_title"]').value,
+      proposer_name: form.querySelector('[name="proposer_name"]').value,
+      proposer_email: form.querySelector('[name="proposer_email"]').value,
+      proposer_affiliation: form.querySelector('[name="proposer_affiliation"]').value,
+      session_scope: form.querySelector('[name="session_scope"]').value,
+      expected_papers: form.querySelector('[name="expected_papers"]')?.value || 6
+    };
+
+    try {
+      const res = await fetch('/api/special-sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        showToast(data.message, 'success');
+        form.reset();
+        const modal = document.getElementById('specialSessionModal');
+        if (modal) modal.classList.remove('open');
+      } else {
+        showToast(data.error || 'Failed to submit proposal.', 'error');
+      }
+    } catch (err) {
+      showToast('Network error submitting session proposal.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
     }
   });
 }

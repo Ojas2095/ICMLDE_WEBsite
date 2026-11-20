@@ -354,7 +354,34 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// 7. Public Conference Stats
+// 7. Special Sessions Proposal Submission
+app.post('/api/special-sessions', (req, res) => {
+  try {
+    const { session_title, proposer_name, proposer_email, proposer_affiliation, session_scope, expected_papers } = req.body;
+    if (!session_title || !proposer_name || !proposer_email || !proposer_affiliation || !session_scope) {
+      return res.status(400).json({ error: 'All fields are required to propose a special session.' });
+    }
+
+    const saved = db.createSpecialSession({
+      session_title: session_title.trim(),
+      proposer_name: proposer_name.trim(),
+      proposer_email: proposer_email.trim().toLowerCase(),
+      proposer_affiliation: proposer_affiliation.trim(),
+      session_scope: session_scope.trim(),
+      expected_papers: parseInt(expected_papers) || 6
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Special session proposal submitted successfully! The organizing committee will review your proposal.',
+      data: saved
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to submit proposal: ' + err.message });
+  }
+});
+
+// 8. Public Conference Stats
 app.get('/api/public-stats', (req, res) => {
   const stats = db.getStats();
   res.json({
@@ -493,6 +520,18 @@ app.get('/api/admin/inquiries', requireAdmin, (req, res) => {
 app.patch('/api/admin/inquiries/:id/status', requireAdmin, (req, res) => {
   const { status, reply_text } = req.body;
   const updated = db.updateInquiryStatus(req.params.id, status || 'Resolved', reply_text);
+  res.json({ success: true, data: updated });
+});
+
+// Admin Special Sessions List
+app.get('/api/admin/special-sessions', requireAdmin, (req, res) => {
+  res.json({ success: true, data: db.getAllSpecialSessions() });
+});
+
+// Admin Update Special Session Status
+app.patch('/api/admin/special-sessions/:id/status', requireAdmin, (req, res) => {
+  const { status } = req.body;
+  const updated = db.updateSpecialSessionStatus(req.params.id, status || 'Approved');
   res.json({ success: true, data: updated });
 });
 

@@ -82,6 +82,18 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS special_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_title TEXT NOT NULL,
+    proposer_name TEXT NOT NULL,
+    proposer_email TEXT NOT NULL,
+    proposer_affiliation TEXT NOT NULL,
+    session_scope TEXT NOT NULL,
+    expected_papers INTEGER DEFAULT 6,
+    status TEXT DEFAULT 'Pending Review',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
   CREATE INDEX IF NOT EXISTS idx_submissions_paper_id ON submissions(paper_id);
   CREATE INDEX IF NOT EXISTS idx_submissions_email ON submissions(corresponding_email);
   CREATE INDEX IF NOT EXISTS idx_registrations_reg_id ON registrations(reg_id);
@@ -260,6 +272,34 @@ module.exports = {
     db.prepare('UPDATE inquiries SET status = ?, reply_text = ? WHERE id = ?')
       .run(status, reply_text || '', id);
     return db.prepare('SELECT * FROM inquiries WHERE id = ?').get(id);
+  },
+
+  // Special Sessions
+  createSpecialSession(data) {
+    const stmt = db.prepare(`
+      INSERT INTO special_sessions (
+        session_title, proposer_name, proposer_email,
+        proposer_affiliation, session_scope, expected_papers
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `);
+    const res = stmt.run(
+      data.session_title,
+      data.proposer_name,
+      data.proposer_email,
+      data.proposer_affiliation,
+      data.session_scope,
+      data.expected_papers || 6
+    );
+    return db.prepare('SELECT * FROM special_sessions WHERE id = ?').get(res.lastInsertRowid);
+  },
+
+  getAllSpecialSessions() {
+    return db.prepare('SELECT * FROM special_sessions ORDER BY id DESC').all();
+  },
+
+  updateSpecialSessionStatus(id, status) {
+    db.prepare('UPDATE special_sessions SET status = ? WHERE id = ?').run(status, id);
+    return db.prepare('SELECT * FROM special_sessions WHERE id = ?').get(id);
   },
 
   // Summary Metrics

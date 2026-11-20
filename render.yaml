@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: icmlde-2026-platform
+    env: node
+    plan: standard
+    buildCommand: npm install
+    startCommand: node server.js
+    disk:
+      name: icmlde-data
+      mountPath: /app/data
+      sizeGB: 10
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
