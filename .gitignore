@@ -15,3 +15,5 @@ uploads/papers/*
 !uploads/papers/demo_paper_1042.pdf
 !uploads/papers/demo_paper_1088.pdf
 !uploads/papers/demo_paper_1125.pdf
+
+.vercel
