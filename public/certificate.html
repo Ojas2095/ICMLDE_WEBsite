@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Creator & Verification Portal | ICMLDE 2026</title>
+  <meta name="description" content="Official Certificate Generator and Verification Portal for the 5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026).">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Great+Vibes&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: #06090f;
+      color: #f8fafc;
+    }
+    .cert-wrapper {
+      max-width: 1100px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.25rem;
+    }
+    /* Printable Certificate Canvas Card */
+    .certificate-card {
+      background: #ffffff;
+      color: #0f172a;
+      width: 100%;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      border: 12px double #b45309;
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #fdfbf7 100%);
+    }
+    .cert-inner-border {
+      border: 2px solid #d97706;
+      padding: 2.5rem 2rem;
+      position: relative;
+      border-radius: 4px;
+    }
+    .cert-corner-decor {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #b45309;
+    }
+    .corner-tl { top: -6px; left: -6px; border-right: none; border-bottom: none; }
+    .corner-tr { top: -6px; right: -6px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: -6px; left: -6px; border-right: none; border-top: none; }
+    .corner-br { bottom: -6px; right: -6px; border-left: none; border-top: none; }
+    
+    .cert-institution {
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #475569;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .cert-conference-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #1e1b4b;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .cert-publisher-sub {
+      font-size: 0.8rem;
+      color: #b45309;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .cert-headline {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: #92400e;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid rgba(180, 83, 9, 0.3);
+      display: inline-block;
+      padding-bottom: 0.4rem;
+    }
+    .cert-presented-to {
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .cert-recipient-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: #1e1b4b;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .cert-body-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #334155;
+      line-height: 1.7;
+      max-width: 780px;
+      margin: 0 auto 2rem;
+    }
+    .cert-paper-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: #0f172a;
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 1.05rem;
+      font-style: italic;
+    }
+    .cert-signatures {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 2.5rem;
+      padding: 0 1.5rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .cert-sign-col {
+      text-align: center;
+      width: 220px;
+    }
+    .cert-sign-line {
+      border-top: 1px solid #475569;
+      margin-top: 0.5rem;
+      padding-top: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cert-sign-role {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+    .cert-seal {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px double #b45309;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.2);
+    }
+    .cert-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.75rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #cbd5e1;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .certificate-card, .certificate-card * {
+        visibility: visible;
+      }
+      .certificate-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+        margin: 0;
+        padding: 2rem;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar-wrapper no-print">
+    <div class="container navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">
+          ICMLDE 2026
+          <span>Certificate Creator & Verifier</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/" class="btn btn-outline btn-sm">&larr; Public Portal</a>
+        <a href="/submission-form.html" class="btn btn-primary btn-sm">Paper Submission Form</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="cert-wrapper">
+    
+    <!-- Controls & Generator Form -->
+    <div class="card no-print" style="padding: 2rem; margin-bottom: 2rem; border-color: var(--border-highlight);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h2 style="font-size: 1.6rem; color: #ffffff;">ICMLDE 2026 Certificate Generator</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Generate, customize, and print verified presentation & participation certificates.</p>
+        </div>
+        <div style="display:flex; gap:0.75rem;">
+          <button class="btn btn-outline btn-sm" onclick="applySampleData()">⚡ Load Sample Data</button>
+          <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+      </div>
+
+      <form id="certGeneratorForm">
+        <div class="grid-3">
+          <div class="form-group">
+            <label class="form-label">Recipient Full Name *</label>
+            <input type="text" id="inputRecipient" class="form-control" value="Dr. Rajesh Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Affiliation / University *</label>
+            <input type="text" id="inputAffiliation" class="form-control" value="Indian Institute of Technology, Roorkee" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Certificate Type *</label>
+            <select id="inputCertType" class="form-control" required>
+              <option value="Certificate of Paper Presentation">Certificate of Paper Presentation</option>
+              <option value="Certificate of Participation">Certificate of Participation</option>
+              <option value="Certificate of Best Paper Award">Best Paper Award</option>
+              <option value="Certificate of Appreciation">Certificate of Appreciation / Session Chair</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Presented Paper Title (If presenting author)</label>
+            <input type="text" id="inputPaperTitle" class="form-control" value="Self-Supervised Contrastive Learning for Multi-Modal Remote Sensing Data">
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Paper ID / Reg ID</label>
+              <input type="text" id="inputPaperId" class="form-control" value="ICMLDE-2026-1042">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Issue</label>
+              <input type="text" id="inputDate" class="form-control" value="November 28, 2026">
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+          <button type="button" class="btn btn-accent" onclick="saveCertificateToBackend()">
+            💾 Save & Generate QR Verification Seal
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Live Rendered Certificate -->
+    <div class="certificate-card" id="certificateCanvas">
+      <div class="cert-inner-border">
+        <div class="cert-corner-decor corner-tl"></div>
+        <div class="cert-corner-decor corner-tr"></div>
+        <div class="cert-corner-decor corner-bl"></div>
+        <div class="cert-corner-decor corner-br"></div>
+
+        <div class="cert-institution">School of Computer Science &bull; UPES Dehradun, India</div>
+        <div class="cert-conference-title">5th International Conference on Machine Learning & Data Engineering</div>
+        <div class="cert-publisher-sub">Proceedings published in Elsevier Procedia Computer Science &bull; Scopus Indexed</div>
+
+        <div class="cert-headline" id="dispCertType">Certificate of Presentation</div>
+
+        <div class="cert-presented-to">This is proudly presented to</div>
+        <div class="cert-recipient-name" id="dispRecipientName">Dr. Rajesh Sharma</div>
+
+        <div class="cert-body-text" id="dispBodyText">
+          from <strong id="dispAffiliation">Indian Institute of Technology, Roorkee</strong> for successfully presenting the peer-reviewed research paper titled:
+          <span class="cert-paper-title" id="dispPaperTitle">"Self-Supervised Contrastive Learning for Multi-Modal Remote Sensing Data"</span>
+          at the <em>5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)</em> held in hybrid mode at Dehradun, Uttarakhand, India on November 27th & 28th, 2026.
+        </div>
+
+        <!-- Signatures & Verification Seal -->
+        <div class="cert-signatures">
+          <div class="cert-sign-col">
+            <div style="font-family:'Great Vibes', cursive; font-size:2rem; color:#1e1b4b; height:45px;">Vijendra Singh</div>
+            <div class="cert-sign-line">Dr. Vijendra Singh</div>
+            <div class="cert-sign-role">Organizing Chair &bull; UPES Dehradun</div>
+          </div>
+
+          <div class="cert-seal">
+            <span>ICMLDE</span>
+            <span style="font-size:1.1rem; color:#b45309;">2026</span>
+            <span>VERIFIED</span>
+          </div>
+
+          <div class="cert-sign-col">
+            <div style="font-family:'Great Vibes', cursive; font-size:2rem; color:#1e1b4b; height:45px;">Panos Liatsis</div>
+            <div class="cert-sign-line">Prof. Panos Liatsis</div>
+            <div class="cert-sign-role">Advisory Chair &bull; Khalifa Univ, UAE</div>
+          </div>
+        </div>
+
+        <!-- Meta Footer -->
+        <div class="cert-footer-meta">
+          <div>Certificate ID: <strong id="dispCertId" style="color:#b45309;">CERT-ICMLDE-2026-1042</strong></div>
+          <div id="dispQrContainer">
+            <span style="font-size:0.7rem; color:#64748b;">Verification URL: https://icmlde-website.vercel.app/certificate.html</span>
+          </div>
+          <div>Date: <strong id="dispDate">November 28, 2026</strong></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Live update certificate as user types
+    const inputRecipient = document.getElementById('inputRecipient');
+    const inputAffiliation = document.getElementById('inputAffiliation');
+    const inputCertType = document.getElementById('inputCertType');
+    const inputPaperTitle = document.getElementById('inputPaperTitle');
+    const inputPaperId = document.getElementById('inputPaperId');
+    const inputDate = document.getElementById('inputDate');
+
+    function updateLivePreview() {
+      document.getElementById('dispRecipientName').textContent = inputRecipient.value || 'Participant Name';
+      document.getElementById('dispAffiliation').textContent = inputAffiliation.value || 'University / Institution';
+      document.getElementById('dispCertType').textContent = inputCertType.value;
+      document.getElementById('dispDate').textContent = inputDate.value || 'November 28, 2026';
+
+      const paperTitle = inputPaperTitle.value.trim();
+      const dispTitle = document.getElementById('dispPaperTitle');
+      if (paperTitle && inputCertType.value.includes('Presentation')) {
+        dispTitle.textContent = `"${paperTitle}"`;
+        dispTitle.style.display = 'block';
+      } else if (!paperTitle) {
+        dispTitle.style.display = 'none';
+      }
+
+      if (inputPaperId.value) {
+        document.getElementById('dispCertId').textContent = `CERT-${inputPaperId.value.trim()}`;
+      }
+    }
+
+    [inputRecipient, inputAffiliation, inputCertType, inputPaperTitle, inputPaperId, inputDate].forEach(el => {
+      el.addEventListener('input', updateLivePreview);
+      el.addEventListener('change', updateLivePreview);
+    });
+
+    function applySampleData() {
+      inputRecipient.value = "Prof. Elena Rostova";
+      inputAffiliation.value = "Technical University of Munich, Germany";
+      inputCertType.value = "Certificate of Paper Presentation";
+      inputPaperTitle.value = "Distributed Stream Processing in Real-Time Urban Mobility Data Lakes";
+      inputPaperId.value = "ICMLDE-2026-1088";
+      inputDate.value = "November 28, 2026";
+      updateLivePreview();
+      showToast('Loaded sample presenter certificate!', 'success');
+    }
+
+    async function saveCertificateToBackend() {
+      const payload = {
+        recipient_name: inputRecipient.value,
+        affiliation: inputAffiliation.value,
+        cert_type: inputCertType.value,
+        paper_title: inputPaperTitle.value,
+        paper_id: inputPaperId.value
+      };
+
+      try {
+        const res = await fetch('/api/certificates/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          document.getElementById('dispCertId').textContent = data.data.cert_id;
+          if (data.data.qrCode) {
+            document.getElementById('dispQrContainer').innerHTML = `
+              <img src="${data.data.qrCode}" alt="Verification QR" style="width:50px; height:50px; vertical-align:middle;">
+              <span style="font-size:0.7rem; color:#475569; margin-left:0.35rem;">Scan to verify</span>
+            `;
+          }
+          showToast('Certificate verified and saved in conference database!', 'success');
+        } else {
+          showToast(data.error || 'Failed to save certificate.', 'error');
+        }
+      } catch (e) {
+        showToast('Generated client certificate preview.', 'info');
+      }
+    }
+
+    // Check if URL has ?verify=CERT-XXXX
+    window.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const verifyId = urlParams.get('verify');
+      if (verifyId) {
+        try {
+          const res = await fetch(`/api/certificates/${encodeURIComponent(verifyId)}`);
+          const data = await res.json();
+          if (res.ok && data.success) {
+            const c = data.data;
+            inputRecipient.value = c.recipient_name;
+            inputAffiliation.value = c.affiliation;
+            inputCertType.value = c.cert_type;
+            inputPaperTitle.value = c.paper_title || '';
+            inputPaperId.value = c.paper_id || '';
+            document.getElementById('dispCertId').textContent = c.cert_id;
+            updateLivePreview();
+            showToast(`Verified Genuine Certificate: ${c.cert_id}`, 'success');
+          }
+        } catch (e) {}
+      }
+    });
+  </script>
+</body>
+</html>

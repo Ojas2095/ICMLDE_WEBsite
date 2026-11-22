@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Paper Submission Form | ICMLDE 2026</title>
+  <meta name="description" content="Official standalone research paper submission portal for ICMLDE 2026. Published in Elsevier Procedia Computer Science (Scopus indexed).">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: #070a11;
+      color: #f1f5f9;
+    }
+    .form-page-container {
+      max-width: 960px;
+      margin: 2.5rem auto 5rem;
+      padding: 0 1.25rem;
+    }
+    .form-header-card {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.8), rgba(17, 24, 39, 0.95));
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    .form-section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 1.75rem;
+      transition: var(--transition);
+    }
+    .form-section-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .step-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .word-count-badge {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    .checkbox-label input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--primary);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar-wrapper">
+    <div class="container navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">ML</div>
+        <div class="brand-text">
+          ICMLDE 2026
+          <span>Official Submission Portal</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/" class="btn btn-outline btn-sm">&larr; Return to Conference Website</a>
+        <a href="/papers.html#tracker" class="btn btn-primary btn-sm">Track Existing Paper</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="form-page-container">
+    
+    <!-- Form Banner -->
+    <div class="form-header-card">
+      <div style="display:flex; justify-content:center; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <span class="pill-badge gold">5th International Edition</span>
+        <span class="pill-badge cyan">November 27–28, 2026</span>
+        <span class="pill-badge">Elsevier Procedia CS (Scopus Indexed)</span>
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Online Manuscript Submission Portal</h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 720px; margin: 0 auto; line-height: 1.6;">
+        Submit your original research paper for double-blind peer review. Authors will receive a confirmation email with a unique Paper ID to track review progress and upload camera-ready manuscripts upon acceptance.
+      </p>
+    </div>
+
+    <!-- The Submission Form -->
+    <form id="standaloneSubmissionForm" enctype="multipart/form-data">
+
+      <!-- SECTION 1: Corresponding Author Information -->
+      <div class="form-section-card">
+        <div class="form-section-title">
+          <span class="step-badge">1</span>
+          <span>Corresponding Author Information</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Full Name & Academic Title *</label>
+            <input type="text" name="authors" class="form-control" placeholder="e.g. Dr. Jane Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Corresponding Email Address *</label>
+            <input type="email" name="corresponding_email" class="form-control" placeholder="author@university.edu" required>
+            <span style="font-size:0.75rem; color:var(--text-dim);">Review notifications and decision letters will be dispatched here.</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Primary Institution / University / Organization *</label>
+            <input type="text" name="affiliation" class="form-control" placeholder="e.g. UPES / IIT / MIT / Tech Lab" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Country of Affiliation *</label>
+            <input type="text" name="country" class="form-control" placeholder="e.g. India, USA, Germany, Japan" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Co-Authors & Affiliations (If applicable)</label>
+          <input type="text" name="coauthors" class="form-control" placeholder="e.g. Prof. Alan Turing (Cambridge), Dr. Grace Hopper (Yale)">
+          <span style="font-size:0.75rem; color:var(--text-dim);">Separate multiple co-authors with commas.</span>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Manuscript Metadata -->
+      <div class="form-section-card">
+        <div class="form-section-title">
+          <span class="step-badge">2</span>
+          <span>Manuscript Details & Topic Track</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Complete Manuscript Title *</label>
+          <input type="text" name="title" class="form-control" placeholder="Enter complete paper title as in document" required>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Select Primary Technical Track *</label>
+            <select name="track" class="form-control" required>
+              <option value="">-- Choose Track --</option>
+              <option value="Track 1: Advances in Machine Learning & Deep Learning">Track 1: Machine Learning Foundations & Deep Learning</option>
+              <option value="Track 2: Big Data Engineering & Cloud-Edge Infrastructure">Track 2: Big Data Engineering & Distributed Systems</option>
+              <option value="Track 3: Generative AI, LLMs & Agentic Systems">Track 3: Generative AI, LLMs & Agentic Systems</option>
+              <option value="Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science">Track 4: Applied AI in Healthcare, Climate & Remote Sensing</option>
+              <option value="Track 5: Computer Vision, Robotics & IoT">Track 5: Computer Vision, Robotics & IoT</option>
+              <option value="Track 6: Trustworthy AI, Security & Ethics">Track 6: Trustworthy AI, Security, Privacy & Ethics</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Total Number of Pages (Max 10) *</label>
+            <input type="number" name="page_count" class="form-control" placeholder="6 to 10 pages" min="4" max="15" value="8" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Manuscript Abstract (200 - 350 words) *</label>
+          <textarea name="abstract" id="abstractInput" class="form-control" placeholder="Describe context, problem formulation, proposed methodology, empirical benchmarks, and conclusions..." required style="min-height: 140px;"></textarea>
+          <div class="word-count-badge" id="abstractCount">0 words</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Keywords (Comma separated, 3 to 6 keywords) *</label>
+          <input type="text" name="keywords" class="form-control" placeholder="e.g. Self-Supervised Learning, Vision Transformers, Contrastive Loss, Remote Sensing" required>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Manuscript Upload -->
+      <div class="form-section-card">
+        <div class="form-section-title">
+          <span class="step-badge">3</span>
+          <span>Attach Paper Manuscript (.PDF or .DOCX)</span>
+        </div>
+
+        <div class="form-group">
+          <div class="file-dropzone" id="dropzoneStandalone">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 0 1-.88-7.903A5 5 0 1 1 15.9 6L16 6a5 5 0 0 1 1 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Click to upload or drag & drop your research manuscript here</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Format: <strong>PDF (preferred)</strong> or DOCX &bull; Maximum file size: 25 MB</p>
+            <input type="file" id="paperFileStandalone" name="paperFile" accept=".pdf,.doc,.docx" style="display: none;" required>
+          </div>
+          <div id="fileDisplayStandalone"></div>
+        </div>
+
+        <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+          ℹ️ <strong>Double-Blind Peer Review Reminder:</strong> For initial review, kindly remove author names, affiliations, and identifying credentials from the PDF header/footer. Author details are automatically tracked via this portal.
+        </div>
+      </div>
+
+      <!-- SECTION 4: Author Declarations -->
+      <div class="form-section-card">
+        <div class="form-section-title">
+          <span class="step-badge">4</span>
+          <span>Ethics & Publication Declarations</span>
+        </div>
+
+        <label class="checkbox-label">
+          <input type="checkbox" required>
+          <span><strong>Originality & Prior Publication:</strong> I certify that this manuscript represents original research, has not been published previously, and is not currently under review by another journal or conference.</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" required>
+          <span><strong>Plagiarism Policy:</strong> I certify that the similarity index (via Turnitin / iThenticate) does not exceed the mandatory 15% threshold.</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" required>
+          <span><strong>Presentation Commitment:</strong> I agree that upon acceptance, at least one author will register and present the paper for archival in <strong>Elsevier Procedia Computer Science</strong> (Scopus indexed).</span>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <button type="submit" id="submitStandaloneBtn" class="btn btn-primary btn-lg" style="width: 100%; max-width: 500px; font-size: 1.1rem; padding: 1rem 2rem;">
+          🚀 Submit Research Manuscript to ICMLDE 2026
+        </button>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.75rem;">
+          A unique Paper ID and receipt will be generated instantly.
+        </p>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- Submission Success Modal -->
+  <div class="modal-overlay" id="standaloneSuccessModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeStandaloneModal()">&times;</button>
+      <div id="modalStandaloneContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center" style="text-align: center;">
+      <p style="color: var(--text-muted); font-size: 0.85rem;">
+        5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026) &bull; UPES Dehradun &bull; Elsevier Procedia Computer Science
+      </p>
+      <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-dim);">
+        Secretariat Email: <a href="mailto:info@icmlde.org" style="color:var(--primary-light);">info@icmlde.org</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Live word count for abstract
+    const abstractArea = document.getElementById('abstractInput');
+    const wordCountEl = document.getElementById('abstractCount');
+    if (abstractArea && wordCountEl) {
+      abstractArea.addEventListener('input', () => {
+        const words = abstractArea.value.trim().split(/\s+/).filter(Boolean).length;
+        wordCountEl.textContent = `${words} words`;
+        wordCountEl.style.color = (words >= 200 && words <= 350) ? '#34d399' : '#94a3b8';
+      });
+    }
+
+    // Drag and drop for standalone form
+    const dropzone = document.getElementById('dropzoneStandalone');
+    const fileInput = document.getElementById('paperFileStandalone');
+    const fileDisplay = document.getElementById('fileDisplayStandalone');
+
+    if (dropzone && fileInput) {
+      dropzone.addEventListener('click', () => fileInput.click());
+
+      ['dragenter', 'dragover'].forEach(ev => {
+        dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+      });
+      ['dragleave', 'drop'].forEach(ev => {
+        dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove('dragover'); });
+      });
+
+      dropzone.addEventListener('drop', e => {
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          renderFile(files[0]);
+        }
+      });
+
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) renderFile(fileInput.files[0]);
+      });
+    }
+
+    function renderFile(file) {
+      const mb = (file.size / (1024 * 1024)).toFixed(2);
+      fileDisplay.innerHTML = `
+        <div style="margin-top: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-elevated); border: 1px solid var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="color:#ffffff;">📄 <strong>${file.name}</strong> (${mb} MB)</span>
+          <span style="color: var(--success); font-weight: 600; font-size: 0.85rem;">Ready to upload</span>
+        </div>
+      `;
+    }
+
+    // Handle Form Submit
+    const form = document.getElementById('standaloneSubmissionForm');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitStandaloneBtn');
+        const origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳ Uploading Manuscript & Generating Paper ID...</span>';
+
+        const formData = new FormData(form);
+
+        // Append coauthors to authors if present
+        const co = form.querySelector('[name="coauthors"]').value;
+        if (co) {
+          const mainAuthor = formData.get('authors');
+          formData.set('authors', `${mainAuthor}, ${co}`);
+        }
+
+        try {
+          const res = await fetch('/api/submissions', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            form.reset();
+            fileDisplay.innerHTML = '';
+            showStandaloneSuccess(data.data);
+          } else {
+            showToast(data.error || 'Submission failed.', 'error');
+          }
+        } catch (err) {
+          showToast('Network error during manuscript upload.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = origText;
+        }
+      });
+    }
+
+    function showStandaloneSuccess(item) {
+      const modal = document.getElementById('standaloneSuccessModal');
+      const content = document.getElementById('modalStandaloneContent');
+
+      content.innerHTML = `
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">🎉</div>
+          <h2 style="color: #ffffff; margin-bottom: 0.25rem;">Submission Confirmed!</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Your manuscript has entered double-blind peer review.</p>
+        </div>
+
+        <div style="background: var(--bg-elevated); border: 2px dashed var(--primary-light); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem; margin-bottom:0.75rem;">
+            <span style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:bold;">Assigned Paper ID</span>
+            <strong style="color:var(--accent); font-size:1.4rem;">${item.paper_id}</strong>
+          </div>
+          <p style="margin: 0.4rem 0;"><strong>Title:</strong> ${item.title}</p>
+          <p style="margin: 0.4rem 0;"><strong>Authors:</strong> ${item.authors}</p>
+          <p style="margin: 0.4rem 0;"><strong>Track:</strong> ${item.track}</p>
+          <p style="margin: 0.4rem 0; color:var(--secondary);"><strong>Status:</strong> ${item.status}</p>
+          <p style="font-size:0.8rem; color:var(--text-dim); margin-top:0.5rem;">Submission Date: ${item.created_at || new Date().toLocaleString()}</p>
+        </div>
+
+        <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="window.print()">🖨️ Print Receipt</button>
+          <a href="/papers.html#tracker?paperId=${encodeURIComponent(item.paper_id)}" class="btn btn-primary">Track Paper Status &rarr;</a>
+          <button class="btn btn-outline" onclick="closeStandaloneModal()">Done</button>
+        </div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeStandaloneModal() {
+      document.getElementById('standaloneSuccessModal').classList.remove('open');
+    }
+  </script>
+</body>
+</html>

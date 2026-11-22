@@ -61,8 +61,11 @@ This project delivers a full-stack academic conference web platform designed to 
 | :--- | :--- | :--- |
 | **Conference Info** | `GET /api/conference-info` | Exposes verified banking (YES Bank & UPES NEFT/SWIFT), dates, and venue metadata. |
 | **Manuscript Upload** | `POST /api/submissions` | Handles multipart form upload of research papers up to 25MB, auto-generating Paper IDs (e.g., `ICMLDE-2026-XXXX`). |
+| **Standalone Submission Portal** | `GET /submission-form.html` | Distraction-free dedicated multi-step paper submission portal with live word counter, drag-and-drop PDF dropzone, and printable receipt. |
 | **Paper Status Tracker** | `GET /api/submissions/track` | Allows authors to check live status (*Under Review*, *Accepted*, *Revision*, *Rejected*) and reviewer remarks. |
 | **Camera-Ready Archival** | `POST /api/submissions/camera-ready` | Permits accepted authors to upload final camera-ready versions for Elsevier publication. |
+| **Certificate Creator & Verifier** | `POST /api/certificates/generate` | Generates official conference presentation, participation, and best paper awards with dynamic QR verification seals. |
+| **Certificate Public Verification** | `GET /api/certificates/:certId` | Instant cryptographic validation of participant credentials via serialized Certificate IDs. |
 | **Delegate Registration** | `POST /api/registrations` | Computes fee tiers (Regular Author, Students, Industry, Listener), uploads UTR payment proof, and generates QR badge. |
 | **Special Sessions** | `POST /api/special-sessions` | Captures special session proposals with scope and target paper quotas. |
 | **Contact / Secretariat** | `POST /api/contact` | Captures inquiries regarding visa letters, travel, and sponsorships. |
@@ -72,8 +75,13 @@ This project delivers a full-stack academic conference web platform designed to 
 
 ---
 
-## 4. Administrative Credentials
+## 4. Administrative & Portal URLs
 
+* **Official Portal:** [https://icmlde-website.vercel.app](https://icmlde-website.vercel.app)
+* **Standalone Submission Form:** [https://icmlde-website.vercel.app/submission-form.html](https://icmlde-website.vercel.app/submission-form.html)
+* **Certificate Creator & Verifier:** [https://icmlde-website.vercel.app/certificate.html](https://icmlde-website.vercel.app/certificate.html)
+* **Author Call for Papers & Tracking:** [https://icmlde-website.vercel.app/papers.html](https://icmlde-website.vercel.app/papers.html)
+* **Registration & Fee Calculator:** [https://icmlde-website.vercel.app/register.html](https://icmlde-website.vercel.app/register.html)
 * **Editorial Dashboard:** [https://icmlde-website.vercel.app/admin.html](https://icmlde-website.vercel.app/admin.html)
 * **Default Username:** `admin`
 * **Default Password:** `icmlde2026_SecretPass!`
@@ -82,8 +90,10 @@ This project delivers a full-stack academic conference web platform designed to 
 
 ## 5. Verification & Testing Instructions
 
-1. **Submission Test:** Open [Papers Hub](https://icmlde-website.vercel.app/papers.html), submit a manuscript, and record your generated Paper ID.
+1. **Standalone Submission Test:** Open [Standalone Form](https://icmlde-website.vercel.app/submission-form.html), fill out author details, attach a sample PDF, submit, and view the generated Paper ID receipt.
 2. **Review Test:** Open [Admin Console](https://icmlde-website.vercel.app/admin.html), log in, locate the submission, change status to **Accepted**, and add reviewer remarks.
-3. **Tracking Test:** Return to the Author Center and query your Paper ID to verify the status update and camera-ready upload prompt.
-4. **Registration Test:** Open [Registration Portal](https://icmlde-website.vercel.app/register.html), complete registration, and inspect the dynamically generated QR pass.
-5. **CSV Roster Test:** In the Admin Console, click **Export Registrations (CSV)** to inspect the generated spreadsheet.
+3. **Tracking Test:** Open [Papers Hub](https://icmlde-website.vercel.app/papers.html#tracker), query your Paper ID, and verify the status update and camera-ready upload prompt.
+4. **Certificate Creator Test:** Open [Certificate Portal](https://icmlde-website.vercel.app/certificate.html), customize recipient name, paper title, click **Save & Generate QR Verification Seal**, and test **Print / Save as PDF**.
+5. **Certificate Public Verification Test:** Scan or visit `https://icmlde-website.vercel.app/certificate.html?verify=CERT-ID` to confirm the system loads the verified record.
+6. **Registration Test:** Open [Registration Portal](https://icmlde-website.vercel.app/register.html), complete registration, and inspect the dynamically generated QR pass.
+7. **CSV Roster Test:** In the Admin Console, click **Export Registrations (CSV)** to inspect the generated spreadsheet.

@@ -381,7 +381,60 @@ app.post('/api/special-sessions', (req, res) => {
   }
 });
 
-// 8. Public Conference Stats
+// 8. Certificate Generator & Verification API
+app.post('/api/certificates/generate', async (req, res) => {
+  try {
+    const { recipient_name, cert_type, paper_title, paper_id, affiliation } = req.body;
+    if (!recipient_name || !cert_type || !affiliation) {
+      return res.status(400).json({ error: 'Recipient name, certificate type, and affiliation are required.' });
+    }
+
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    const cert_id = `CERT-ICMLDE-2026-${randomCode}`;
+
+    const certData = {
+      cert_id,
+      recipient_name: recipient_name.trim(),
+      cert_type: cert_type.trim(),
+      paper_title: paper_title ? paper_title.trim() : '',
+      paper_id: paper_id ? paper_id.trim() : '',
+      affiliation: affiliation.trim(),
+      issue_date: 'November 28, 2026'
+    };
+
+    const saved = db.createCertificate(certData);
+
+    // Verification QR code
+    const qrPayload = `https://icmlde-website.vercel.app/certificate.html?verify=${saved.cert_id}`;
+    const qrDataUrl = await QRCode.toDataURL(qrPayload);
+
+    res.status(201).json({
+      success: true,
+      message: 'Certificate generated successfully!',
+      data: {
+        ...saved,
+        qrCode: qrDataUrl,
+        verifyUrl: qrPayload
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to generate certificate: ' + err.message });
+  }
+});
+
+app.get('/api/certificates/:certId', (req, res) => {
+  try {
+    const cert = db.getCertificateById(req.params.certId);
+    if (!cert) {
+      return res.status(404).json({ error: 'Certificate record not found or invalid serial.' });
+    }
+    res.json({ success: true, data: cert });
+  } catch (err) {
+    res.status(500).json({ error: 'Error verifying certificate.' });
+  }
+});
+
+// 9. Public Conference Stats
 app.get('/api/public-stats', (req, res) => {
   const stats = db.getStats();
   res.json({

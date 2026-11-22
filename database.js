@@ -94,6 +94,18 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS certificates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cert_id TEXT UNIQUE NOT NULL,
+    recipient_name TEXT NOT NULL,
+    cert_type TEXT NOT NULL,
+    paper_title TEXT,
+    paper_id TEXT,
+    affiliation TEXT NOT NULL,
+    issue_date TEXT DEFAULT 'November 28, 2026',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
   CREATE INDEX IF NOT EXISTS idx_submissions_paper_id ON submissions(paper_id);
   CREATE INDEX IF NOT EXISTS idx_submissions_email ON submissions(corresponding_email);
   CREATE INDEX IF NOT EXISTS idx_registrations_reg_id ON registrations(reg_id);
@@ -300,6 +312,34 @@ module.exports = {
   updateSpecialSessionStatus(id, status) {
     db.prepare('UPDATE special_sessions SET status = ? WHERE id = ?').run(status, id);
     return db.prepare('SELECT * FROM special_sessions WHERE id = ?').get(id);
+  },
+
+  // Certificates
+  createCertificate(data) {
+    const stmt = db.prepare(`
+      INSERT INTO certificates (
+        cert_id, recipient_name, cert_type, paper_title,
+        paper_id, affiliation, issue_date
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    stmt.run(
+      data.cert_id,
+      data.recipient_name,
+      data.cert_type,
+      data.paper_title || '',
+      data.paper_id || '',
+      data.affiliation,
+      data.issue_date || 'November 28, 2026'
+    );
+    return this.getCertificateById(data.cert_id);
+  },
+
+  getCertificateById(certId) {
+    return db.prepare('SELECT * FROM certificates WHERE LOWER(cert_id) = LOWER(?)').get(certId.trim());
+  },
+
+  getAllCertificates() {
+    return db.prepare('SELECT * FROM certificates ORDER BY id DESC').all();
   },
 
   // Summary Metrics
