@@ -1,295 +1,231 @@
 /* ===================================================================
-   ICMLDE 2026 - Main Interactive Scripts
+   ICMLDE 2026 — shared site scripts
    =================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
-  initCountdown();
+  initRibbon();
+  initCopyButtons();
+  initTabs();
   initContactForm();
-  initQuickTracker();
-  initFaqAccordion();
-  initScrollTop();
   initSpecialSessionForm();
 });
 
-// Mobile Navigation Toggle
-function initMobileNav() {
-  const toggleBtn = document.getElementById('mobileNavToggle');
-  const mobileNav = document.getElementById('mobileNav');
-  
-  if (toggleBtn && mobileNav) {
-    toggleBtn.addEventListener('click', () => {
-      mobileNav.classList.toggle('open');
-      const isOpen = mobileNav.classList.contains('open');
-      toggleBtn.innerHTML = isOpen ? '✕' : '☰';
-    });
+/** Escape text before putting it into innerHTML. */
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+window.escapeHtml = escapeHtml;
 
-    // Close when clicking any nav link
-    mobileNav.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('open');
-        toggleBtn.innerHTML = '☰';
+/* ---------- Mobile navigation ---------- */
+function initMobileNav() {
+  const btn = document.getElementById('mobileNavToggle');
+  const nav = document.getElementById('mobileNav');
+  if (!btn || !nav) return;
+
+  const setOpen = (open) => {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Close' : 'Menu';
+  };
+  btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+}
+
+/* ---------- Key-dates ribbon (home) ---------- */
+function initRibbon() {
+  const ribbon = document.getElementById('ribbon');
+  if (!ribbon) return;
+
+  const items = [...ribbon.querySelectorAll('li')];
+  const ist = (d, end) => new Date(`${d}T${end ? '23:59:59' : '00:00:00'}+05:30`).getTime();
+  const dates = items.map(li => ({ start: ist(li.dataset.date), end: ist(li.dataset.end || li.dataset.date, true) }));
+  const now = Date.now();
+  const confStart = new Date('2026-11-27T09:00:00+05:30').getTime();
+  const confEnd = dates[dates.length - 1].end;
+
+  // mark past / next milestones
+  let nextIdx = dates.findIndex(d => now < d.start);
+  items.forEach((li, i) => {
+    if (now > dates[i].end) li.classList.add('done');
+    if (i === nextIdx) li.classList.add('next');
+  });
+
+  // progress: equal spacing between milestones, interpolated by real time
+  let pos; // 0 .. items.length-1
+  if (now <= dates[0].start) pos = 0;
+  else if (now >= confEnd) pos = items.length - 1;
+  else if (nextIdx === -1) pos = items.length - 1;
+  else {
+    const prev = nextIdx - 1;
+    const from = dates[prev].start, to = dates[nextIdx].start;
+    pos = prev + Math.min(1, Math.max(0, (now - from) / (to - from)));
+  }
+  const n = items.length;
+  const pct = (pos / (n - 1)) * 100;                 // along the inner line
+  const fill = ribbon.querySelector('.ribbon-fill');
+  const today = ribbon.querySelector('.ribbon-today');
+  requestAnimationFrame(() => {
+    fill.style.setProperty('--fill', String(pct / 100));
+    today.style.left = `calc(10% + (100% - 20%) * ${pct / 100})`;
+  });
+  if (now >= confEnd || now < dates[0].start) today.style.display = 'none';
+
+  // status sentence
+  const statusEl = document.getElementById('ribbonStatus');
+  const subEl = document.getElementById('ribbonSub');
+  const dayMs = 86400000;
+  const fmt = (t) => new Date(t).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'Asia/Kolkata' });
+  const istDay = (t) => Math.floor((t + 5.5 * 3600000) / dayMs);
+
+  if (now < confStart) {
+    const days = istDay(confStart) - istDay(now);
+    statusEl.textContent = days <= 0 ? 'The conference opens today at 09:00 IST'
+      : days === 1 ? 'The conference opens tomorrow, 27 November'
+      : `The conference opens in ${days} days`;
+    if (nextIdx > -1 && nextIdx < n - 1) {
+      subEl.textContent = `Next: ${items[nextIdx].querySelector('.what').textContent.toLowerCase()} on ${fmt(dates[nextIdx].start)}`;
+    } else {
+      subEl.textContent = 'Registration desk opens at 08:30 IST in the main foyer.';
+    }
+  } else if (now <= confEnd) {
+    const dayNo = istDay(now) - istDay(confStart) + 1;
+    statusEl.textContent = `Day ${dayNo} of ICMLDE 2026 is under way`;
+    subEl.innerHTML = '<a href="/schedule.html" style="color:inherit">Today’s programme</a>';
+  } else {
+    statusEl.textContent = 'ICMLDE 2026 has concluded. Thank you to every author and delegate.';
+    subEl.innerHTML = '<a href="/fee-receipt.html" style="color:inherit">Fee receipts</a> and <a href="/certificate.html" style="color:inherit">certificates</a> remain available.';
+  }
+}
+
+/* ---------- Copy buttons (bank details) ---------- */
+function initCopyButtons() {
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      const old = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = old; }, 1500);
+    } catch {
+      showToast('Copy failed. Select the text and copy it manually.', 'error');
+    }
+  });
+}
+
+/* ---------- Tabs (programme, admin) ---------- */
+function initTabs() {
+  document.querySelectorAll('[role="tablist"]').forEach(list => {
+    const tabs = [...list.querySelectorAll('[role="tab"]')];
+    const select = (tab) => {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+    };
+    // open today's tab automatically (programme days carry data-date)
+    const todayIst = new Date(Date.now() + 5.5 * 3600000).toISOString().slice(0, 10);
+    const todays = tabs.find(t => t.dataset.date === todayIst);
+    if (todays) select(todays);
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus(); select(next);
+        }
       });
     });
-  }
+  });
 }
 
-// Countdown Timer to Conference Date: November 27, 2026 09:00:00 IST
-function initCountdown() {
-  const daysEl = document.getElementById('cd-days');
-  const hoursEl = document.getElementById('cd-hours');
-  const minsEl = document.getElementById('cd-mins');
-  const secsEl = document.getElementById('cd-secs');
-
-  if (!daysEl) return;
-
-  const confDate = new Date('2026-11-27T09:00:00+05:30').getTime();
-
-  function updateTimer() {
-    const now = new Date().getTime();
-    const distance = confDate - now;
-
-    if (distance <= 0) {
-      daysEl.textContent = '00';
-      hoursEl.textContent = '00';
-      minsEl.textContent = '00';
-      secsEl.textContent = '00';
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    daysEl.textContent = String(days).padStart(2, '0');
-    hoursEl.textContent = String(hours).padStart(2, '0');
-    minsEl.textContent = String(minutes).padStart(2, '0');
-    secsEl.textContent = String(seconds).padStart(2, '0');
-  }
-
-  updateTimer();
-  setInterval(updateTimer, 1000);
-}
-
-// Toast Notification Utility
+/* ---------- Toasts ---------- */
 function showToast(message, type = 'info') {
   let container = document.getElementById('toastContainer');
   if (!container) {
     container = document.createElement('div');
     container.id = 'toastContainer';
     container.className = 'toast-container';
+    container.setAttribute('role', 'status');
+    container.setAttribute('aria-live', 'polite');
     document.body.appendChild(container);
   }
-
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  
-  let icon = 'ℹ️';
-  if (type === 'success') icon = '✅';
-  if (type === 'error') icon = '⚠️';
-
-  toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+  toast.textContent = message;
   container.appendChild(toast);
-
   setTimeout(() => {
+    toast.style.transition = 'opacity .3s ease';
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(100%)';
-    toast.style.transition = 'all 0.3s ease';
     setTimeout(() => toast.remove(), 300);
   }, 4500);
 }
+window.showToast = showToast;
 
-// Contact Form Handler
+/* ---------- Simple JSON form helper ---------- */
+async function postJson(url, payload) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  let data = {};
+  try { data = await res.json(); } catch { /* non-JSON */ }
+  return { res, data };
+}
+window.postJson = postJson;
+
 function initContactForm() {
-  const contactForm = document.getElementById('contactForm');
-  if (!contactForm) return;
-
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending Message...';
-
-    const formData = {
-      name: contactForm.querySelector('[name="name"]').value,
-      email: contactForm.querySelector('[name="email"]').value,
-      subject: contactForm.querySelector('[name="subject"]').value,
-      message: contactForm.querySelector('[name="message"]').value
-    };
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        showToast(data.message, 'success');
-        contactForm.reset();
-      } else {
-        showToast(data.error || 'Failed to submit inquiry.', 'error');
-      }
-    } catch (err) {
-      console.error(err);
-      showToast('Network error contacting server.', 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }
-  });
-}
-
-// Quick Paper Tracker on Homepage
-function initQuickTracker() {
-  const form = document.getElementById('quickTrackForm');
-  const resultBox = document.getElementById('quickTrackResult');
-  if (!form || !resultBox) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const paperId = form.querySelector('[name="paperId"]').value.trim();
-    const email = form.querySelector('[name="authorEmail"]').value.trim();
-
-    if (!paperId) {
-      showToast('Please enter your Paper ID', 'error');
-      return;
-    }
-
-    resultBox.innerHTML = '<div style="text-align:center; padding: 1rem;">Searching database...</div>';
-    resultBox.style.display = 'block';
-
-    try {
-      let url = `/api/submissions/track?paper_id=${encodeURIComponent(paperId)}`;
-      if (email) url += `&email=${encodeURIComponent(email)}`;
-
-      const res = await fetch(url);
-      const resData = await res.json();
-
-      if (res.ok && resData.success) {
-        const item = resData.data;
-        let badgeClass = 'status-review';
-        if (item.status === 'Accepted') badgeClass = 'status-accepted';
-        if (item.status === 'Revision Requested') badgeClass = 'status-revision';
-        if (item.status === 'Rejected') badgeClass = 'status-rejected';
-
-        resultBox.innerHTML = `
-          <div class="status-result">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
-              <strong style="color:#ffffff; font-size:1.05rem;">${item.paper_id}</strong>
-              <span class="status-badge ${badgeClass}">${item.status}</span>
-            </div>
-            <h4 style="color:#e2e8f0; font-size:1rem; margin-bottom: 0.4rem;">${item.title}</h4>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 0.5rem;">
-              <strong>Authors:</strong> ${item.authors} (${item.affiliation})
-            </p>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 0.5rem;">
-              <strong>Track:</strong> ${item.track}
-            </p>
-            ${item.reviewer_feedback ? `
-              <div style="margin-top:0.75rem; padding:0.6rem; background:rgba(0,0,0,0.3); border-radius:6px; font-size:0.85rem; border-left: 3px solid var(--accent);">
-                <strong style="color:var(--accent);">Reviewer Note:</strong> ${item.reviewer_feedback}
-              </div>
-            ` : ''}
-          </div>
-        `;
-      } else {
-        resultBox.innerHTML = `
-          <div class="status-result" style="border-left-color: var(--danger);">
-            <p style="color:#f87171; font-weight:600;">Paper Not Found</p>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
-              ${resData.error || 'No matching record found. Please verify your Paper ID.'}
-            </p>
-          </div>
-        `;
-      }
-    } catch (err) {
-      resultBox.innerHTML = `<p style="color:#f87171;">Failed to connect to backend server.</p>`;
-    }
-  });
-}
-
-// FAQ Accordion Toggle
-function initFaqAccordion() {
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const questionBtn = item.querySelector('.faq-question');
-    if (questionBtn) {
-      questionBtn.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        // Close others
-        faqItems.forEach(i => i.classList.remove('active'));
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    }
-  });
-}
-
-// Scroll to top button
-function initScrollTop() {
-  const btn = document.getElementById('scrollTopBtn');
-  if (!btn) return;
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
-  });
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-// Special Session Proposal Form
-function initSpecialSessionForm() {
-  const form = document.getElementById('specialSessionForm');
+  const form = document.getElementById('contactForm');
   if (!form) return;
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<span>Submitting Proposal...</span>';
-
-    const payload = {
-      session_title: form.querySelector('[name="session_title"]').value,
-      proposer_name: form.querySelector('[name="proposer_name"]').value,
-      proposer_email: form.querySelector('[name="proposer_email"]').value,
-      proposer_affiliation: form.querySelector('[name="proposer_affiliation"]').value,
-      session_scope: form.querySelector('[name="session_scope"]').value,
-      expected_papers: form.querySelector('[name="expected_papers"]')?.value || 6
-    };
-
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending…';
     try {
-      const res = await fetch('/api/special-sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-
+      const { res, data } = await postJson('/api/contact', Object.fromEntries(new FormData(form)));
       if (res.ok && data.success) {
-        showToast(data.message, 'success');
+        showToast('Message sent. The secretariat will reply by email.', 'success');
         form.reset();
-        const modal = document.getElementById('specialSessionModal');
-        if (modal) modal.classList.remove('open');
       } else {
-        showToast(data.error || 'Failed to submit proposal.', 'error');
+        showToast(data.error || 'Your message wasn’t sent. Check the fields and try again.', 'error');
       }
-    } catch (err) {
-      showToast('Network error submitting session proposal.', 'error');
+    } catch {
+      showToast('Couldn’t reach the server. Check your connection and try again.', 'error');
     } finally {
-      btn.disabled = false;
-      btn.innerHTML = originalText;
+      btn.disabled = false; btn.textContent = label;
+    }
+  });
+}
+
+function initSpecialSessionForm() {
+  const form = document.getElementById('specialSessionForm');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const { res, data } = await postJson('/api/special-sessions', Object.fromEntries(new FormData(form)));
+      if (res.ok && data.success) {
+        showToast('Proposal sent. The programme committee will be in touch.', 'success');
+        form.reset();
+      } else {
+        showToast(data.error || 'Your proposal wasn’t sent. Check the fields and try again.', 'error');
+      }
+    } catch {
+      showToast('Couldn’t reach the server. Check your connection and try again.', 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = label;
     }
   });
 }

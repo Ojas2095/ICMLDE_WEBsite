@@ -48,6 +48,18 @@ Official portal and real-time backend engine for the **5th International Confere
 * **Secretariat Mailbox:** Review inquiries submitted via the public contact form and mark them as resolved.
 * **Database Reset / Purge Action:** Secure button allowing the conference chairs to clear test records anytime to ensure a 100% clean operational database.
 
+### 6. 🧾 Fee Receipt Download (`/fee-receipt.html`)
+* Authors enter their **Paper ID** and **registered email**; if both match a confirmed payment, a printable receipt (with the amount in words) is shown and can be saved as PDF.
+* Data comes from a **Google Sheet** kept by the secretariat. The server reads it (`feeReceipts.js`, endpoint `POST /api/fee-receipt`) and returns only the matching row, so other authors' details never reach the browser. Lookups are rate-limited.
+
+**Setting up the sheet**
+1. Create a Google Sheet with a header row. Required columns: `Paper ID`, `Email`. Recommended: `Name`, `Amount`, `Currency`, `Payment Mode`, `Transaction ID`, `Date`. Optional: `Receipt No`, `Paper Title`, `Category`, `Affiliation`, `Status`. A ready-made template is in [`docs/fee-sheet-template.csv`](docs/fee-sheet-template.csv) (File → Import in Google Sheets).
+   * Header names are flexible (`Gmail`, `UTR No`, `NEFT/UPI No`, `Amount Paid`, `Dated` … all work). Any other columns are printed on the receipt as extra rows.
+   * Paper IDs match loosely: `913` finds `ICMLDE-2026-913`. An email cell may hold several addresses separated by commas or semicolons (e.g. co-authors).
+   * If there is a `Status` column, rows marked `Pending`, `Unverified`, `Rejected` or `Failed` are **not** shown as receipts; the author is told the payment is awaiting confirmation.
+2. Share it: **Share → General access → Anyone with the link → Viewer** (or **File → Share → Publish to web → CSV**).
+3. In Vercel: **Project → Settings → Environment Variables**, add `FEE_SHEET_URL` = the sheet link, then redeploy. Changes to the sheet appear on the site within about a minute.
+
 ---
 
 ## ⚙️ Configuration & Environment (`.env`)
@@ -93,6 +105,7 @@ Access the system:
 * **Paper Submissions Hub:** `http://localhost:3000/papers.html`
 * **Schedule & Agenda:** `http://localhost:3000/schedule.html`
 * **Registration & QR Pass:** `http://localhost:3000/register.html`
+* **Fee Receipt Download:** `http://localhost:3000/fee-receipt.html`
 * **Admin & Editorial Console:** `http://localhost:3000/admin.html`
   * **Default Username:** `admin`
   * **Default Password:** `icmlde2026_SecretPass!`

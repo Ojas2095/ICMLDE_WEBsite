@@ -1,0 +1,4 @@
+Receipt No,Paper ID,Name,Email,Affiliation,Paper Title,Category,Amount,Currency,Payment Mode,Transaction ID,Date,Status
+ICMLDE26-R-0001,913,Ananya Rao,ananya.rao@example.com,Example University,Sample Paper Title on Graph Learning,Students Author,11000,INR,NEFT/UPI,293005810000,10 October 2026,Confirmed
+ICMLDE26-R-0002,ICMLDE-2026-1042,Rajesh Sharma,rajesh@example.edu; coauthor@example.edu,IIT Roorkee,Self-Supervised Contrastive Learning for Remote Sensing,Regular Author,11500,INR,UPI,UTR4471029381,12 October 2026,Confirmed
+ICMLDE26-R-0003,1088,Elena Rostova,elena@example.de,TU Munich,"Distributed Stream Processing, Urban Mobility",International Author,350,USD,SWIFT Wire,SWF88120017,14 October 2026,Pending

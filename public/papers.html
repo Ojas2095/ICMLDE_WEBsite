@@ -3,277 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Call for Papers & Submission Hub | ICMLDE 2026</title>
-  <meta name="description" content="Submit your research manuscript to ICMLDE 2026. Published in Elsevier Procedia Computer Science (Scopus indexed).">
-  <!-- Fonts -->
+  <title>Call for papers | ICMLDE 2026</title>
+  <meta name="description" content="Submission guidelines, formatting, review policy and paper status tracking for ICMLDE 2026.">
+  <meta name="theme-color" content="#12362a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312362a'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' text-anchor='middle' fill='%23f2a900'%3EM%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-  <!-- Top Announcement Bar -->
-  <div class="announcement-bar">
-    <div class="container announcement-inner">
-      <div style="display: flex; align-items: center; gap: 0.6rem;">
-        <span class="announcement-badge">Call For Papers</span>
-        <span>Paper Submission Deadline: <strong>September 15, 2026</strong> &bull; Conference: <strong>Nov 27–28, 2026</strong></span>
-      </div>
-      <div class="announcement-links">
-        <a href="#tracker">Check Status &darr;</a>
-        <a href="/admin.html">Admin Portal &rarr;</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header / Navigation -->
-  <header class="navbar-wrapper">
-    <div class="container navbar">
-      <a href="/" class="brand">
-        <div class="brand-icon">ML</div>
-        <div class="brand-text">
-          ICMLDE 2026
-          <span>5th Int. Conference</span>
-        </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="wordmark" aria-label="ICMLDE 2026 home">
+        <b>ICMLDE 2026</b>
+        <small>UPES, Dehradun</small>
       </a>
-
-      <nav class="nav-menu">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/papers.html" class="nav-link active">Call for Papers</a>
-        <a href="/submission-form.html" class="nav-link">Submission Form</a>
-        <a href="/certificate.html" class="nav-link">Certificates</a>
-        <a href="/schedule.html" class="nav-link">Program & Agenda</a>
-        <a href="/register.html" class="nav-link">Registration</a>
-        <a href="/committee.html" class="nav-link">Committees</a>
-        <a href="/#contact" class="nav-link">Contact</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/papers.html" aria-current="page">Call for papers</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
+        <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
+        <a href="/#contact">Contact</a>
       </nav>
-
-      <div class="nav-actions">
-        <a href="/submission-form.html" class="btn btn-primary btn-sm">Online Form</a>
-        <button class="mobile-toggle" id="mobileNavToggle">☰</button>
-      </div>
+      <a href="/submission-form.html" class="btn btn-primary btn-sm header-cta">Submit a paper</a>
+      <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="/#about">About</a>
+        <a href="/papers.html" aria-current="page">Call for papers</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
+        <a href="/fee-receipt.html">Fee receipt</a>
+        <a href="/certificate.html">Certificates</a>
+        <a href="/papers.html#tracker">Check review status</a>
+        <a href="/#contact">Contact</a>
+        <a href="/submission-form.html" class="btn btn-primary">Submit a paper</a>
+  </nav>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-nav" id="mobileNav">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/papers.html" class="nav-link active">Call for Papers</a>
-    <a href="/submission-form.html" class="nav-link" style="color:var(--primary-light); font-weight:700;">Online Submission Form</a>
-    <a href="/certificate.html" class="nav-link" style="color:var(--gold); font-weight:700;">Certificate Portal</a>
-    <a href="#submit" class="nav-link">Submit Paper (Embedded)</a>
-    <a href="#tracker" class="nav-link">Track Status</a>
-    <a href="/schedule.html" class="nav-link">Program</a>
-    <a href="/register.html" class="nav-link">Registration</a>
-    <a href="/committee.html" class="nav-link">Committees</a>
-  </div>
-
-  <!-- Hero Header -->
-  <section class="section" style="padding: 4rem 0 3rem; background: radial-gradient(circle at 50% 10%, rgba(79, 70, 229, 0.12) 0%, rgba(10, 14, 23, 0) 70%);">
-    <div class="container text-center" style="max-width: 840px; margin: 0 auto; text-align: center;">
-      <span class="pill-badge gold" style="margin-bottom: 1rem;">Submission Portal Open</span>
-      <h1>Call for Papers & Author Submission Hub</h1>
-      <p style="color: var(--text-muted); font-size: 1.15rem; margin-top: 1rem;">
-        Submit your original research contributions to the <strong>5th International Conference on Machine Learning and Data Engineering</strong>. All peer-reviewed and accepted papers will be published in <strong>Elsevier Procedia Computer Science</strong> (Scopus & WoS indexed).
-      </p>
-      <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.75rem; flex-wrap: wrap;">
-        <a href="/submission-form.html" class="btn btn-primary">🚀 Standalone Submission Form</a>
-        <a href="#submit" class="btn btn-outline">📝 Quick Embedded Form</a>
-        <a href="#tracker" class="btn btn-outline">🔍 Track Submitted Paper</a>
-        <a href="/certificate.html" class="btn btn-accent">🎓 Certificate Portal</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Guidelines & Formatting -->
-  <section class="section section-alt" id="guidelines">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-subtitle">Formatting & Integrity</span>
-        <h2>Author Submission Guidelines</h2>
-        <p class="section-desc">Please adhere strictly to Elsevier Procedia guidelines before submitting your manuscript.</p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 0.75rem;">1. Manuscript Length & Format</h3>
-          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
-            Regular research papers should be between <strong>6 to 10 pages</strong> formatted in Elsevier Procedia single/double column layout. Short/Work-in-progress papers: <strong>4 to 5 pages</strong>.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 0.75rem;">2. Double-Blind Review Policy</h3>
-          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
-            For the initial review, remove author names, emails, and institutional affiliations from the PDF manuscript to facilitate an unbiased, double-blind peer review.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 0.75rem;">3. Originality & Plagiarism</h3>
-          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
-            Submissions must represent original, unpublished work not under consideration elsewhere. Similarity index (via Turnitin/iThenticate) must not exceed <strong>15%</strong> overall.
-          </p>
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="crumbs"><a href="/">ICMLDE 2026</a> / Call for papers</p>
+        <h1>Call for papers</h1>
+        <p>We invite original research in machine learning and data engineering. Accepted and presented papers are published in Elsevier Procedia Computer Science, indexed in Scopus.</p>
+        <div class="hero-actions">
+          <a href="/submission-form.html" class="btn btn-accent">Submit a paper</a>
+          <a href="#tracker" class="btn btn-ghost-light">Check review status</a>
         </div>
       </div>
+    </section>
 
-      <!-- Template Download Cards -->
-      <div style="margin-top: 2rem; background: var(--bg-card); border: 1px solid var(--border-color); padding: 1.5rem 2rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-        <div>
-          <h4 style="color:#ffffff;">Official Elsevier Procedia Paper Templates</h4>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Download templates formatted with exact fonts, margins, citations, and reference styles.</p>
+    <section class="section" id="guidelines">
+      <div class="container">
+        <div class="section-head">
+          <h2>Before you submit</h2>
+          <p>Papers that don’t follow these rules may be returned without review.</p>
         </div>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <a href="#" class="btn btn-outline btn-sm" onclick="alert('Elsevier Word Template will be downloaded.'); return false;">
-            📄 MS Word (.docx) Template
-          </a>
-          <a href="#" class="btn btn-outline btn-sm" onclick="alert('Elsevier LaTeX Package will be downloaded.'); return false;">
-            📦 LaTeX Package (.zip)
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Paper Submission Form -->
-  <section class="section" id="submit">
-    <div class="container" style="max-width: 900px;">
-      <div class="section-header">
-        <span class="section-subtitle">Live Submission Form</span>
-        <h2>Submit Your Manuscript</h2>
-        <p class="section-desc">Fill in the author details and upload your paper document. You will instantly receive a unique Paper ID.</p>
-        <div style="margin-top: 1rem;">
-          <a href="/submission-form.html" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
-            <span>🚀 Prefer a Full-Screen Standalone Submission Experience? Click Here &rarr;</span>
-          </a>
+        <ol class="tracks">
+          <li><span class="n">1</span><h3>Length and format</h3><p>Regular papers: 6 to 10 pages in the Elsevier Procedia template. Short or work-in-progress papers: 4 to 5 pages. Pages beyond 10 are charged extra.</p></li>
+          <li><span class="n">2</span><h3>Anonymise for double-blind review</h3><p>Remove author names, emails and affiliations from the PDF. You enter author details in the submission form instead.</p></li>
+          <li><span class="n">3</span><h3>Originality</h3><p>The work must be unpublished and not under review elsewhere. The overall similarity index (Turnitin or iThenticate) must not exceed 15%.</p></li>
+          <li><span class="n">4</span><h3>Registration and presentation</h3><p>At least one author must register and present the paper, in person or online, for it to appear in the proceedings.</p></li>
+        </ol>
+        <div class="callout info mt-2">
+          Use the Elsevier Procedia Computer Science template (Word or LaTeX). Find it on the <a href="https://www.sciencedirect.com/journal/procedia-computer-science" target="_blank" rel="noopener">Procedia Computer Science journal page</a>, or write to <a href="mailto:info@icmlde.org">info@icmlde.org</a> and the secretariat will send it.
         </div>
       </div>
+    </section>
 
-      <div class="card" style="padding: 2.5rem; border-color: var(--border-highlight);">
-        <form id="paperSubmissionForm" enctype="multipart/form-data">
-          
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tracks</h2>
+          <p>Pick the closest track when you submit. Full descriptions are on the <a href="/#tracks">home page</a>.</p>
+        </div>
+        <ul class="people">
+          <li><div class="name">Track 1</div><div class="org">Machine learning foundations and deep learning</div></li>
+          <li><div class="name">Track 2</div><div class="org">Data engineering and distributed computing</div></li>
+          <li><div class="name">Track 3</div><div class="org">Generative AI, LLMs and agentic systems</div></li>
+          <li><div class="name">Track 4</div><div class="org">AI in healthcare, climate and remote sensing</div></li>
+          <li><div class="name">Track 5</div><div class="org">Computer vision, robotics and IoT</div></li>
+          <li><div class="name">Track 6</div><div class="org">Trustworthy AI, security and ethics</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="tracker">
+      <div class="container split">
+        <div class="prose">
+          <h2 class="mb-1">Check review status</h2>
+          <p>Enter the Paper ID you received when you submitted. Add the corresponding author’s email to see reviewer comments.</p>
+          <p>Accepted papers get a link to register. After registering and paying, you can <a href="/fee-receipt.html">download your fee receipt</a>.</p>
+        </div>
+        <form class="panel" id="trackForm">
           <div class="form-group">
-            <label class="form-label">Paper Title *</label>
-            <input type="text" name="title" class="form-control" placeholder="Enter complete manuscript title" required>
+            <label class="form-label" for="trackPaperId">Paper ID</label>
+            <input type="text" id="trackPaperId" class="form-control" placeholder="e.g. ICMLDE-2026-1042" autocomplete="off" required>
           </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label">All Authors & Affiliations *</label>
-              <input type="text" name="authors" class="form-control" placeholder="e.g. Dr. Jane Doe, Prof. Alan Turing" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Corresponding Author Email *</label>
-              <input type="email" name="corresponding_email" class="form-control" placeholder="jane.doe@university.edu" required>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label">Primary Institution / University *</label>
-              <input type="text" name="affiliation" class="form-control" placeholder="e.g. UPES / IIT / MIT" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Select Primary Track *</label>
-              <select name="track" class="form-control" required>
-                <option value="">-- Choose Track --</option>
-                <option value="Track 1: Advances in Machine Learning & Deep Learning">Track 1: Advances in Machine Learning & Deep Learning</option>
-                <option value="Track 2: Big Data Engineering & Cloud-Edge Infrastructure">Track 2: Big Data Engineering & Cloud-Edge Infrastructure</option>
-                <option value="Track 3: Generative AI, LLMs & Agentic Systems">Track 3: Generative AI, LLMs & Agentic Systems</option>
-                <option value="Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science">Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science</option>
-                <option value="Track 5: Computer Vision, Robotics & IoT">Track 5: Computer Vision, Robotics & IoT</option>
-                <option value="Track 6: Trustworthy AI, Security & Ethics">Track 6: Trustworthy AI, Security & Ethics</option>
-              </select>
-            </div>
-          </div>
-
           <div class="form-group">
-            <label class="form-label">Manuscript Abstract (200 - 350 words) *</label>
-            <textarea name="abstract" class="form-control" placeholder="Summarize problem statement, methodology, empirical findings, and primary contributions..." required></textarea>
+            <label class="form-label" for="trackAuthorEmail">Corresponding author email <span class="muted" style="font-weight:400">(optional)</span></label>
+            <input type="email" id="trackAuthorEmail" class="form-control" placeholder="author@university.edu">
           </div>
-
-          <div class="form-group">
-            <label class="form-label">Keywords (Comma separated) *</label>
-            <input type="text" name="keywords" class="form-control" placeholder="e.g. Machine Learning, Apache Spark, Transformers, Latency Optimization" required>
-          </div>
-
-          <!-- File Upload Zone -->
-          <div class="form-group">
-            <label class="form-label">Attach Manuscript File (.PDF or .DOCX, Max 20MB) *</label>
-            <div class="file-dropzone" id="dropzone">
-              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 0 1-.88-7.903A5 5 0 1 1 15.9 6L16 6a5 5 0 0 1 1 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-              <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Click to upload or drag & drop your PDF file here</p>
-              <p style="color: var(--text-muted); font-size: 0.85rem;">Supported formats: .pdf, .docx (Max 20MB)</p>
-              <input type="file" id="paperFile" name="paperFile" accept=".pdf,.doc,.docx" style="display: none;" required>
-            </div>
-            <div id="fileSelectedDisplay"></div>
-          </div>
-
-          <div style="margin-top: 2rem;">
-            <button type="submit" id="submitPaperBtn" class="btn btn-primary btn-lg" style="width: 100%;">
-              🚀 Submit Manuscript for Peer Review
-            </button>
-          </div>
-
+          <button type="submit" id="trackPaperSearchBtn" class="btn btn-primary btn-block">Check status</button>
         </form>
       </div>
-    </div>
-  </section>
-
-  <!-- Status Tracker Section -->
-  <section class="section section-alt" id="tracker">
-    <div class="container" style="max-width: 800px;">
-      <div class="section-header">
-        <span class="section-subtitle">Real-Time Verification</span>
-        <h2>Author Paper Status Tracker</h2>
-        <p class="section-desc">Check the progress of peer reviews, editorial decisions, and reviewer comments.</p>
+      <div class="container">
+        <div id="trackerDetailedResult" class="result" aria-live="polite"></div>
       </div>
+    </section>
+  </main>
 
-      <div class="card" style="padding: 2rem; margin-bottom: 2rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: flex-end;">
-          <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label">Paper ID *</label>
-            <input type="text" id="trackPaperId" class="form-control" placeholder="e.g. ICMLDE-2026-1042">
-          </div>
-          <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label">Corresponding Email</label>
-            <input type="email" id="trackAuthorEmail" class="form-control" placeholder="author@domain.edu">
-          </div>
-          <button type="button" id="trackPaperSearchBtn" class="btn btn-primary" style="height: 48px;">
-            🔍 Search
-          </button>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <b>ICMLDE 2026</b>
+          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+        </div>
+        <div>
+          <h2>Conference</h2>
+          <ul>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/papers.html">Call for papers</a></li>
+            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/committee.html">Committee</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Authors</h2>
+          <ul>
+            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="/papers.html#tracker">Check review status</a></li>
+            <li><a href="/register.html">Register</a></li>
+            <li><a href="/fee-receipt.html">Fee receipt</a></li>
+            <li><a href="/certificate.html">Certificates</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Secretariat</h2>
+          <ul>
+            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
+            <li><a href="/admin.html">Organiser sign-in</a></li>
+          </ul>
         </div>
       </div>
-
-      <div id="trackerDetailedResult">
-        <!-- Result will populate here via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Submission Success Modal -->
-  <div class="modal-overlay" id="submissionSuccessModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeSubmissionModal()">&times;</button>
-      <div id="modalSubmissionDetails">
-        <!-- Rendered by submission.js -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
       <div class="footer-bottom">
-        <div>&copy; 2026 ICMLDE Conference. All rights reserved.</div>
-        <div>Elsevier Procedia Computer Science Archival &bull; November 27–28, 2026</div>
+        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
+        <span>Dehradun, Uttarakhand, India</span>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="/js/main.js"></script>
   <script src="/js/submission.js"></script>
 </body>

@@ -3,419 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online Paper Submission Form | ICMLDE 2026</title>
-  <meta name="description" content="Official standalone research paper submission portal for ICMLDE 2026. Published in Elsevier Procedia Computer Science (Scopus indexed).">
-  <!-- Fonts -->
+  <title>Submit a paper | ICMLDE 2026</title>
+  <meta name="description" content="Submit your manuscript to ICMLDE 2026 for double-blind review. Proceedings in Elsevier Procedia Computer Science.">
+  <meta name="theme-color" content="#12362a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312362a'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' text-anchor='middle' fill='%23f2a900'%3EM%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-  <style>
-    body {
-      background: #070a11;
-      color: #f1f5f9;
-    }
-    .form-page-container {
-      max-width: 960px;
-      margin: 2.5rem auto 5rem;
-      padding: 0 1.25rem;
-    }
-    .form-header-card {
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.8), rgba(17, 24, 39, 0.95));
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      position: relative;
-    }
-    .form-section-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      margin-bottom: 1.75rem;
-      transition: var(--transition);
-    }
-    .form-section-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-    .form-section-title {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1.25rem;
-      color: #ffffff;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border-color);
-    }
-    .step-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .word-count-badge {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      text-align: right;
-      margin-top: 0.25rem;
-    }
-    .checkbox-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      margin-bottom: 0.75rem;
-      line-height: 1.5;
-    }
-    .checkbox-label input[type="checkbox"] {
-      margin-top: 0.25rem;
-      accent-color: var(--primary);
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-    }
-  </style>
 </head>
 <body>
-
-  <!-- Top Navigation Bar -->
-  <header class="navbar-wrapper">
-    <div class="container navbar">
-      <a href="/" class="brand">
-        <div class="brand-icon">ML</div>
-        <div class="brand-text">
-          ICMLDE 2026
-          <span>Official Submission Portal</span>
-        </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="wordmark" aria-label="ICMLDE 2026 home">
+        <b>ICMLDE 2026</b>
+        <small>UPES, Dehradun</small>
       </a>
-
-      <div class="nav-actions">
-        <a href="/" class="btn btn-outline btn-sm">&larr; Return to Conference Website</a>
-        <a href="/papers.html#tracker" class="btn btn-primary btn-sm">Track Existing Paper</a>
-      </div>
+      <nav class="main-nav" aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
+        <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a href="/submission-form.html" class="btn btn-primary btn-sm header-cta">Submit a paper</a>
+      <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
+        <a href="/fee-receipt.html">Fee receipt</a>
+        <a href="/certificate.html">Certificates</a>
+        <a href="/papers.html#tracker">Check review status</a>
+        <a href="/#contact">Contact</a>
+        <a href="/submission-form.html" class="btn btn-primary">Submit a paper</a>
+  </nav>
 
-  <div class="form-page-container">
-    
-    <!-- Form Banner -->
-    <div class="form-header-card">
-      <div style="display:flex; justify-content:center; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap;">
-        <span class="pill-badge gold">5th International Edition</span>
-        <span class="pill-badge cyan">November 27–28, 2026</span>
-        <span class="pill-badge">Elsevier Procedia CS (Scopus Indexed)</span>
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="crumbs"><a href="/">ICMLDE 2026</a> / <a href="/papers.html">Call for papers</a></p>
+        <h1>Submit a paper</h1>
+        <p>Your paper goes to double-blind review as soon as you submit. You’ll get a Paper ID on screen and by email; keep it to track the decision.</p>
       </div>
-      <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Online Manuscript Submission Portal</h1>
-      <p style="color: var(--text-muted); font-size: 1rem; max-width: 720px; margin: 0 auto; line-height: 1.6;">
-        Submit your original research paper for double-blind peer review. Authors will receive a confirmation email with a unique Paper ID to track review progress and upload camera-ready manuscripts upon acceptance.
-      </p>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <form id="standaloneSubmissionForm" enctype="multipart/form-data">
+          <fieldset class="fieldset">
+            <legend><span class="step">Step 1 of 4</span> Corresponding author</legend>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="sf_name">Full name and title</label>
+                <input id="sf_name" type="text" name="authors" class="form-control" placeholder="Dr. Jane Doe" autocomplete="name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sf_email">Email</label>
+                <input id="sf_email" type="email" name="corresponding_email" class="form-control" placeholder="author@university.edu" autocomplete="email" required>
+                <span class="form-hint">Review decisions are sent here. Use the same email later for your fee receipt.</span>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="sf_aff">Institution</label>
+                <input id="sf_aff" type="text" name="affiliation" class="form-control" placeholder="University or organisation" autocomplete="organization" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sf_country">Country</label>
+                <input id="sf_country" type="text" name="country" class="form-control" autocomplete="country-name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sf_co">Co-authors <span class="muted" style="font-weight:400">(optional)</span></label>
+              <input id="sf_co" type="text" name="coauthors" class="form-control" placeholder="Name (institution), separated by commas">
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span class="step">Step 2 of 4</span> Paper details</legend>
+            <div class="form-group">
+              <label class="form-label" for="sf_title">Title</label>
+              <input id="sf_title" type="text" name="title" class="form-control" placeholder="As it appears in the manuscript" required>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="sf_track">Track</label>
+                <select id="sf_track" name="track" class="form-control" required>
+                  <option value="">Choose a track</option>
+                  <option value="Track 1: Advances in Machine Learning & Deep Learning">1. Machine learning foundations and deep learning</option>
+                  <option value="Track 2: Big Data Engineering & Cloud-Edge Infrastructure">2. Data engineering and distributed computing</option>
+                  <option value="Track 3: Generative AI, LLMs & Agentic Systems">3. Generative AI, LLMs and agentic systems</option>
+                  <option value="Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science">4. AI in healthcare, climate and remote sensing</option>
+                  <option value="Track 5: Computer Vision, Robotics & IoT">5. Computer vision, robotics and IoT</option>
+                  <option value="Track 6: Trustworthy AI, Security & Ethics">6. Trustworthy AI, security and ethics</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sf_pages">Number of pages</label>
+                <input id="sf_pages" type="number" name="page_count" class="form-control" min="4" max="15" value="8" required>
+                <span class="form-hint">Up to 10 included; extra pages are charged.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="abstractInput">Abstract</label>
+              <textarea id="abstractInput" name="abstract" class="form-control" placeholder="Problem, method, results and contribution (200–350 words)" required></textarea>
+              <span class="form-hint" id="abstractCount" aria-live="polite">0 words</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sf_kw">Keywords</label>
+              <input id="sf_kw" type="text" name="keywords" class="form-control" placeholder="3 to 6, separated by commas" required>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span class="step">Step 3 of 4</span> Manuscript file</legend>
+            <div class="file-dropzone" id="dropzoneStandalone" tabindex="0" role="button" aria-describedby="dzHint">
+              <p><strong>Choose a file</strong> or drag it here</p>
+              <p class="hint" id="dzHint">PDF preferred, or DOCX. Up to 25 MB.</p>
+              <input type="file" id="paperFileStandalone" name="paperFile" accept=".pdf,.doc,.docx" tabindex="-1">
+            </div>
+            <div id="fileDisplayStandalone"></div>
+            <p class="callout mt-1">Remove author names, emails and affiliations from the file. Reviewers see only the manuscript.</p>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span class="step">Step 4 of 4</span> Declarations</legend>
+            <label class="check"><input type="checkbox" required><span><strong>Original work.</strong> This paper is unpublished and not under review anywhere else.</span></label>
+            <label class="check"><input type="checkbox" required><span><strong>Similarity.</strong> The similarity index (Turnitin or iThenticate) is 15% or less.</span></label>
+            <label class="check"><input type="checkbox" required><span><strong>Presentation.</strong> If accepted, at least one author will register and present the paper so it can be published in Elsevier Procedia Computer Science.</span></label>
+          </fieldset>
+
+          <button type="submit" id="submitStandaloneBtn" class="btn btn-primary btn-lg">Submit paper</button>
+        </form>
+
+        <aside class="panel" style="position:sticky; top:88px">
+          <h2 style="font-size:1.35rem" class="mb-1">Checklist</h2>
+          <dl class="facts small">
+            <div><dt>Template</dt><dd>Elsevier Procedia</dd></div>
+            <div><dt>Length</dt><dd>6–10 pages (short papers 4–5)</dd></div>
+            <div><dt>Review</dt><dd>Double-blind, anonymised PDF</dd></div>
+            <div><dt>Similarity</dt><dd>15% or less</dd></div>
+            <div><dt>File</dt><dd>PDF or DOCX, up to 25 MB</dd></div>
+          </dl>
+          <p class="small muted mt-1">Already submitted? <a href="/papers.html#tracker">Check your review status</a>.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="modal-overlay" id="standaloneSuccessModal" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeStandaloneModal()" aria-label="Close">&times;</button>
+        <div id="modalStandaloneContent"></div>
+      </div>
     </div>
+  </main>
 
-    <!-- The Submission Form -->
-    <form id="standaloneSubmissionForm" enctype="multipart/form-data">
-
-      <!-- SECTION 1: Corresponding Author Information -->
-      <div class="form-section-card">
-        <div class="form-section-title">
-          <span class="step-badge">1</span>
-          <span>Corresponding Author Information</span>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <b>ICMLDE 2026</b>
+          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
         </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label class="form-label">Full Name & Academic Title *</label>
-            <input type="text" name="authors" class="form-control" placeholder="e.g. Dr. Jane Doe" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Corresponding Email Address *</label>
-            <input type="email" name="corresponding_email" class="form-control" placeholder="author@university.edu" required>
-            <span style="font-size:0.75rem; color:var(--text-dim);">Review notifications and decision letters will be dispatched here.</span>
-          </div>
+        <div>
+          <h2>Conference</h2>
+          <ul>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/papers.html">Call for papers</a></li>
+            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/committee.html">Committee</a></li>
+          </ul>
         </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label class="form-label">Primary Institution / University / Organization *</label>
-            <input type="text" name="affiliation" class="form-control" placeholder="e.g. UPES / IIT / MIT / Tech Lab" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Country of Affiliation *</label>
-            <input type="text" name="country" class="form-control" placeholder="e.g. India, USA, Germany, Japan" required>
-          </div>
+        <div>
+          <h2>Authors</h2>
+          <ul>
+            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="/papers.html#tracker">Check review status</a></li>
+            <li><a href="/register.html">Register</a></li>
+            <li><a href="/fee-receipt.html">Fee receipt</a></li>
+            <li><a href="/certificate.html">Certificates</a></li>
+          </ul>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Co-Authors & Affiliations (If applicable)</label>
-          <input type="text" name="coauthors" class="form-control" placeholder="e.g. Prof. Alan Turing (Cambridge), Dr. Grace Hopper (Yale)">
-          <span style="font-size:0.75rem; color:var(--text-dim);">Separate multiple co-authors with commas.</span>
+        <div>
+          <h2>Secretariat</h2>
+          <ul>
+            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
+            <li><a href="/admin.html">Organiser sign-in</a></li>
+          </ul>
         </div>
       </div>
-
-      <!-- SECTION 2: Manuscript Metadata -->
-      <div class="form-section-card">
-        <div class="form-section-title">
-          <span class="step-badge">2</span>
-          <span>Manuscript Details & Topic Track</span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Complete Manuscript Title *</label>
-          <input type="text" name="title" class="form-control" placeholder="Enter complete paper title as in document" required>
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label class="form-label">Select Primary Technical Track *</label>
-            <select name="track" class="form-control" required>
-              <option value="">-- Choose Track --</option>
-              <option value="Track 1: Advances in Machine Learning & Deep Learning">Track 1: Machine Learning Foundations & Deep Learning</option>
-              <option value="Track 2: Big Data Engineering & Cloud-Edge Infrastructure">Track 2: Big Data Engineering & Distributed Systems</option>
-              <option value="Track 3: Generative AI, LLMs & Agentic Systems">Track 3: Generative AI, LLMs & Agentic Systems</option>
-              <option value="Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science">Track 4: Applied AI in Healthcare, Climate & Remote Sensing</option>
-              <option value="Track 5: Computer Vision, Robotics & IoT">Track 5: Computer Vision, Robotics & IoT</option>
-              <option value="Track 6: Trustworthy AI, Security & Ethics">Track 6: Trustworthy AI, Security, Privacy & Ethics</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Total Number of Pages (Max 10) *</label>
-            <input type="number" name="page_count" class="form-control" placeholder="6 to 10 pages" min="4" max="15" value="8" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Manuscript Abstract (200 - 350 words) *</label>
-          <textarea name="abstract" id="abstractInput" class="form-control" placeholder="Describe context, problem formulation, proposed methodology, empirical benchmarks, and conclusions..." required style="min-height: 140px;"></textarea>
-          <div class="word-count-badge" id="abstractCount">0 words</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Keywords (Comma separated, 3 to 6 keywords) *</label>
-          <input type="text" name="keywords" class="form-control" placeholder="e.g. Self-Supervised Learning, Vision Transformers, Contrastive Loss, Remote Sensing" required>
-        </div>
-      </div>
-
-      <!-- SECTION 3: Manuscript Upload -->
-      <div class="form-section-card">
-        <div class="form-section-title">
-          <span class="step-badge">3</span>
-          <span>Attach Paper Manuscript (.PDF or .DOCX)</span>
-        </div>
-
-        <div class="form-group">
-          <div class="file-dropzone" id="dropzoneStandalone">
-            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 0 1-.88-7.903A5 5 0 1 1 15.9 6L16 6a5 5 0 0 1 1 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-            <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Click to upload or drag & drop your research manuscript here</p>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Format: <strong>PDF (preferred)</strong> or DOCX &bull; Maximum file size: 25 MB</p>
-            <input type="file" id="paperFileStandalone" name="paperFile" accept=".pdf,.doc,.docx" style="display: none;" required>
-          </div>
-          <div id="fileDisplayStandalone"></div>
-        </div>
-
-        <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">
-          ℹ️ <strong>Double-Blind Peer Review Reminder:</strong> For initial review, kindly remove author names, affiliations, and identifying credentials from the PDF header/footer. Author details are automatically tracked via this portal.
-        </div>
-      </div>
-
-      <!-- SECTION 4: Author Declarations -->
-      <div class="form-section-card">
-        <div class="form-section-title">
-          <span class="step-badge">4</span>
-          <span>Ethics & Publication Declarations</span>
-        </div>
-
-        <label class="checkbox-label">
-          <input type="checkbox" required>
-          <span><strong>Originality & Prior Publication:</strong> I certify that this manuscript represents original research, has not been published previously, and is not currently under review by another journal or conference.</span>
-        </label>
-
-        <label class="checkbox-label">
-          <input type="checkbox" required>
-          <span><strong>Plagiarism Policy:</strong> I certify that the similarity index (via Turnitin / iThenticate) does not exceed the mandatory 15% threshold.</span>
-        </label>
-
-        <label class="checkbox-label">
-          <input type="checkbox" required>
-          <span><strong>Presentation Commitment:</strong> I agree that upon acceptance, at least one author will register and present the paper for archival in <strong>Elsevier Procedia Computer Science</strong> (Scopus indexed).</span>
-        </label>
-      </div>
-
-      <!-- Submit Button -->
-      <div style="text-align: center; margin-top: 2rem;">
-        <button type="submit" id="submitStandaloneBtn" class="btn btn-primary btn-lg" style="width: 100%; max-width: 500px; font-size: 1.1rem; padding: 1rem 2rem;">
-          🚀 Submit Research Manuscript to ICMLDE 2026
-        </button>
-        <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.75rem;">
-          A unique Paper ID and receipt will be generated instantly.
-        </p>
-      </div>
-
-    </form>
-
-  </div>
-
-  <!-- Submission Success Modal -->
-  <div class="modal-overlay" id="standaloneSuccessModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeStandaloneModal()">&times;</button>
-      <div id="modalStandaloneContent"></div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container text-center" style="text-align: center;">
-      <p style="color: var(--text-muted); font-size: 0.85rem;">
-        5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026) &bull; UPES Dehradun &bull; Elsevier Procedia Computer Science
-      </p>
-      <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-dim);">
-        Secretariat Email: <a href="mailto:info@icmlde.org" style="color:var(--primary-light);">info@icmlde.org</a>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
+        <span>Dehradun, Uttarakhand, India</span>
       </div>
     </div>
   </footer>
 
   <script src="/js/main.js"></script>
-  <script>
-    // Live word count for abstract
-    const abstractArea = document.getElementById('abstractInput');
-    const wordCountEl = document.getElementById('abstractCount');
-    if (abstractArea && wordCountEl) {
-      abstractArea.addEventListener('input', () => {
-        const words = abstractArea.value.trim().split(/\s+/).filter(Boolean).length;
-        wordCountEl.textContent = `${words} words`;
-        wordCountEl.style.color = (words >= 200 && words <= 350) ? '#34d399' : '#94a3b8';
-      });
-    }
-
-    // Drag and drop for standalone form
-    const dropzone = document.getElementById('dropzoneStandalone');
-    const fileInput = document.getElementById('paperFileStandalone');
-    const fileDisplay = document.getElementById('fileDisplayStandalone');
-
-    if (dropzone && fileInput) {
-      dropzone.addEventListener('click', () => fileInput.click());
-
-      ['dragenter', 'dragover'].forEach(ev => {
-        dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add('dragover'); });
-      });
-      ['dragleave', 'drop'].forEach(ev => {
-        dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove('dragover'); });
-      });
-
-      dropzone.addEventListener('drop', e => {
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-          fileInput.files = files;
-          renderFile(files[0]);
-        }
-      });
-
-      fileInput.addEventListener('change', () => {
-        if (fileInput.files.length > 0) renderFile(fileInput.files[0]);
-      });
-    }
-
-    function renderFile(file) {
-      const mb = (file.size / (1024 * 1024)).toFixed(2);
-      fileDisplay.innerHTML = `
-        <div style="margin-top: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-elevated); border: 1px solid var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
-          <span style="color:#ffffff;">📄 <strong>${file.name}</strong> (${mb} MB)</span>
-          <span style="color: var(--success); font-weight: 600; font-size: 0.85rem;">Ready to upload</span>
-        </div>
-      `;
-    }
-
-    // Handle Form Submit
-    const form = document.getElementById('standaloneSubmissionForm');
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('submitStandaloneBtn');
-        const origText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<span>⏳ Uploading Manuscript & Generating Paper ID...</span>';
-
-        const formData = new FormData(form);
-
-        // Append coauthors to authors if present
-        const co = form.querySelector('[name="coauthors"]').value;
-        if (co) {
-          const mainAuthor = formData.get('authors');
-          formData.set('authors', `${mainAuthor}, ${co}`);
-        }
-
-        try {
-          const res = await fetch('/api/submissions', {
-            method: 'POST',
-            body: formData
-          });
-          const data = await res.json();
-
-          if (res.ok && data.success) {
-            form.reset();
-            fileDisplay.innerHTML = '';
-            showStandaloneSuccess(data.data);
-          } else {
-            showToast(data.error || 'Submission failed.', 'error');
-          }
-        } catch (err) {
-          showToast('Network error during manuscript upload.', 'error');
-        } finally {
-          btn.disabled = false;
-          btn.innerHTML = origText;
-        }
-      });
-    }
-
-    function showStandaloneSuccess(item) {
-      const modal = document.getElementById('standaloneSuccessModal');
-      const content = document.getElementById('modalStandaloneContent');
-
-      content.innerHTML = `
-        <div style="text-align: center; margin-bottom: 1.25rem;">
-          <div style="font-size: 2.75rem; margin-bottom: 0.5rem;">🎉</div>
-          <h2 style="color: #ffffff; margin-bottom: 0.25rem;">Submission Confirmed!</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Your manuscript has entered double-blind peer review.</p>
-        </div>
-
-        <div style="background: var(--bg-elevated); border: 2px dashed var(--primary-light); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem; margin-bottom:0.75rem;">
-            <span style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:bold;">Assigned Paper ID</span>
-            <strong style="color:var(--accent); font-size:1.4rem;">${item.paper_id}</strong>
-          </div>
-          <p style="margin: 0.4rem 0;"><strong>Title:</strong> ${item.title}</p>
-          <p style="margin: 0.4rem 0;"><strong>Authors:</strong> ${item.authors}</p>
-          <p style="margin: 0.4rem 0;"><strong>Track:</strong> ${item.track}</p>
-          <p style="margin: 0.4rem 0; color:var(--secondary);"><strong>Status:</strong> ${item.status}</p>
-          <p style="font-size:0.8rem; color:var(--text-dim); margin-top:0.5rem;">Submission Date: ${item.created_at || new Date().toLocaleString()}</p>
-        </div>
-
-        <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
-          <button class="btn btn-outline" onclick="window.print()">🖨️ Print Receipt</button>
-          <a href="/papers.html#tracker?paperId=${encodeURIComponent(item.paper_id)}" class="btn btn-primary">Track Paper Status &rarr;</a>
-          <button class="btn btn-outline" onclick="closeStandaloneModal()">Done</button>
-        </div>
-      `;
-
-      modal.classList.add('open');
-    }
-
-    function closeStandaloneModal() {
-      document.getElementById('standaloneSuccessModal').classList.remove('open');
-    }
-  </script>
+  <script src="/js/submission.js"></script>
 </body>
 </html>

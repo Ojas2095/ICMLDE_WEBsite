@@ -1,200 +1,137 @@
 /* ===================================================================
-   ICMLDE 2026 - Production Registration Logic (Aligned with Official ICMLDE)
+   ICMLDE 2026 — registration and payment
    =================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initRegistrationLogic();
+  initRegistration();
   loadBankDetails();
 });
 
-// Official ICMLDE Fee Structure
 const PRICING_TABLE = {
   INR: {
-    'Regular Author': 11500,
-    'Students Author': 11000,
-    'Industry Professional': 12500,
-    '2nd Paper, Regular Author': 11000,
-    'Listener / Non-Author': 5000,
-    'Workshop (Non-Author)': 4000
+    'Regular Author': 11500, 'Students Author': 11000, 'Industry Professional': 12500,
+    '2nd Paper, Regular Author': 11000, 'Listener / Non-Author': 5000, 'Workshop (Non-Author)': 4000
   },
   USD: {
-    'Regular Author': 350,
-    'Students Author': 300,
-    'Industry Professional': 350,
-    '2nd Paper, Regular Author': 250,
-    'Listener / Non-Author': 150,
-    'Workshop (Non-Author)': 60
+    'Regular Author': 350, 'Students Author': 300, 'Industry Professional': 350,
+    '2nd Paper, Regular Author': 250, 'Listener / Non-Author': 150, 'Workshop (Non-Author)': 60
   }
 };
 
 let currentCurrency = 'INR';
+const escR = (v) => window.escapeHtml(v);
+const fmtMoney = (cur, n) => cur === 'INR' ? '₹' + n.toLocaleString('en-IN') : '$' + n.toLocaleString('en-US');
 
 async function loadBankDetails() {
+  const box = document.getElementById('bankDetailsDisplay');
+  if (!box) return;
   try {
     const res = await fetch('/api/conference-info');
     const data = await res.json();
-    if (res.ok && data.success) {
-      const b = data.data.bankDetails;
-      const f = data.data.foreignWireDetails;
-      const bankBox = document.getElementById('bankDetailsDisplay');
-      if (bankBox) {
-        bankBox.innerHTML = `
-          <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
-            <!-- Indian Authors NEFT Account -->
-            <div style="background: rgba(15, 23, 42, 0.6); padding: 1.25rem; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3);">
-              <h5 style="color: #38bdf8; margin-bottom: 0.5rem; font-size: 0.95rem;">🇮🇳 For Indian Authors & Delegates (NEFT / RTGS / IMPS):</h5>
-              <p><strong>Name of Beneficiary:</strong> ${b.accountName}</p>
-              <p><strong>Bank Name:</strong> ${b.bankName} &bull; <strong>Branch:</strong> ${b.branch}</p>
-              <p><strong>Account No. of Beneficiary:</strong> <code style="color:var(--accent); font-size:1.1rem; font-weight:bold;">${b.accountNumber}</code></p>
-              <p><strong>IFSC Code:</strong> <code>${b.ifsc}</code> &bull; <strong>Account Type:</strong> ${b.accountType}</p>
-              <p><strong>Official UPI ID:</strong> <code style="color:#34d399;">${b.upiId}</code></p>
-            </div>
-
-            <!-- Foreign Authors Wire Transfer -->
-            <div style="background: rgba(15, 23, 42, 0.6); padding: 1.25rem; border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3);">
-              <h5 style="color: #a5b4fc; margin-bottom: 0.5rem; font-size: 0.95rem;">🌐 For International Authors (Wire Transfer / SWIFT):</h5>
-              <p><strong>Name of Beneficiary:</strong> ${f.beneficiary} &bull; <strong>Purpose:</strong> ${f.purpose}</p>
-              <p><strong>Bank Name:</strong> ${f.bankName} &bull; <strong>Account No.:</strong> <code style="color:var(--accent);">${f.accountNumber}</code></p>
-              <p><strong>Branch IFSC:</strong> <code>${f.ifsc}</code> &bull; <strong>SWIFT Code:</strong> <code>${f.swift}</code></p>
-              <p><strong>Branch Address:</strong> ${f.address}</p>
-            </div>
-          </div>
-        `;
-      }
-    }
-  } catch (e) {
-    console.error('Failed to load banking info', e);
+    if (!res.ok || !data.success) throw new Error();
+    const b = data.data.bankDetails, f = data.data.foreignWireDetails;
+    const row = (k, v, copy) => `<div><dt>${k}</dt><dd>${copy ? `<code>${escR(v)}</code><button type="button" class="copy-btn" data-copy="${escR(v)}">Copy</button>` : escR(v)}</dd></div>`;
+    box.innerHTML = `
+      <h3>Paying from India</h3>
+      <p class="note">NEFT, RTGS, IMPS or UPI</p>
+      <dl>
+        ${row('Beneficiary', b.accountName)}
+        ${row('Bank', `${b.bankName}, ${b.branch}`)}
+        ${row('Account no.', b.accountNumber, true)}
+        ${row('IFSC', b.ifsc, true)}
+        ${row('UPI ID', b.upiId, true)}
+      </dl>
+      <h3 class="mt-2">Paying from outside India</h3>
+      <p class="note">SWIFT wire. Purpose: ${escR(f.purpose)}</p>
+      <dl>
+        ${row('Beneficiary', f.beneficiary)}
+        ${row('Bank', f.bankName)}
+        ${row('Account no.', f.accountNumber, true)}
+        ${row('SWIFT', f.swift, true)}
+        ${row('Branch IFSC', f.ifsc)}
+        ${row('Branch address', f.address)}
+      </dl>`;
+  } catch {
+    box.innerHTML = '<p class="muted">Payment details couldn’t be loaded. They are also listed under <a href="/#fees">Registration fees</a> on the home page.</p>';
   }
 }
 
-function initRegistrationLogic() {
+function initRegistration() {
   const form = document.getElementById('registrationForm');
-  const currencyToggles = document.querySelectorAll('input[name="currency"]');
-  const categorySelect = document.getElementById('regCategory');
-  const amountDisplay = document.getElementById('computedAmountDisplay');
-  const hiddenAmountInput = document.getElementById('hiddenAmountInput');
+  const select = document.getElementById('regCategory');
+  const amountEl = document.getElementById('computedAmountDisplay');
+  const hidden = document.getElementById('hiddenAmountInput');
 
-  // Check URL query parameters for prefilled Paper ID
-  const urlParams = new URLSearchParams(window.location.search);
-  const paperIdParam = urlParams.get('paperId');
-  const paperIdInput = document.getElementById('regPaperId');
-  if (paperIdParam && paperIdInput) {
-    paperIdInput.value = paperIdParam;
-  }
+  const params = new URLSearchParams(location.search);
+  const paperInput = document.getElementById('regPaperId');
+  if (params.get('paperId') && paperInput) paperInput.value = params.get('paperId');
+  if (params.get('cat') && select) select.value = params.get('cat');
 
-  function updatePrice() {
-    if (!categorySelect || !amountDisplay) return;
-    const category = categorySelect.value;
-    const price = PRICING_TABLE[currentCurrency]?.[category] || 11500;
-    const symbol = currentCurrency === 'INR' ? '₹' : '$';
-
-    amountDisplay.textContent = `${symbol}${price.toLocaleString()}`;
-    if (hiddenAmountInput) {
-      hiddenAmountInput.value = `${currentCurrency} ${price.toLocaleString()}`;
-    }
-  }
-
-  currencyToggles.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      currentCurrency = e.target.value;
-      updatePrice();
+  function update() {
+    const price = PRICING_TABLE[currentCurrency][select.value] || PRICING_TABLE[currentCurrency]['Regular Author'];
+    amountEl.textContent = fmtMoney(currentCurrency, price);
+    hidden.value = `${currentCurrency} ${price.toLocaleString(currentCurrency === 'INR' ? 'en-IN' : 'en-US')}`;
+    document.querySelectorAll('.tier .price[data-inr]').forEach(el => {
+      el.textContent = fmtMoney(currentCurrency, Number(el.dataset[currentCurrency.toLowerCase()]));
     });
-  });
+  }
 
-  if (categorySelect) categorySelect.addEventListener('change', updatePrice);
-  updatePrice();
+  document.querySelectorAll('input[name="currency"]').forEach(r => r.addEventListener('change', e => { currentCurrency = e.target.value; update(); }));
+  document.querySelectorAll('[data-pick]').forEach(btn => btn.addEventListener('click', () => {
+    select.value = btn.dataset.pick; update();
+    document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('r_name')?.focus({ preventScroll: true }), 400);
+  }));
+  if (select) { select.addEventListener('change', update); update(); }
 
-  // Registration Form Submission (with FormData for payment proof upload)
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const submitBtn = document.getElementById('submitRegBtn');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>⏳ Processing Real-Time Registration & QR Pass...</span>`;
-
-      const formData = new FormData(form);
-      formData.set('amount', hiddenAmountInput.value);
-
-      try {
-        const res = await fetch('/api/registrations', {
-          method: 'POST',
-          body: formData
-        });
-
-        const result = await res.json();
-
-        if (res.ok && result.success) {
-          form.reset();
-          showRegistrationReceipt(result.data);
-        } else {
-          showToast(result.error || 'Registration failed.', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-        showToast('Network error during registration.', 'error');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitRegBtn');
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Registering…';
+    const data = new FormData(form);
+    data.set('amount', hidden.value);
+    try {
+      const res = await fetch('/api/registrations', { method: 'POST', body: data });
+      const result = await res.json().catch(() => ({}));
+      if (res.ok && result.success) {
+        form.reset(); update();
+        showRegistrationReceipt(result.data);
+      } else {
+        showToast(result.error || 'Registration wasn’t completed. Check the form and try again.', 'error');
       }
-    });
-  }
+    } catch {
+      showToast('Couldn’t reach the server. Check your connection and try again.', 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  });
 }
 
 function showRegistrationReceipt(reg) {
   const modal = document.getElementById('regSuccessModal');
-  const detailsEl = document.getElementById('modalRegDetails');
-
-  if (!modal || !detailsEl) {
-    alert(`Registration Confirmed! Reg ID: ${reg.reg_id}`);
-    return;
-  }
-
-  detailsEl.innerHTML = `
-    <div style="text-align: center; margin-bottom: 1.25rem;">
-      <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">✅</div>
-      <h3 style="color: #ffffff; margin-bottom: 0.25rem;">Registration Confirmed</h3>
-      <p style="color: var(--text-muted); font-size: 0.85rem;">Official Delegate Pass for ICMLDE 2026 (Dehradun)</p>
-    </div>
-
-    <div style="background: var(--bg-elevated); border: 2px solid var(--success); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
-        <div>
-          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Official Delegate Number</span>
-          <h4 style="color: var(--accent); font-size: 1.3rem;">${reg.reg_id}</h4>
-        </div>
-        <span class="status-badge status-accepted">${reg.payment_status}</span>
-      </div>
-
-      <div style="font-size: 0.9rem; line-height: 1.6;">
-        <p><strong>Name:</strong> ${reg.full_name}</p>
-        <p><strong>Email:</strong> ${reg.email}</p>
-        <p><strong>Affiliation:</strong> ${reg.affiliation} (${reg.country})</p>
-        <p><strong>Category:</strong> ${reg.category} &bull; <span style="color:var(--secondary); font-weight:600;">${reg.mode}</span></p>
-        ${reg.paper_id ? `<p><strong>Linked Paper:</strong> ${reg.paper_id}</p>` : ''}
-        <p><strong>Amount:</strong> <strong style="color:#ffffff;">${reg.amount}</strong> (${reg.payment_method})</p>
-        <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.35rem;"><strong>Txn / UTR Reference:</strong> ${reg.transaction_id}</p>
-      </div>
-
-      ${reg.qrCode ? `
-        <div style="text-align: center; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
-          <img src="${reg.qrCode}" alt="Pass QR Code" style="width: 140px; height: 140px; margin: 0 auto; border-radius: 8px; background:#fff; padding:6px;">
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Verified QR Pass &bull; Present at the registration desk in Dehradun</p>
-        </div>
-      ` : ''}
-    </div>
-
-    <div style="display: flex; gap: 0.75rem; justify-content: center;">
-      <button class="btn btn-outline" onclick="window.print()">🖨️ Print Delegate Pass</button>
-      <button class="btn btn-primary" onclick="closeRegModal()">Done</button>
-    </div>
-  `;
-
+  const el = document.getElementById('modalRegDetails');
+  if (!modal || !el) { alert(`Registered. Your registration ID is ${reg.reg_id}`); return; }
+  el.innerHTML = `
+    <h2 id="regDoneTitle">You’re registered</h2>
+    <p class="lead">Show this pass at the registration desk. Your fee receipt will be available once the finance team confirms your payment.</p>
+    <div class="small muted">Registration ID</div>
+    <div class="bigid">${escR(reg.reg_id)}</div>
+    <dl class="facts mt-1">
+      <div><dt>Name</dt><dd>${escR(reg.full_name)}</dd></div>
+      <div><dt>Category</dt><dd>${escR(reg.category)}, ${escR(reg.mode)}</dd></div>
+      ${reg.paper_id ? `<div><dt>Paper ID</dt><dd>${escR(reg.paper_id)}</dd></div>` : ''}
+      <div><dt>Amount</dt><dd>${escR(reg.amount)} by ${escR(reg.payment_method)}</dd></div>
+      <div><dt>UTR / reference</dt><dd>${escR(reg.transaction_id)}</dd></div>
+    </dl>
+    ${reg.qrCode ? `<img class="qr" src="${escR(reg.qrCode)}" alt="QR code for registration ${escR(reg.reg_id)}">` : ''}
+    <div class="actions">
+      <button type="button" class="btn btn-primary" onclick="window.print()">Print pass</button>
+      ${reg.paper_id ? `<a class="btn btn-outline" href="/fee-receipt.html?paper=${encodeURIComponent(reg.paper_id)}">Fee receipt</a>` : ''}
+      <button type="button" class="btn btn-outline" onclick="closeRegModal()">Done</button>
+    </div>`;
+  modal.setAttribute('aria-labelledby', 'regDoneTitle');
   modal.classList.add('open');
 }
-
-window.closeRegModal = function() {
-  const modal = document.getElementById('regSuccessModal');
-  if (modal) modal.classList.remove('open');
-};
+window.closeRegModal = () => document.getElementById('regSuccessModal')?.classList.remove('open');
