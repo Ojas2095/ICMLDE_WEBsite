@@ -75,7 +75,43 @@
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // Which ICMLDE edition a payment belongs to, by the year it was paid
+  const EDITIONS = {
+    2025: { name: '4th International Conference on Machine Learning and Data Engineering', short: 'ICMLDE 2025', dates: '6–8 November 2025' },
+    2026: { name: '5th International Conference on Machine Learning and Data Engineering', short: 'ICMLDE 2026', dates: '27–28 November 2026' }
+  };
+  const DEFAULT_YEAR = 2026;
+
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  /** Parse "2025-10-10 00:00:00", "10/13/2025 16:32", "13-10-2025", "10 October 2025" → {y, m, d} */
+  function parseDate(raw) {
+    const s = String(raw || '').trim();
+    let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return { y: +m[1], m: +m[2], d: +m[3] };
+    if ((m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/))) {
+      let a = +m[1], b = +m[2];
+      // the payment export writes month/day; fall back to day/month when that is impossible
+      let month = a, day = b;
+      if (a > 12 && b <= 12) { month = b; day = a; }
+      return { y: +m[3], m: month, d: day };
+    }
+    if ((m = s.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/))) {
+      const mi = MONTHS.findIndex(x => x.toLowerCase().startsWith(m[2].toLowerCase().slice(0, 3)));
+      if (mi >= 0) return { y: +m[3], m: mi + 1, d: +m[1] };
+    }
+    return null;
+  }
+  function formatDate(raw) {
+    const p = parseDate(raw);
+    if (!p || p.m < 1 || p.m > 12 || p.d < 1 || p.d > 31) return String(raw || '');
+    return `${p.d} ${MONTHS[p.m - 1]} ${p.y}`;
+  }
+
   function receiptHtml(r, generated) {
+    const paid = parseDate(r.date);
+    const ed = EDITIONS[paid && EDITIONS[paid.y] ? paid.y : DEFAULT_YEAR];
+    const dateText = r.date ? formatDate(r.date) : '';
+    const mode = r.mode || 'NEFT/UPI';
     const money = parseMoney(r.amount, r.currency);
     const rows = [
       ['Paper ID', r.paper_id],
@@ -83,18 +119,18 @@
       ['Registration category', r.category],
       ['Affiliation', r.affiliation],
       ['Registered email', r.email],
-      ['Payment mode', r.mode],
+      ['Payment mode', mode],
       ['Transaction / UTR no.', r.reference],
-      ['Date of payment', r.date],
+      ['Date of payment', dateText],
       ...(r.extra || []).filter(x => !/status/i.test(x.label)).map(x => [x.label, x.value])
     ].filter(([, v]) => v);
 
     const parts = [];
     parts.push(`Received with thanks from <b>${esc(r.name || 'the author')}</b>`);
     if (money) parts.push(` the sum of <b>${esc(money.display)}</b>`);
-    if (r.mode) parts.push(` via ${esc(r.mode)}`);
+    parts.push(` via ${esc(mode)}`);
     if (r.reference) parts.push(`, reference no. <b>${esc(r.reference)}</b>,`);
-    parts.push(` towards registration at <b>ICMLDE 2026</b>, School of Computer Science, UPES, Bidholi Campus, Dehradun`);
+    parts.push(` towards registration at <b>${esc(ed.short)}</b>, School of Computer Science, UPES, Bidholi Campus, Dehradun`);
     if (r.paper_id) parts.push(`, for Paper ID <b>${esc(r.paper_id)}</b>`);
     parts.push('.');
 
@@ -102,13 +138,13 @@
       <article class="receipt" aria-label="Payment receipt">
         <header class="receipt-head">
           <div class="org">School of Computer Science, UPES, Dehradun</div>
-          <div class="conf">5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)</div>
-          <div class="meta">27–28 November 2026, Dehradun, India</div>
+          <div class="conf">${esc(ed.name)} (${esc(ed.short)})</div>
+          <div class="meta">${esc(ed.dates)}, Dehradun, India</div>
         </header>
 
         <div class="receipt-title">
           <h2>PAYMENT RECEIPT</h2>
-          <div class="no">${r.receipt_no ? `Receipt no. <b>${esc(r.receipt_no)}</b>` : ''}${r.receipt_no && r.date ? '<br>' : ''}${r.date ? `Dated <b>${esc(r.date)}</b>` : ''}</div>
+          <div class="no">${r.receipt_no ? `Receipt no. <b>${esc(r.receipt_no)}</b>` : ''}${r.receipt_no && r.date ? '<br>' : ''}${dateText ? `Dated <b>${esc(dateText)}</b>` : ''}</div>
         </div>
 
         <div class="receipt-body"><p>${parts.join('')}</p></div>
@@ -126,9 +162,9 @@
         </table>
 
         <footer class="receipt-foot">
-          <div>Computer-generated from the ICMLDE 2026 payment records on ${esc(generated)}.<br>
+          <div>Computer-generated from the ${esc(ed.short)} payment records on ${esc(generated)}.<br>
           Look it up again at ${esc(location.host || 'icmlde-website.vercel.app')}/fee-receipt.html</div>
-          <div class="issuer">ICMLDE 2026 Secretariat<span>School of Computer Science, UPES</span></div>
+          <div class="issuer">${esc(ed.short)} Secretariat<span>School of Computer Science, UPES</span></div>
         </footer>
       </article>`;
   }

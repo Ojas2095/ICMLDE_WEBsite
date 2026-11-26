@@ -92,7 +92,7 @@ const submissionLimiter = rateLimit({
 
 const receiptLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 40,
+  max: Number(process.env.RECEIPT_LOOKUPS_PER_15_MIN || 40),
   message: { error: 'Too many receipt lookups from this connection. Try again in 15 minutes.' }
 });
 

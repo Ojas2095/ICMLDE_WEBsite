@@ -55,6 +55,9 @@ Website and author platform for the **5th International Conference on Machine Le
    * If there is a `Status` column, rows marked `Pending`, `Unverified`, `Rejected` or `Failed` are **not** shown as receipts; the author is told the payment is awaiting confirmation.
 2. Share it: **Share → General access → Anyone with the link → Viewer** (or **File → Share → Publish to web → CSV**).
 3. In Vercel: **Project → Settings → Environment Variables**, add `FEE_SHEET_URL` = the sheet link, then redeploy. Changes to the sheet appear on the site within about a minute.
+   * Uploaded `.xlsx` files opened in Google Sheets work too (e.g. the Paytm export `EReceipt.xlsx`). Columns such as `Payout Date`, `UTR`, `Registration Fees`, `Participant Name`, `Mail id`, `Title of the paper`, `Paper ID` are recognised, stray apostrophes (`913'`) are stripped, and phone numbers / internal columns (`Contact No`, `CB Amt`, `Invoice ID`) are never shown.
+   * The receipt names the edition from the payment date: payments in 2025 print as ICMLDE 2025 (4th edition, 6–8 November 2025), 2026 as ICMLDE 2026. Edit `EDITIONS` in `public/js/fee-receipt.js` for future years.
+   * Lookups are limited to 40 per connection per 15 minutes; change with `RECEIPT_LOOKUPS_PER_15_MIN`.
 
 ---
 
