@@ -46,6 +46,11 @@ function initSubmissionForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // ICMLDE 2026 submissions closed on 30 August 2026. Remove data-closed from the form to reopen it.
+    if (form.dataset.closed === 'true') {
+      showToast('Submissions for ICMLDE 2026 closed on 30 August 2026.', 'error');
+      return;
+    }
     if (!fileInput.files || !fileInput.files.length) {
       showToast('Attach your manuscript (PDF or DOCX) before submitting.', 'error');
       dropzone.focus();
