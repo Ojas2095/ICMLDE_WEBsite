@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ICMLDE 2026 | 5th International Conference on Machine Learning and Data Engineering</title>
   <meta name="description" content="ICMLDE 2026, 27–28 November 2026 at UPES Dehradun and online. Proceedings in Elsevier Procedia Computer Science, indexed in Scopus.">
-  <meta name="theme-color" content="#12362a">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312362a'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' text-anchor='middle' fill='%23f2a900'%3EM%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#f0efe9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23121210'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23d4523a'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -23,68 +23,88 @@
       <nav class="main-nav" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
-        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/submission-form.html" class="btn btn-primary btn-sm header-cta">Submit a paper</a>
+      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
-        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html">Fee receipt</a>
         <a href="/certificate.html">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/submission-form.html" class="btn btn-primary">Submit a paper</a>
+        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
     <section class="hero" aria-labelledby="heroTitle">
       <div class="container">
-        <p class="hero-kicker"><strong>5th International Conference</strong>, ICMLDE 2026</p>
-        <h1 id="heroTitle">Machine Learning and Data Engineering</h1>
-        <p class="hero-lede">Two days of peer-reviewed research, keynotes and workshops at the School of Computer Science, UPES, in the Doon valley, with every session also open online.</p>
-
-        <dl class="hero-facts">
-          <div><dt>When</dt><dd>27–28 November 2026</dd></div>
-          <div><dt>Where</dt><dd>UPES, Bidholi campus, Dehradun, and online</dd></div>
-          <div><dt>Proceedings</dt><dd>Elsevier Procedia Computer Science, indexed in Scopus</dd></div>
-        </dl>
-
-        <div class="hero-actions">
-          <a href="/register.html" class="btn btn-accent btn-lg">Register</a>
-          <a href="/schedule.html" class="btn btn-ghost-light btn-lg">See the programme</a>
+        <div class="metabar">
+          <span>Edition 05 · ICMLDE 2026<span class="hide-sm"> · Dehradun</span></span>
+          <span>27–28 Nov 2026<span class="hide-sm"> · Hybrid</span></span>
         </div>
-      </div>
 
-      <div class="ribbon-wrap" id="dates">
-        <div class="container">
-          <div class="ribbon-status">
-            <p id="ribbonStatus">Key dates for ICMLDE 2026</p>
-            <span id="ribbonSub"></span>
+        <p class="hero-word" aria-hidden="true">ICMLDE</p>
+
+        <div class="hero-grid">
+          <ul class="hero-stats" aria-label="At a glance">
+            <li><b>6 tracks</b><span>across ML and data engineering</span></li>
+            <li><b>Scopus indexed</b><span>Elsevier Procedia Computer Science</span></li>
+            <li><b>Hybrid</b><span>present in Dehradun or online</span></li>
+          </ul>
+
+          <div class="cover" id="dates">
+            <div class="badge-circle" aria-hidden="true"><b>5th</b><span>international edition</span></div>
+            <p class="cover-kicker">Key dates</p>
+            <p class="cover-status" id="ribbonStatus">Key dates for ICMLDE 2026</p>
+            <p class="cover-sub" id="ribbonSub"></p>
+            <div class="ribbon" id="ribbon">
+              <span class="ribbon-fill" aria-hidden="true"></span>
+              <span class="ribbon-today" aria-hidden="true"></span>
+              <ol aria-label="Key dates">
+                <li data-date="2026-08-30"><span class="dot"></span><span class="when">30 Aug</span><span class="what">Paper submission deadline</span></li>
+                <li data-date="2026-10-05"><span class="dot"></span><span class="when">5 Oct</span><span class="what">Acceptance notification</span></li>
+                <li data-date="2026-10-09"><span class="dot"></span><span class="when">9 Oct</span><span class="what">Author registration closes</span></li>
+                <li data-date="2026-10-15"><span class="dot"></span><span class="when">15 Oct</span><span class="what">Camera-ready paper due</span></li>
+                <li data-date="2026-11-27" data-end="2026-11-28" class="event"><span class="dot"></span><span class="when">27–28 Nov</span><span class="what">Conference, Dehradun and online</span></li>
+              </ol>
+            </div>
+            <span class="cover-chip">Cover · Doon valley</span>
           </div>
-          <div class="ribbon" id="ribbon">
-            <span class="ribbon-fill" aria-hidden="true"></span>
-            <span class="ribbon-today" aria-hidden="true" data-label="Today"></span>
-            <ol aria-label="Key dates">
-            <li data-date="2026-08-30"><span class="dot"></span><span class="when">30 Aug</span><span class="what">Paper submission deadline</span></li>
-            <li data-date="2026-10-05"><span class="dot"></span><span class="when">5 Oct</span><span class="what">Acceptance notification</span></li>
-            <li data-date="2026-10-09"><span class="dot"></span><span class="when">9 Oct</span><span class="what">Author registration closes</span></li>
-            <li data-date="2026-10-15"><span class="dot"></span><span class="when">15 Oct</span><span class="what">Camera-ready paper due</span></li>
-            <li data-date="2026-11-27" data-end="2026-11-28" class="event"><span class="dot"></span><span class="when">27–28 Nov</span><span class="what">Conference in Dehradun and online</span></li>
-            </ol>
+
+          <div class="hero-pitch">
+            <h1 id="heroTitle"><span class="sr-only">ICMLDE 2026: 5th International Conference on Machine Learning and Data Engineering. </span>Where machine learning research meets the <em>data it runs on.</em></h1>
+            <p class="venue">School of Computer Science, UPES, Bidholi campus, Dehradun, and online</p>
+            <a href="/register.html" class="btn btn-primary btn-xl">Register now <span class="arr" aria-hidden="true">→</span></a>
+            <div class="secondary-links">
+              <a href="/schedule.html">See the programme</a>
+              <a href="/fee-receipt.html">Get your fee receipt</a>
+            </div>
+            <div class="barcode-row" aria-hidden="true">
+              <span class="barcode"></span>
+              <span class="mono">Edition 05</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="ticker" aria-label="Conference tracks">
+      <div class="ticker-track">
+        <span>Machine learning foundations</span><span>Data engineering at scale</span><span>Generative AI and agents</span><span>AI for climate and health</span><span>Vision, robotics and IoT</span><span>Trustworthy AI</span>
+        <span aria-hidden="true">Machine learning foundations</span><span aria-hidden="true">Data engineering at scale</span><span aria-hidden="true">Generative AI and agents</span><span aria-hidden="true">AI for climate and health</span><span aria-hidden="true">Vision, robotics and IoT</span><span aria-hidden="true">Trustworthy AI</span>
+      </div>
+    </div>
 
     <section class="section" aria-labelledby="deskTitle">
       <div class="container">
@@ -280,7 +300,7 @@
     </section>
 
     <section class="section" id="faq" aria-labelledby="faqTitle">
-      <div class="container narrow">
+      <div class="container">
         <h2 id="faqTitle" class="mb-1">Questions</h2>
         <div class="faq">
           <details><summary>Where are accepted papers published?</summary><div>In the open-access <strong>Elsevier Procedia Computer Science</strong> series, submitted for indexing in Scopus, Web of Science and DBLP. A paper must be registered and presented to be included.</div></details>
@@ -331,6 +351,7 @@
 
   <footer class="site-footer">
     <div class="container">
+      <div class="footer-word" aria-hidden="true">ICMLDE 2026</div>
       <div class="footer-grid">
         <div class="footer-brand">
           <b>ICMLDE 2026</b>

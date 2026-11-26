@@ -68,6 +68,7 @@ function initRibbon() {
   const pct = (pos / (n - 1)) * 100;                 // along the inner line
   const fill = ribbon.querySelector('.ribbon-fill');
   const today = ribbon.querySelector('.ribbon-today');
+  // vertical list: fill runs from the first dot to the last
   requestAnimationFrame(() => {
     fill.style.setProperty('--fill', String(pct / 100));
     today.style.left = `calc(10% + (100% - 20%) * ${pct / 100})`;
@@ -83,20 +84,18 @@ function initRibbon() {
 
   if (now < confStart) {
     const days = istDay(confStart) - istDay(now);
-    statusEl.textContent = days <= 0 ? 'The conference opens today at 09:00 IST'
-      : days === 1 ? 'The conference opens tomorrow, 27 November'
-      : `The conference opens in ${days} days`;
+    statusEl.textContent = days <= 0 ? 'Opens today' : days === 1 ? 'Opens tomorrow' : `Opens in ${days} days`;
     if (nextIdx > -1 && nextIdx < n - 1) {
       subEl.textContent = `Next: ${items[nextIdx].querySelector('.what').textContent.toLowerCase()} on ${fmt(dates[nextIdx].start)}`;
     } else {
-      subEl.textContent = 'Registration desk opens at 08:30 IST in the main foyer.';
+      subEl.textContent = 'Friday 27 November. Registration desk opens at 08:30 IST, inaugural at 09:30.';
     }
   } else if (now <= confEnd) {
     const dayNo = istDay(now) - istDay(confStart) + 1;
-    statusEl.textContent = `Day ${dayNo} of ICMLDE 2026 is under way`;
+    statusEl.textContent = `Day ${dayNo} is under way`;
     subEl.innerHTML = '<a href="/schedule.html" style="color:inherit">Today’s programme</a>';
   } else {
-    statusEl.textContent = 'ICMLDE 2026 has concluded. Thank you to every author and delegate.';
+    statusEl.textContent = 'That’s a wrap. Thank you, authors and delegates.';
     subEl.innerHTML = '<a href="/fee-receipt.html" style="color:inherit">Fee receipts</a> and <a href="/certificate.html" style="color:inherit">certificates</a> remain available.';
   }
 }
