@@ -160,7 +160,14 @@ app.get('/api/conference-info', (req, res) => {
 });
 
 // 2. Submit Manuscript
-app.post('/api/submissions', submissionLimiter, paperUpload.single('paperFile'), async (req, res) => {
+// Submissions closed on 30 August 2026 and registration on 15 November 2026.
+// Set SUBMISSIONS_OPEN=true / REGISTRATION_OPEN=true to reopen them (e.g. for a demo).
+const isOpen = (name) => String(process.env[name] || '').toLowerCase() === 'true';
+
+app.post('/api/submissions', submissionLimiter, (req, res, next) => {
+  if (!isOpen('SUBMISSIONS_OPEN')) return res.status(403).json({ error: 'Submissions for ICMLDE 2026 closed on 30 August 2026.' });
+  next();
+}, paperUpload.single('paperFile'), async (req, res) => {
   try {
     const { title, authors, corresponding_email, affiliation, track, abstract, keywords } = req.body;
 
@@ -276,7 +283,10 @@ app.post('/api/submissions/camera-ready', cameraReadyUpload.single('cameraReadyF
 });
 
 // 5. Delegate & Author Registration
-app.post('/api/registrations', proofUpload.single('paymentProof'), async (req, res) => {
+app.post('/api/registrations', (req, res, next) => {
+  if (!isOpen('REGISTRATION_OPEN')) return res.status(403).json({ error: 'Registration for ICMLDE 2026 closed on 15 November 2026.' });
+  next();
+}, proofUpload.single('paymentProof'), async (req, res) => {
   try {
     const {
       full_name, email, phone, affiliation, country,

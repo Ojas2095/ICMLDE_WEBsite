@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -29,7 +30,7 @@
         <a href="/fee-receipt.html" class="nav-receipt" aria-current="page">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <a href="/fee-receipt.html" class="btn btn-primary btn-sm header-cta">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
@@ -43,7 +44,7 @@
         <a href="/certificate.html">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/fee-receipt.html" class="btn btn-primary">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
@@ -51,7 +52,7 @@
       <div class="container">
         <p class="crumbs"><a href="/">ICMLDE 2026</a> / Authors</p>
         <h1>Download your fee receipt</h1>
-        <p>Enter your Paper ID and the email you registered with. When they match a confirmed payment, your receipt appears here, ready to print or save as a PDF.</p>
+        <p>Enter your Paper ID and the email you registered with. When they match a confirmed payment, your receipt appears here, ready to download as a PDF or print.</p>
       </div>
     </section>
 
@@ -84,7 +85,7 @@
               <li>Pay the registration fee and register with your Paper ID.</li>
               <li>The finance team checks your payment against the bank statement.</li>
               <li>Once confirmed, enter your Paper ID and email here to get the receipt.</li>
-              <li>Print it, or choose “Save as PDF” in the print dialog to keep a copy.</li>
+              <li>Download it as a PDF, or print it.</li>
             </ol>
           </div>
         </div>
@@ -115,7 +116,7 @@
           <ul>
             <li><a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a></li>
             <li><a href="/papers.html#tracker">Check review status</a></li>
-            <li><a href="/register.html">Register</a></li>
+            <li><a href="/register.html">Registration (closed)</a></li>
             <li><a href="/fee-receipt.html">Fee receipt</a></li>
             <li><a href="/certificate.html">Certificates</a></li>
           </ul>
@@ -138,6 +139,7 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/vendor/jspdf.umd.min.js"></script>
   <script src="/js/fee-receipt.js"></script>
 </body>
 </html>

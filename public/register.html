@@ -29,7 +29,7 @@
         <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <a href="/fee-receipt.html" class="btn btn-primary btn-sm header-cta">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
@@ -43,15 +43,19 @@
         <a href="/certificate.html">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/fee-receipt.html" class="btn btn-primary">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
     <section class="page-head">
       <div class="container">
         <p class="crumbs"><a href="/">ICMLDE 2026</a> / Registration</p>
-        <h1>Register for ICMLDE 2026</h1>
-        <p>Pay the fee first, then fill in this form with your transaction or reference ID. Presenting authors need the Paper ID of their accepted paper. The regular registration deadline was 15 November 2026.</p>
+        <h1>Registration is closed</h1>
+        <p>Registration for ICMLDE 2026 closed on 15 November 2026. The fees and payment details are kept here for reference.</p>
+        <div class="callout mt-1" style="max-width:62ch"><strong>Already registered?</strong> <a href="/fee-receipt.html">Download your fee receipt</a> with your Paper ID and registered email. For anything else, write to <a href="mailto:info@icmlde.org">info@icmlde.org</a>.</div>
+        <div class="hero-actions">
+          <a href="/fee-receipt.html" class="btn btn-primary">Get your fee receipt <span class="arr" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
@@ -65,10 +69,10 @@
           </div>
         </div>
         <div class="tiers">
-          <div class="tier featured"><h3>Regular author</h3><div class="price" data-inr="12000" data-usd="350">₹12,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul><button class="btn btn-primary btn-sm" data-pick="Regular Author">Choose</button></div>
-          <div class="tier"><h3>Student author</h3><div class="price" data-inr="11500" data-usd="300">₹11,500</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul><button class="btn btn-outline btn-sm" data-pick="Students Author">Choose</button></div>
-          <div class="tier"><h3>Industry professional</h3><div class="price" data-inr="13000" data-usd="">₹13,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Indian delegates only</li></ul><button class="btn btn-outline btn-sm" data-pick="Industry Professional">Choose</button></div>
-          <div class="tier"><h3>Listener</h3><div class="price" data-inr="7000" data-usd="150">₹7,000</div><ul><li>Non-author, co-author or general participant</li><li>Per person</li><li>No presentation</li></ul><button class="btn btn-outline btn-sm" data-pick="Listener / Non-Author">Choose</button></div>
+          <div class="tier featured"><h3>Regular author</h3><div class="price" data-inr="12000" data-usd="350">₹12,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul></div>
+          <div class="tier"><h3>Student author</h3><div class="price" data-inr="11500" data-usd="300">₹11,500</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul></div>
+          <div class="tier"><h3>Industry professional</h3><div class="price" data-inr="13000" data-usd="">₹13,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Indian delegates only</li></ul></div>
+          <div class="tier"><h3>Listener</h3><div class="price" data-inr="7000" data-usd="150">₹7,000</div><ul><li>Non-author, co-author or general participant</li><li>Per person</li><li>No presentation</li></ul></div>
         </div>
         <p class="small muted mt-1">Also available: second paper by a regular author (₹11,500 / $250), and the workshop for non-authors (₹7,000 per person; free for registered authors). Pages beyond 10 cost ₹1,100 (Indian) or $15 (international) per page. Fees are non-refundable; a delegate substitution is allowed. All bank charges are paid by the remitter.</p>
       </div>
@@ -76,8 +80,9 @@
 
     <section class="section section-alt" id="form">
       <div class="container split">
-        <form id="registrationForm" enctype="multipart/form-data">
-          <fieldset class="fieldset">
+        <form id="registrationForm" enctype="multipart/form-data" data-closed="true">
+          <p class="callout info mb-1">Registration closed on 15 November 2026. The form below is kept for reference.</p>
+          <fieldset class="fieldset" disabled>
             <legend>Your details</legend>
             <div class="grid-2">
               <div class="form-group">
@@ -106,7 +111,7 @@
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
+          <fieldset class="fieldset" disabled>
             <legend>Registration</legend>
             <div class="grid-2">
               <div class="form-group">
@@ -135,7 +140,7 @@
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
+          <fieldset class="fieldset" disabled>
             <legend>Payment</legend>
             <div class="grid-2">
               <div class="form-group">
@@ -161,14 +166,14 @@
             </div>
           </fieldset>
 
-          <button type="submit" id="submitRegBtn" class="btn btn-primary btn-lg">Complete registration</button>
+          <button type="submit" id="submitRegBtn" class="btn btn-primary btn-lg" disabled>Registration closed</button>
         </form>
 
         <aside>
           <div class="panel bank" id="bankDetailsDisplay">
             <p class="muted">Loading payment details…</p>
           </div>
-          <p class="small muted mt-1">Once the finance team confirms your payment, <a href="/fee-receipt.html">download your fee receipt</a> with your Paper ID and email.</p>
+          <p class="small muted mt-1"><a href="/fee-receipt.html">Download your fee receipt</a> with your Paper ID and registered email.</p>
         </aside>
       </div>
     </section>
@@ -204,7 +209,7 @@
           <ul>
             <li><a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a></li>
             <li><a href="/papers.html#tracker">Check review status</a></li>
-            <li><a href="/register.html">Register</a></li>
+            <li><a href="/register.html">Registration (closed)</a></li>
             <li><a href="/fee-receipt.html">Fee receipt</a></li>
             <li><a href="/certificate.html">Certificates</a></li>
           </ul>

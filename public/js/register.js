@@ -91,6 +91,11 @@ function initRegistration() {
   if (!form) return;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Registration closed on 15 November 2026. Remove data-closed (and the fieldsets' disabled) to reopen.
+    if (form.dataset.closed === 'true') {
+      showToast('Registration for ICMLDE 2026 closed on 15 November 2026.', 'error');
+      return;
+    }
     if (!hidden.value) {
       showToast('This category is for Indian delegates only. Choose another category or switch the currency to ₹.', 'error');
       return;

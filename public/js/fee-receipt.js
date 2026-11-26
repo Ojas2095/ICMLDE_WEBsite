@@ -57,28 +57,10 @@
     out.querySelector('[data-reset]').addEventListener('click', () => { out.innerHTML = helpHtml; });
   }
 
-  function renderReceipts(list) {
-    const generated = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' });
-    const tools = `
-      <div class="receipt-tools no-print">
-        <button type="button" class="btn btn-primary" data-print>Print or save as PDF</button>
-        <button type="button" class="btn btn-outline" data-again>Find another receipt</button>
-      </div>
-      ${list.length > 1 ? `<p class="small muted no-print">${list.length} payments are recorded for this paper. Each has its own receipt below.</p>` : ''}`;
-
-    out.innerHTML = tools + list.map(r => receiptHtml(r, generated)).join('');
-    out.querySelector('[data-print]').addEventListener('click', () => window.print());
-    out.querySelector('[data-again]').addEventListener('click', () => {
-      out.innerHTML = helpHtml; form.reset(); form.paper_id.focus();
-    });
-    document.title = `Fee receipt ${list[0].paper_id ? '– Paper ' + list[0].paper_id : ''} | ICMLDE 2026`;
-    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   // Which ICMLDE edition a payment belongs to, by the year it was paid
   const EDITIONS = {
-    2025: { name: '4th International Conference on Machine Learning and Data Engineering', short: 'ICMLDE 2025', dates: '6–8 November 2025' },
-    2026: { name: '5th International Conference on Machine Learning and Data Engineering', short: 'ICMLDE 2026', dates: '27–28 November 2026' }
+    2025: { ordinal: '4th', short: 'ICMLDE 2025', datesLong: '6th-8th November 2025' },
+    2026: { ordinal: '5th', short: 'ICMLDE 2026', datesLong: '27th-28th November 2026' }
   };
   const DEFAULT_YEAR = 2026;
 
@@ -107,66 +89,137 @@
     return `${p.d} ${MONTHS[p.m - 1]} ${p.y}`;
   }
 
-  function receiptHtml(r, generated) {
+  function renderReceipts(list) {
+    const tools = `
+      <div class="receipt-tools no-print">
+        <button type="button" class="btn btn-primary" data-pdf>Download PDF</button>
+        <button type="button" class="btn btn-outline" data-print>Print</button>
+        <button type="button" class="btn btn-outline" data-again>Find another receipt</button>
+      </div>
+      ${list.length > 1 ? `<p class="small muted no-print">${list.length} payments are recorded for this paper. Each has its own receipt below; the PDF contains all of them.</p>` : ''}`;
+
+    out.innerHTML = tools + '<p class="loading no-print" data-wait>Preparing your receipt…</p>';
+    out.querySelector('[data-again]').addEventListener('click', () => {
+      out.innerHTML = helpHtml; form.reset(); form.paper_id.focus();
+    });
+
+    drawAll(list).then(canvases => {
+      out.querySelector('[data-wait]')?.remove();
+      const pages = canvases.map(c => c.toDataURL('image/jpeg', 0.92));
+      pages.forEach((src, i) => {
+        const fig = document.createElement('figure');
+        fig.className = 'receipt-paper';
+        fig.innerHTML = `<img src="${src}" alt="Payment receipt for Paper ID ${esc(list[i].paper_id)}, ${esc(list[i].name)}">`;
+        out.appendChild(fig);
+      });
+      out.querySelector('[data-print]').addEventListener('click', () => window.print());
+      out.querySelector('[data-pdf]').addEventListener('click', () => savePdf(pages, list[0]));
+      document.title = `Fee receipt – Paper ${list[0].paper_id} | ICMLDE`;
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(err => {
+      console.error(err);
+      renderMessage('The receipt couldn’t be drawn. Reload the page and try again.', 'error', 'Something went wrong');
+    });
+  }
+
+  /* ----- receipt paper: the original UPES receipt, with the details filled in ----- */
+  const PAPER_SRC = '/img/receipt-paper.jpg';   // 1556 × 1442 px, body text blanked out
+  const INK = '#111827';
+  const MAROON = '#7a0a1a';
+  const BODY_FONT = '"Inter", "Helvetica Neue", Arial, sans-serif';
+  let paperImg;
+
+  function loadPaper() {
+    if (paperImg) return paperImg;
+    paperImg = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => { paperImg = null; reject(new Error('receipt paper failed to load')); };
+      img.src = PAPER_SRC;
+    });
+    return paperImg;
+  }
+
+  async function drawAll(list) {
+    const img = await loadPaper();
+    try {
+      await Promise.all(['400 30px Inter', '600 30px Inter', '700 30px Inter'].map(f => document.fonts.load(f)));
+    } catch { /* fall back to system fonts */ }
+    return list.map(r => drawReceipt(img, r));
+  }
+
+  function drawReceipt(img, r) {
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    ctx.textBaseline = 'alphabetic';
+
     const paid = parseDate(r.date);
-    const ed = EDITIONS[paid && EDITIONS[paid.y] ? paid.y : DEFAULT_YEAR];
-    const dateText = r.date ? formatDate(r.date) : '';
-    const mode = r.mode || 'NEFT/UPI';
+    const year = paid && EDITIONS[paid.y] ? paid.y : DEFAULT_YEAR;
+    const ed = EDITIONS[year];
+
+    // The paper is printed for ICMLDE 2025; for other years, replace the header lines
+    if (year !== 2025) {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(300, 195, 956, 185);
+      const centre = (text, y, font, colour) => {
+        ctx.font = font; ctx.fillStyle = colour;
+        ctx.fillText(text, (c.width - ctx.measureText(text).width) / 2, y);
+      };
+      centre(`${ed.ordinal} International Conference on Machine Learning and Data Engineering`, 230, `700 26px ${BODY_FONT}`, MAROON);
+      centre(ed.short, 286, `700 31px ${BODY_FONT}`, MAROON);
+      centre(ed.datesLong, 326, '700 22px "Times New Roman", Times, serif', '#18171c');
+      centre('Dehradun, India', 365, `600 24px ${BODY_FONT}`, MAROON);
+    }
+
     const money = parseMoney(r.amount, r.currency);
-    const rows = [
-      ['Paper ID', r.paper_id],
-      ['Paper title', r.paper_title],
-      ['Registration category', r.category],
-      ['Affiliation', r.affiliation],
-      ['Registered email', r.email],
-      ['Payment mode', mode],
-      ['Transaction / UTR no.', r.reference],
-      ['Date of payment', dateText],
-      ...(r.extra || []).filter(x => !/status/i.test(x.label)).map(x => [x.label, x.value])
-    ].filter(([, v]) => v);
+    const amountText = money ? money.plain : (r.amount || '');
+    const currencyWord = money && money.cur === 'USD' ? 'US Dollars' : 'Rupees';
+    const name = String(r.name || '').replace(/\.+$/, '');
+    const dateText = r.date ? formatDate(r.date) : '';
 
-    const parts = [];
-    parts.push(`Received with thanks from <b>${esc(r.name || 'the author')}</b>`);
-    if (money) parts.push(` the sum of <b>${esc(money.display)}</b>`);
-    parts.push(` via ${esc(mode)}`);
-    if (r.reference) parts.push(`, reference no. <b>${esc(r.reference)}</b>,`);
-    parts.push(` towards registration at <b>${esc(ed.short)}</b>, School of Computer Science, UPES, Bidholi Campus, Dehradun`);
-    if (r.paper_id) parts.push(`, for Paper ID <b>${esc(r.paper_id)}</b>`);
-    parts.push('.');
+    const LEFT = 111, RIGHT = 1450, LINE = 73;
+    let shift = 0;
+    const para = (y, runs) => { shift += flow(ctx, runs, LEFT, RIGHT, y + shift, LINE) * LINE; };
+    const R = (t) => ({ t, w: 400 }), B = (t) => ({ t, w: 600 });
 
-    return `
-      <article class="receipt" aria-label="Payment receipt">
-        <header class="receipt-head">
-          <div class="org">School of Computer Science, UPES, Dehradun</div>
-          <div class="conf">${esc(ed.name)} (${esc(ed.short)})</div>
-          <div class="meta">${esc(ed.dates)}, Dehradun, India</div>
-        </header>
+    para(590, [R('Received With thanks from '), B(name || '—'), R('.')]);
+    para(663, [R(`The sum of ${currencyWord}: `), B(amountText), R(' /- via NEFT/UPI no/ch.no: '), B(r.reference || '—'), R('  against')]);
+    para(736, [R(`“${ed.short}” at UPES, Bidholi Campus, Dehradun for Registration of the Paper ID:`)]);
+    para(782, [B(r.paper_id || '—'), R('.')]);
+    if (dateText) para(883, [R('Dated: '), B(dateText)]);
+    return c;
+  }
 
-        <div class="receipt-title">
-          <h2>PAYMENT RECEIPT</h2>
-          <div class="no">${r.receipt_no ? `Receipt no. <b>${esc(r.receipt_no)}</b>` : ''}${r.receipt_no && r.date ? '<br>' : ''}${dateText ? `Dated <b>${esc(dateText)}</b>` : ''}</div>
-        </div>
+  /** Draw text runs with word wrapping. Returns how many extra lines were used. */
+  function flow(ctx, runs, left, right, y, lineHeight) {
+    let x = left, extra = 0;
+    ctx.fillStyle = INK;
+    for (const run of runs) {
+      ctx.font = `${run.w} 30px ${BODY_FONT}`;
+      for (const part of run.t.split(/(\s+)/)) {
+        if (!part) continue;
+        const w = ctx.measureText(part).width;
+        if (x + w > right && x > left && part.trim()) { x = left; y += lineHeight; extra++; }
+        if (x === left && !part.trim()) continue;
+        ctx.fillText(part, x, y);
+        x += w;
+      }
+    }
+    return extra;
+  }
 
-        <div class="receipt-body"><p>${parts.join('')}</p></div>
-
-        ${money ? `
-        <div class="receipt-amount">
-          <span class="fig">${esc(money.display)}</span>
-          <span class="words">${esc(money.words)}</span>
-        </div>` : ''}
-
-        <table class="receipt-table">
-          <tbody>
-            ${rows.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}
-          </tbody>
-        </table>
-
-        <footer class="receipt-foot">
-          <div>Computer-generated from the ${esc(ed.short)} payment records on ${esc(generated)}.<br>
-          Look it up again at ${esc(location.host || 'icmlde-website.vercel.app')}/fee-receipt.html</div>
-          <div class="issuer">${esc(ed.short)} Secretariat<span>School of Computer Science, UPES</span></div>
-        </footer>
-      </article>`;
+  function savePdf(pages, first) {
+    const { jsPDF } = window.jspdf || {};
+    if (!jsPDF) { showToast('The PDF tool didn’t load. Use Print and choose “Save as PDF”.', 'error'); return; }
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    pages.forEach((src, i) => {
+      if (i) doc.addPage();
+      doc.addImage(src, 'JPEG', 6, 6, 583.28, 540.55);   // same placement as the original receipt PDF
+    });
+    const id = String(first.paper_id || 'receipt').replace(/[^A-Za-z0-9-]+/g, '_');
+    doc.save(`ICMLDE_Payment_Receipt_${id}.pdf`);
   }
 
   /* ----- amounts ----- */
@@ -182,17 +235,19 @@
 
     if (cur === 'INR') {
       return {
+        cur, plain: num.toFixed(2),
         display: '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
         words: 'Rupees ' + toWordsIndian(num, 'Paise') + ' only'
       };
     }
     if (cur === 'USD') {
       return {
+        cur, plain: num.toFixed(2),
         display: 'US$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
         words: 'US Dollars ' + toWordsWestern(num, 'Cents') + ' only'
       };
     }
-    return { display: `${cur} ${num.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, words: `${cur} ${toWordsWestern(num, '')} only` };
+    return { cur, plain: num.toFixed(2), display: `${cur} ${num.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, words: `${cur} ${toWordsWestern(num, '')} only` };
   }
 
   const ONES = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve',
