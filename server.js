@@ -10,6 +10,7 @@ require('dotenv').config();
 
 const db = require('./database');
 const mailer = require('./mailer');
+const feeReceipts = require('./feeReceipts');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -88,6 +89,15 @@ const submissionLimiter = rateLimit({
   max: 30,
   message: { error: 'Submission rate limit reached for this IP. Please try again in an hour.' }
 });
+
+const receiptLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 40,
+  message: { error: 'Too many receipt lookups from this connection. Try again in 15 minutes.' }
+});
+
+// Vercel / Render sit behind a proxy: use the real client IP for rate limiting
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(globalLimiter);
@@ -448,6 +458,46 @@ app.get('/api/public-stats', (req, res) => {
       edition: '5th International Edition'
     }
   });
+});
+
+// 10. Fee Receipt Lookup (reads the secretariat's Google Sheet)
+app.post('/api/fee-receipt', receiptLimiter, async (req, res) => {
+  const paperId = String(req.body.paper_id || '').trim();
+  const email = String(req.body.email || '').trim();
+
+  if (!paperId || !email) {
+    return res.status(400).json({ error: 'Enter both your Paper ID and the email you registered with.' });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'That email address doesn\'t look complete. Check it and try again.' });
+  }
+  if (!feeReceipts.isConfigured()) {
+    return res.status(503).json({ error: 'Fee receipts aren\'t published yet. Please check back later or write to info@icmlde.org.' });
+  }
+
+  try {
+    const matches = await feeReceipts.findReceipts(paperId, email);
+    if (matches.length === 0) {
+      return res.status(404).json({
+        error: 'No receipt matches that Paper ID and email. Use the exact email you registered with. If your payment was made recently, it may not have been confirmed yet.'
+      });
+    }
+
+    const pendingRe = /^(pending|unverified|not\s*verified|rejected|failed|no|unpaid|under\s*verification)$/i;
+    const confirmed = matches.filter(m => !m.status || !pendingRe.test(m.status.trim()));
+    if (confirmed.length === 0) {
+      return res.status(202).json({
+        success: false,
+        pending: true,
+        error: 'We found your payment, but the finance team hasn\'t confirmed it yet. Your receipt will appear here once it is confirmed.'
+      });
+    }
+
+    res.json({ success: true, data: confirmed });
+  } catch (err) {
+    console.error('[fee-receipt]', err.message);
+    res.status(502).json({ error: 'The receipt records couldn\'t be reached just now. Try again in a minute.' });
+  }
 });
 
 // ==========================================

@@ -3,24 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificate Creator & Verification Portal | ICMLDE 2026</title>
-  <meta name="description" content="Official Certificate Generator and Verification Portal for the 5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026).">
-  <!-- Fonts -->
+  <title>Certificates | ICMLDE 2026</title>
+  <meta name="description" content="Presentation and participation certificates for ICMLDE 2026, with online verification.">
+  <meta name="theme-color" content="#f0efe9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23121210'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23d4523a'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Great+Vibes&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: #06090f;
-      color: #f8fafc;
-    }
-    .cert-wrapper {
-      max-width: 1100px;
-      margin: 2rem auto 4rem;
-      padding: 0 1.25rem;
-    }
     /* Printable Certificate Canvas Card */
     .certificate-card {
       background: #ffffff;
@@ -173,112 +165,104 @@
       font-size: 0.75rem;
       color: #64748b;
     }
-
+    .cert-stage { overflow-x: auto; padding-bottom: 1rem; }
+    .cert-stage .certificate-card { min-width: 760px; }
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      .certificate-card, .certificate-card * {
-        visibility: visible;
-      }
-      .certificate-card {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        max-width: 100%;
-        box-shadow: none;
-        margin: 0;
-        padding: 2rem;
-      }
-      .no-print {
-        display: none !important;
-      }
+      .site-header, .mobile-nav, .skip-link, .page-head, .site-footer, .no-print, .toast-container { display: none !important; }
+      .section { padding: 0 !important; background: #fff !important; }
+      .certificate-card { box-shadow: none; margin: 0; max-width: 100%; }
+      body { background: #fff; }
+      @page { size: A4 landscape; margin: 10mm; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="navbar-wrapper no-print">
-    <div class="container navbar">
-      <a href="/" class="brand">
-        <div class="brand-icon">🎓</div>
-        <div class="brand-text">
-          ICMLDE 2026
-          <span>Certificate Creator & Verifier</span>
-        </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="wordmark" aria-label="ICMLDE 2026 home">
+        <b>ICMLDE 2026</b>
+        <small>UPES, Dehradun</small>
       </a>
-
-      <div class="nav-actions">
-        <a href="/" class="btn btn-outline btn-sm">&larr; Public Portal</a>
-        <a href="/submission-form.html" class="btn btn-primary btn-sm">Paper Submission Form</a>
-      </div>
+      <nav class="main-nav" aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/fee-receipt.html">Fee receipt</a>
+        <a href="/certificate.html" aria-current="page">Certificates</a>
+        <a href="/papers.html#tracker">Check review status</a>
+        <a href="/#contact">Contact</a>
+        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+  </nav>
 
-  <div class="cert-wrapper">
-    
-    <!-- Controls & Generator Form -->
-    <div class="card no-print" style="padding: 2rem; margin-bottom: 2rem; border-color: var(--border-highlight);">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <h2 style="font-size: 1.6rem; color: #ffffff;">ICMLDE 2026 Certificate Generator</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Generate, customize, and print verified presentation & participation certificates.</p>
-        </div>
-        <div style="display:flex; gap:0.75rem;">
-          <button class="btn btn-outline btn-sm" onclick="applySampleData()">⚡ Load Sample Data</button>
-          <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Print / Save as PDF</button>
-        </div>
+  <main id="main">
+    <section class="page-head no-print">
+      <div class="container">
+        <p class="crumbs"><a href="/">ICMLDE 2026</a> / Authors</p>
+        <h1>Certificates</h1>
+        <p>Fill in the details to preview the certificate, save it to get a verification code, then print or save it as a PDF.</p>
       </div>
+    </section>
 
-      <form id="certGeneratorForm">
-        <div class="grid-3">
-          <div class="form-group">
-            <label class="form-label">Recipient Full Name *</label>
-            <input type="text" id="inputRecipient" class="form-control" value="Dr. Rajesh Sharma" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Affiliation / University *</label>
-            <input type="text" id="inputAffiliation" class="form-control" value="Indian Institute of Technology, Roorkee" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Certificate Type *</label>
-            <select id="inputCertType" class="form-control" required>
-              <option value="Certificate of Paper Presentation">Certificate of Paper Presentation</option>
-              <option value="Certificate of Participation">Certificate of Participation</option>
-              <option value="Certificate of Best Paper Award">Best Paper Award</option>
-              <option value="Certificate of Appreciation">Certificate of Appreciation / Session Chair</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label class="form-label">Presented Paper Title (If presenting author)</label>
-            <input type="text" id="inputPaperTitle" class="form-control" value="Self-Supervised Contrastive Learning for Multi-Modal Remote Sensing Data">
-          </div>
-          <div class="grid-2">
+    <section class="section">
+      <div class="container">
+        <form id="certGeneratorForm" class="panel no-print mb-1" onsubmit="return false">
+          <div class="grid-3">
             <div class="form-group">
-              <label class="form-label">Paper ID / Reg ID</label>
+              <label class="form-label" for="inputRecipient">Recipient name</label>
+              <input type="text" id="inputRecipient" class="form-control" value="Dr. Rajesh Sharma" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputAffiliation">Institution</label>
+              <input type="text" id="inputAffiliation" class="form-control" value="Indian Institute of Technology, Roorkee" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputCertType">Certificate type</label>
+              <select id="inputCertType" class="form-control" required>
+                <option value="Certificate of Paper Presentation">Paper presentation</option>
+                <option value="Certificate of Participation">Participation</option>
+                <option value="Certificate of Best Paper Award">Best paper award</option>
+                <option value="Certificate of Appreciation">Appreciation / session chair</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="form-group">
+              <label class="form-label" for="inputPaperTitle">Paper title <span class="muted" style="font-weight:400">(presenters)</span></label>
+              <input type="text" id="inputPaperTitle" class="form-control" value="Self-Supervised Contrastive Learning for Multi-Modal Remote Sensing Data">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputPaperId">Paper ID or registration ID</label>
               <input type="text" id="inputPaperId" class="form-control" value="ICMLDE-2026-1042">
             </div>
             <div class="form-group">
-              <label class="form-label">Date of Issue</label>
+              <label class="form-label" for="inputDate">Date of issue</label>
               <input type="text" id="inputDate" class="form-control" value="November 28, 2026">
             </div>
           </div>
-        </div>
+          <div class="inline-actions">
+            <button type="button" class="btn btn-primary" onclick="saveCertificateToBackend()">Save and add verification code</button>
+            <button type="button" class="btn btn-outline" onclick="window.print()">Print or save as PDF</button>
+            <button type="button" class="btn btn-outline" onclick="applySampleData()">Fill with sample data</button>
+          </div>
+        </form>
 
-        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
-          <button type="button" class="btn btn-accent" onclick="saveCertificateToBackend()">
-            💾 Save & Generate QR Verification Seal
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Live Rendered Certificate -->
+        <div class="cert-stage">
     <div class="certificate-card" id="certificateCanvas">
       <div class="cert-inner-border">
         <div class="cert-corner-decor corner-tl"></div>
@@ -332,10 +316,10 @@
         </div>
       </div>
     </div>
+        </div>
+      </div>
+    </section>
 
-  </div>
-
-  <script src="/js/main.js"></script>
   <script>
     // Live update certificate as user types
     const inputRecipient = document.getElementById('inputRecipient');
@@ -438,5 +422,51 @@
       }
     });
   </script>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-word" aria-hidden="true">ICMLDE 2026</div>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <b>ICMLDE 2026</b>
+          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+        </div>
+        <div>
+          <h2>Conference</h2>
+          <ul>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/papers.html">Call for papers</a></li>
+            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/committee.html">Committee</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Authors</h2>
+          <ul>
+            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="/papers.html#tracker">Check review status</a></li>
+            <li><a href="/register.html">Register</a></li>
+            <li><a href="/fee-receipt.html">Fee receipt</a></li>
+            <li><a href="/certificate.html">Certificates</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Secretariat</h2>
+          <ul>
+            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
+            <li><a href="/admin.html">Organiser sign-in</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
+        <span>Dehradun, Uttarakhand, India</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
 </body>
 </html>

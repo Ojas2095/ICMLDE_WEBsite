@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fee receipt | ICMLDE 2026</title>
+  <meta name="description" content="Download the receipt for your ICMLDE 2026 registration fee using your Paper ID and registered email.">
+  <meta name="theme-color" content="#f0efe9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23121210'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23d4523a'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="wordmark" aria-label="ICMLDE 2026 home">
+        <b>ICMLDE 2026</b>
+        <small>UPES, Dehradun</small>
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/fee-receipt.html" class="nav-receipt" aria-current="page">Fee receipt</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="/#about">About</a>
+        <a href="/papers.html">Call for papers</a>
+        <a href="/submission-form.html">Submit</a>
+        <a href="/schedule.html">Programme</a>
+        <a href="/committee.html">Committee</a>
+        <a href="/fee-receipt.html" aria-current="page">Fee receipt</a>
+        <a href="/certificate.html">Certificates</a>
+        <a href="/papers.html#tracker">Check review status</a>
+        <a href="/#contact">Contact</a>
+        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+  </nav>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="crumbs"><a href="/">ICMLDE 2026</a> / Authors</p>
+        <h1>Download your fee receipt</h1>
+        <p>Enter your Paper ID and the email you registered with. When they match a confirmed payment, your receipt appears here, ready to print or save as a PDF.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container receipt-layout">
+        <div class="no-print">
+          <form id="receiptForm" class="panel" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="rPaper">Paper ID</label>
+              <input id="rPaper" name="paper_id" class="form-control" placeholder="e.g. 913 or ICMLDE-2026-1042" autocomplete="off" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rEmail">Registered email</label>
+              <input id="rEmail" name="email" type="email" class="form-control" placeholder="name@gmail.com" autocomplete="email" required>
+              <span class="form-hint">The address you used when you registered or paid.</span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="rSubmit">Find my receipt</button>
+            <p id="rError" class="small mt-1" role="alert" style="color:var(--err)"></p>
+          </form>
+
+          <div class="mt-2 small muted">
+            <p><strong style="color:var(--ink)">Can’t find your receipt?</strong> Receipts appear only after the finance team confirms your payment. If you paid more than a week ago, write to <a href="mailto:info@icmlde.org">info@icmlde.org</a> with your Paper ID and UTR number.</p>
+          </div>
+        </div>
+
+        <div id="receiptOutput" aria-live="polite">
+          <div class="receipt-help no-print" id="receiptHelp">
+            <h2>How it works</h2>
+            <ol>
+              <li>Pay the registration fee and register with your Paper ID.</li>
+              <li>The finance team checks your payment against the bank statement.</li>
+              <li>Once confirmed, enter your Paper ID and email here to get the receipt.</li>
+              <li>Print it, or choose “Save as PDF” in the print dialog to keep a copy.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-word" aria-hidden="true">ICMLDE 2026</div>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <b>ICMLDE 2026</b>
+          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+        </div>
+        <div>
+          <h2>Conference</h2>
+          <ul>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/papers.html">Call for papers</a></li>
+            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/committee.html">Committee</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Authors</h2>
+          <ul>
+            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="/papers.html#tracker">Check review status</a></li>
+            <li><a href="/register.html">Register</a></li>
+            <li><a href="/fee-receipt.html">Fee receipt</a></li>
+            <li><a href="/certificate.html">Certificates</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Secretariat</h2>
+          <ul>
+            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
+            <li><a href="/admin.html">Organiser sign-in</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
+        <span>Dehradun, Uttarakhand, India</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/fee-receipt.js"></script>
+</body>
+</html>
