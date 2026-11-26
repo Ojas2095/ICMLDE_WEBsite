@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const SITE_URL = (process.env.SITE_URL || 'https://icmlde-website.vercel.app').replace(/\/$/, '');
 
 let transporter = null;
 
@@ -27,8 +28,8 @@ module.exports = {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
         <div style="background: #1e1b4b; padding: 24px; text-align: center; color: #ffffff;">
-          <h2 style="margin: 0; font-size: 20px;">5th International Conference on Machine Learning & Data Engineering</h2>
-          <p style="margin: 6px 0 0; font-size: 14px; color: #cbd5e1;">November 27th & 28th, 2026 &bull; Dehradun, India &bull; Elsevier Procedia CS</p>
+          <h2 style="margin: 0; font-size: 20px;">5th International Conference on Machine Learning and Data Engineering</h2>
+          <p style="margin: 6px 0 0; font-size: 14px; color: #cbd5e1;">27–28 November 2026 &bull; Dehradun, India &bull; Procedia Computer Science, Elsevier</p>
         </div>
         
         <div style="padding: 24px; border: 1px solid #e2e8f0; background: #ffffff;">
@@ -45,13 +46,13 @@ module.exports = {
           </div>
 
           <p>You can monitor the live peer-review progress and editorial decisions using our online portal:</p>
-          <p><a href="http://localhost:3000/papers.html#tracker" style="background: #4f46e5; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">Check Paper Status Online</a></p>
+          <p><a href="${SITE_URL}/papers.html#tracker" style="background: #4f46e5; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">Check Paper Status Online</a></p>
 
           <p style="font-size: 13px; color: #64748b; margin-top: 30px;">Important: Please quote your unique Paper ID (<strong>${paper.paper_id}</strong>) in all future correspondence with the Technical Program Committee.</p>
         </div>
 
         <div style="text-align: center; padding: 16px; font-size: 12px; color: #94a3b8;">
-          ICMLDE 2026 Organizing Secretariat &bull; School of Computer Science &bull; UPES Dehradun 248007, India
+          ICMLDE 2026 Organising Secretariat &bull; School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India
         </div>
       </div>
     `;
@@ -101,12 +102,12 @@ module.exports = {
             <div style="background: #ecfdf5; border: 1px solid #a7f3d0; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
               <h4 style="color: #065f46; margin: 0 0 8px;">Next Steps for Publication:</h4>
               <ol style="margin: 0; padding-left: 20px; color: #047857; font-size: 14px;">
-                <li>Complete mandatory author registration before November 10, 2026.</li>
+                <li>Complete author registration by the regular registration deadline, 15 November 2026.</li>
                 <li>Prepare and submit your Camera-Ready manuscript formatted strictly according to the Elsevier Procedia template.</li>
                 <li>Submit the signed Elsevier Copyright Transfer Form.</li>
               </ol>
               <div style="margin-top: 14px;">
-                <a href="http://localhost:3000/register.html?paperId=${encodeURIComponent(paper.paper_id)}" style="background: #10b981; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Proceed to Author Registration &rarr;</a>
+                <a href="${SITE_URL}/register.html?paperId=${encodeURIComponent(paper.paper_id)}" style="background: #10b981; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Proceed to Author Registration &rarr;</a>
               </div>
             </div>
           ` : ''}
@@ -136,12 +137,12 @@ module.exports = {
       <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
         <div style="background: #1e1b4b; padding: 24px; text-align: center; color: #ffffff;">
           <h2 style="margin: 0; font-size: 20px;">ICMLDE 2026 Official Delegate Pass</h2>
-          <p style="margin: 6px 0 0; font-size: 14px; color: #cbd5e1;">November 27th & 28th, 2026 &bull; Dehradun, India</p>
+          <p style="margin: 6px 0 0; font-size: 14px; color: #cbd5e1;">27–28 November 2026 &bull; Dehradun, India</p>
         </div>
 
         <div style="padding: 24px; border: 1px solid #e2e8f0; background: #ffffff;">
           <p>Dear <strong>${reg.full_name}</strong>,</p>
-          <p>We are delighted to confirm your registration for the <strong>5th International Conference on Machine Learning & Data Engineering (ICMLDE 2026)</strong>.</p>
+          <p>We are delighted to confirm your registration for the <strong>5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)</strong>.</p>
           
           <div style="border: 2px dashed #4f46e5; border-radius: 12px; padding: 20px; margin: 20px 0; background: #faf5ff;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e9d5ff; padding-bottom: 12px; margin-bottom: 12px;">
@@ -167,7 +168,7 @@ module.exports = {
             ` : ''}
           </div>
 
-          <p style="font-size: 14px;"><strong>Conference Venue:</strong><br>UPES Knowledge Acres Campus, Dehradun 248007, Uttarakhand, India</p>
+          <p style="font-size: 14px;"><strong>Conference Venue:</strong><br>School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India</p>
         </div>
       </div>
     `;

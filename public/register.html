@@ -23,35 +23,39 @@
       <nav class="main-nav" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html" aria-current="page">Registration</a>
         <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <a href="/fee-receipt.html" class="btn btn-primary btn-sm header-cta">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html" aria-current="page">Registration</a>
         <a href="/fee-receipt.html">Fee receipt</a>
         <a href="/certificate.html">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/fee-receipt.html" class="btn btn-primary">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
     <section class="page-head">
       <div class="container">
         <p class="crumbs"><a href="/">ICMLDE 2026</a> / Registration</p>
-        <h1>Register for ICMLDE 2026</h1>
-        <p>Pay the fee first, then fill in this form with your transaction or UTR number. Presenting authors need the Paper ID of their accepted paper.</p>
+        <h1>Registration is closed</h1>
+        <p>Registration for ICMLDE 2026 closed on 15 November 2026. The fees and payment details are kept here for reference.</p>
+        <div class="callout mt-1" style="max-width:62ch"><strong>Already registered?</strong> <a href="/fee-receipt.html">Download your fee receipt</a> with your Paper ID and registered email. For anything else, write to <a href="mailto:info@icmlde.org">info@icmlde.org</a>.</div>
+        <div class="hero-actions">
+          <a href="/fee-receipt.html" class="btn btn-primary">Get your fee receipt <span class="arr" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
@@ -65,19 +69,20 @@
           </div>
         </div>
         <div class="tiers">
-          <div class="tier"><h3>Student author</h3><div class="price" data-inr="11000" data-usd="300">₹11,000</div><ul><li>Paper presentation</li><li>Publication in Procedia CS</li><li>Workshops, kit and certificate</li></ul><button class="btn btn-outline btn-sm" data-pick="Students Author">Choose</button></div>
-          <div class="tier featured"><h3>Regular author</h3><div class="price" data-inr="11500" data-usd="350">₹11,500</div><ul><li>Paper presentation</li><li>Publication in Procedia CS</li><li>Workshops, kit and gala dinner</li></ul><button class="btn btn-primary btn-sm" data-pick="Regular Author">Choose</button></div>
-          <div class="tier"><h3>Industry professional</h3><div class="price" data-inr="12500" data-usd="350">₹12,500</div><ul><li>Paper presentation</li><li>Industry panel and networking</li><li>Full proceedings access</li></ul><button class="btn btn-outline btn-sm" data-pick="Industry Professional">Choose</button></div>
-          <div class="tier"><h3>Listener</h3><div class="price" data-inr="5000" data-usd="150">₹5,000</div><ul><li>All sessions, no presentation</li><li>Certificate of participation</li><li>Lunch and refreshments</li></ul><button class="btn btn-outline btn-sm" data-pick="Listener / Non-Author">Choose</button></div>
+          <div class="tier featured"><h3>Regular author</h3><div class="price" data-inr="12000" data-usd="350">₹12,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul></div>
+          <div class="tier"><h3>Student author</h3><div class="price" data-inr="11500" data-usd="300">₹11,500</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Free workshop entry with certificate</li></ul></div>
+          <div class="tier"><h3>Industry professional</h3><div class="price" data-inr="13000" data-usd="">₹13,000</div><ul><li>Paper presentation</li><li>Publication in Procedia Computer Science</li><li>Indian delegates only</li></ul></div>
+          <div class="tier"><h3>Listener</h3><div class="price" data-inr="7000" data-usd="150">₹7,000</div><ul><li>Non-author, co-author or general participant</li><li>Per person</li><li>No presentation</li></ul></div>
         </div>
-        <p class="small muted mt-1">Also available: second paper by a regular author (₹11,000 / $250) and workshop only (₹4,000 / $60). Choose these in the form below.</p>
+        <p class="small muted mt-1">Also available: second paper by a regular author (₹11,500 / $250), and the workshop for non-authors (₹7,000 per person; free for registered authors). Pages beyond 10 cost ₹1,100 (Indian) or $15 (international) per page. Fees are non-refundable; a delegate substitution is allowed. All bank charges are paid by the remitter.</p>
       </div>
     </section>
 
     <section class="section section-alt" id="form">
       <div class="container split">
-        <form id="registrationForm" enctype="multipart/form-data">
-          <fieldset class="fieldset">
+        <form id="registrationForm" enctype="multipart/form-data" data-closed="true">
+          <p class="callout info mb-1">Registration closed on 15 November 2026. The form below is kept for reference.</p>
+          <fieldset class="fieldset" disabled>
             <legend>Your details</legend>
             <div class="grid-2">
               <div class="form-group">
@@ -106,7 +111,7 @@
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
+          <fieldset class="fieldset" disabled>
             <legend>Registration</legend>
             <div class="grid-2">
               <div class="form-group">
@@ -114,10 +119,10 @@
                 <select name="category" id="regCategory" class="form-control" required>
                   <option value="Regular Author">Regular author</option>
                   <option value="Students Author">Student author</option>
-                  <option value="Industry Professional">Industry professional</option>
+                  <option value="Industry Professional">Industry professional (Indian delegates)</option>
                   <option value="2nd Paper, Regular Author">Second paper, regular author</option>
-                  <option value="Listener / Non-Author">Listener</option>
-                  <option value="Workshop (Non-Author)">Workshop only</option>
+                  <option value="Listener / Non-Author">Listener (non-author, co-author or general participant)</option>
+                  <option value="Workshop (Non-Author)">Workshop, non-author (Indian delegates)</option>
                 </select>
               </div>
               <div class="form-group">
@@ -129,25 +134,24 @@
               <span class="form-label">How will you attend?</span>
               <div class="choice-row">
                 <label class="choice"><input type="radio" name="mode" value="In-Person" checked> In person, Dehradun</label>
-                <label class="choice"><input type="radio" name="mode" value="Virtual"> Online</label>
+                <label class="choice"><input type="radio" name="mode" value="Virtual"> Online (exceptional cases)</label>
               </div>
+              <span class="form-hint">Online presentation is allowed only in exceptional circumstances, such as visa issues, travel restrictions or a medical emergency, and must be requested in writing to info@icmlde.org at least two weeks before the conference.</span>
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
+          <fieldset class="fieldset" disabled>
             <legend>Payment</legend>
             <div class="grid-2">
               <div class="form-group">
                 <label class="form-label" for="r_method">Paid by</label>
                 <select id="r_method" name="payment_method" class="form-control" required>
-                  <option value="Direct NEFT / RTGS / IMPS">NEFT / RTGS / IMPS</option>
-                  <option value="UPI / QR Code Transfer">UPI</option>
-                  <option value="International Wire Transfer">International wire (SWIFT)</option>
-                  <option value="Online Payment Gateway">Card</option>
+                  <option value="Paytm (Indian authors)">Paytm, through the official form (Indian authors)</option>
+                  <option value="Wire transfer (foreign authors)">Wire transfer (foreign authors)</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="r_txn">Transaction or UTR number</label>
+                <label class="form-label" for="r_txn">Transaction or reference ID</label>
                 <input id="r_txn" type="text" name="transaction_id" class="form-control" placeholder="e.g. 293005819500" required>
               </div>
             </div>
@@ -156,20 +160,20 @@
               <input id="r_proof" type="file" name="paymentProof" class="form-control" accept=".pdf,.png,.jpg,.jpeg">
             </div>
             <div class="total-bar">
-              <div><div class="label">Amount to pay</div><div class="sub">Covers all sessions, materials and proceedings</div></div>
-              <div class="amount" id="computedAmountDisplay">₹11,500</div>
-              <input type="hidden" id="hiddenAmountInput" value="INR 11,500">
+              <div><div class="label">Amount to pay</div><div class="sub">Before any extra-page charges</div></div>
+              <div class="amount" id="computedAmountDisplay">₹12,000</div>
+              <input type="hidden" id="hiddenAmountInput" value="INR 12,000">
             </div>
           </fieldset>
 
-          <button type="submit" id="submitRegBtn" class="btn btn-primary btn-lg">Complete registration</button>
+          <button type="submit" id="submitRegBtn" class="btn btn-primary btn-lg" disabled>Registration closed</button>
         </form>
 
         <aside>
           <div class="panel bank" id="bankDetailsDisplay">
             <p class="muted">Loading payment details…</p>
           </div>
-          <p class="small muted mt-1">Once the finance team confirms your payment, <a href="/fee-receipt.html">download your fee receipt</a> with your Paper ID and email.</p>
+          <p class="small muted mt-1"><a href="/fee-receipt.html">Download your fee receipt</a> with your Paper ID and registered email.</p>
         </aside>
       </div>
     </section>
@@ -188,23 +192,24 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <b>ICMLDE 2026</b>
-          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+          <p>The 5th International Conference on Machine Learning and Data Engineering (ICMLDE 5.0), 27–28 November 2026, School of Computer Science, UPES, Dehradun, India.</p>
         </div>
         <div>
           <h2>Conference</h2>
           <ul>
             <li><a href="/#about">About</a></li>
             <li><a href="/papers.html">Call for papers</a></li>
-            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/schedule.html">Programme and speakers</a></li>
             <li><a href="/committee.html">Committee</a></li>
+            <li><a href="https://icmlde.org/" rel="noopener">Official website, icmlde.org</a></li>
           </ul>
         </div>
         <div>
           <h2>Authors</h2>
           <ul>
-            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a></li>
             <li><a href="/papers.html#tracker">Check review status</a></li>
-            <li><a href="/register.html">Register</a></li>
+            <li><a href="/register.html">Registration (closed)</a></li>
             <li><a href="/fee-receipt.html">Fee receipt</a></li>
             <li><a href="/certificate.html">Certificates</a></li>
           </ul>
@@ -212,15 +217,16 @@
         <div>
           <h2>Secretariat</h2>
           <ul>
-            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li>Dr Vijendra Singh, Organising Chair</li>
+            <li>School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India</li>
             <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
             <li><a href="/admin.html">Organiser sign-in</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
-        <span>Dehradun, Uttarakhand, India</span>
+        <span>&copy; 2026 ICMLDE. Proceedings: Procedia Computer Science, Elsevier.</span>
+        <span>27–28 November 2026 · Dehradun, India</span>
       </div>
     </div>
   </footer>

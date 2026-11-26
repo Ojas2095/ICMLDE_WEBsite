@@ -92,7 +92,7 @@ const submissionLimiter = rateLimit({
 
 const receiptLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 40,
+  max: Number(process.env.RECEIPT_LOOKUPS_PER_15_MIN || 40),
   message: { error: 'Too many receipt lookups from this connection. Try again in 15 minutes.' }
 });
 
@@ -133,18 +133,15 @@ app.get('/api/conference-info', (req, res) => {
   res.json({
     success: true,
     data: {
-      name: process.env.CONFERENCE_NAME || '5th International Conference on Machine Learning & Data Engineering (ICMLDE 2026)',
-      dates: process.env.CONFERENCE_DATES || 'November 27–28, 2026',
-      venue: process.env.CONFERENCE_VENUE || 'School of Computer Science, UPES, Bidholi Via-Prem Nagar, Dehradun 248007, India',
+      name: process.env.CONFERENCE_NAME || '5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)',
+      dates: process.env.CONFERENCE_DATES || '27–28 November 2026',
+      venue: process.env.CONFERENCE_VENUE || 'School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India',
       email: process.env.CONFERENCE_EMAIL || 'info@icmlde.org',
-      bankDetails: {
-        accountName: process.env.BANK_ACCOUNT_NAME || 'ICMLDE CONFERENCE',
-        bankName: process.env.BANK_NAME || 'YES Bank',
-        branch: process.env.BANK_BRANCH || 'IFC, 8th Floor Sb Marg, Mumbai',
-        accountNumber: process.env.BANK_ACCOUNT_NUMBER || 'UPESUK877777852',
-        ifsc: process.env.BANK_IFSC || 'YESB0CMSNOC',
-        accountType: process.env.BANK_ACCOUNT_TYPE || 'Savings',
-        upiId: process.env.BANK_UPI_ID || 'icmlde@yesbank'
+      // Indian authors pay through the official Paytm link on the ICMLDE registration form
+      // (icmlde.org does not publish a bank account for Indian payments).
+      indianPayment: {
+        method: 'Online payment (Paytm) via the official ICMLDE registration form',
+        registrationFormUrl: process.env.OFFICIAL_REGISTRATION_URL || 'https://icmlde.org/icmlde_registration5.html'
       },
       foreignWireDetails: {
         beneficiary: process.env.FOREIGN_BENEFICIARY || 'UPES',
@@ -153,7 +150,9 @@ app.get('/api/conference-info', (req, res) => {
         accountNumber: process.env.FOREIGN_ACCOUNT_NUMBER || '011594600000224',
         ifsc: process.env.FOREIGN_BRANCH_IFSC || 'YESB0000115',
         swift: process.env.FOREIGN_SWIFT || 'YESBINBB',
-        address: process.env.FOREIGN_BRANCH_ADDRESS || 'Ground Floor, 56, Rajpur Road, Dehradun, Uttarakhand, India - 248001'
+        address: process.env.FOREIGN_BRANCH_ADDRESS || 'Ground Floor, 56, Rajpur Road, Dehradun, Uttarakhand, India - 248001',
+        branchCode: process.env.FOREIGN_BRANCH_CODE || '000115',
+        accountType: 'Savings'
       },
       smtpActive: mailer.isConfigured()
     }
@@ -161,7 +160,14 @@ app.get('/api/conference-info', (req, res) => {
 });
 
 // 2. Submit Manuscript
-app.post('/api/submissions', submissionLimiter, paperUpload.single('paperFile'), async (req, res) => {
+// Submissions closed on 30 August 2026 and registration on 15 November 2026.
+// Set SUBMISSIONS_OPEN=true / REGISTRATION_OPEN=true to reopen them (e.g. for a demo).
+const isOpen = (name) => String(process.env[name] || '').toLowerCase() === 'true';
+
+app.post('/api/submissions', submissionLimiter, (req, res, next) => {
+  if (!isOpen('SUBMISSIONS_OPEN')) return res.status(403).json({ error: 'Submissions for ICMLDE 2026 closed on 30 August 2026.' });
+  next();
+}, paperUpload.single('paperFile'), async (req, res) => {
   try {
     const { title, authors, corresponding_email, affiliation, track, abstract, keywords } = req.body;
 
@@ -277,7 +283,10 @@ app.post('/api/submissions/camera-ready', cameraReadyUpload.single('cameraReadyF
 });
 
 // 5. Delegate & Author Registration
-app.post('/api/registrations', proofUpload.single('paymentProof'), async (req, res) => {
+app.post('/api/registrations', (req, res, next) => {
+  if (!isOpen('REGISTRATION_OPEN')) return res.status(403).json({ error: 'Registration for ICMLDE 2026 closed on 15 November 2026.' });
+  next();
+}, proofUpload.single('paymentProof'), async (req, res) => {
   try {
     const {
       full_name, email, phone, affiliation, country,
@@ -409,7 +418,7 @@ app.post('/api/certificates/generate', async (req, res) => {
       paper_title: paper_title ? paper_title.trim() : '',
       paper_id: paper_id ? paper_id.trim() : '',
       affiliation: affiliation.trim(),
-      issue_date: 'November 28, 2026'
+      issue_date: '28 November 2026'
     };
 
     const saved = db.createCertificate(certData);
@@ -453,9 +462,9 @@ app.get('/api/public-stats', (req, res) => {
       submissions: stats.submissions.total,
       accepted: stats.submissions.accepted,
       registrations: stats.registrations.total,
-      dates: process.env.CONFERENCE_DATES || 'November 27–28, 2026',
-      venue: 'Dehradun, Uttarakhand, India (Hybrid)',
-      edition: '5th International Edition'
+      dates: process.env.CONFERENCE_DATES || '27–28 November 2026',
+      venue: 'School of Computer Science, UPES, Dehradun, India',
+      edition: '5th edition (ICMLDE 5.0)'
     }
   });
 });
@@ -649,7 +658,7 @@ if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`====================================================`);
     console.log(`  ICMLDE 2026 Production Server Initialized`);
-    console.log(`  Dates: November 27th & 28th, 2026`);
+    console.log(`  Dates: 27–28 November 2026`);
     console.log(`  Host URL: http://localhost:${PORT}`);
     console.log(`  Admin Panel: http://localhost:${PORT}/admin.html`);
     console.log(`  Default Admin: ${process.env.ADMIN_USERNAME || 'admin'}`);

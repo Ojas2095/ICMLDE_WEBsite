@@ -7,14 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBankDetails();
 });
 
+// Official ICMLDE 2026 fees (icmlde.org). Categories without a USD fee are for Indian delegates only.
 const PRICING_TABLE = {
   INR: {
-    'Regular Author': 11500, 'Students Author': 11000, 'Industry Professional': 12500,
-    '2nd Paper, Regular Author': 11000, 'Listener / Non-Author': 5000, 'Workshop (Non-Author)': 4000
+    'Regular Author': 12000, 'Students Author': 11500, 'Industry Professional': 13000,
+    '2nd Paper, Regular Author': 11500, 'Listener / Non-Author': 7000, 'Workshop (Non-Author)': 7000
   },
   USD: {
-    'Regular Author': 350, 'Students Author': 300, 'Industry Professional': 350,
-    '2nd Paper, Regular Author': 250, 'Listener / Non-Author': 150, 'Workshop (Non-Author)': 60
+    'Regular Author': 350, 'Students Author': 300,
+    '2nd Paper, Regular Author': 250, 'Listener / Non-Author': 150
   }
 };
 
@@ -29,27 +30,24 @@ async function loadBankDetails() {
     const res = await fetch('/api/conference-info');
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error();
-    const b = data.data.bankDetails, f = data.data.foreignWireDetails;
+    const india = data.data.indianPayment || {};
+    const f = data.data.foreignWireDetails;
     const row = (k, v, copy) => `<div><dt>${k}</dt><dd>${copy ? `<code>${escR(v)}</code><button type="button" class="copy-btn" data-copy="${escR(v)}">Copy</button>` : escR(v)}</dd></div>`;
     box.innerHTML = `
       <h3>Paying from India</h3>
-      <p class="note">NEFT, RTGS, IMPS or UPI</p>
-      <dl>
-        ${row('Beneficiary', b.accountName)}
-        ${row('Bank', `${b.bankName}, ${b.branch}`)}
-        ${row('Account no.', b.accountNumber, true)}
-        ${row('IFSC', b.ifsc, true)}
-        ${row('UPI ID', b.upiId, true)}
-      </dl>
+      <p class="note">Indian authors pay online through the Paytm link on the official ICMLDE registration form, then come back here with the transaction ID.</p>
+      <a class="btn btn-outline btn-sm" href="${escR(india.registrationFormUrl || 'https://icmlde.org/icmlde_registration5.html')}" rel="noopener">Open the official registration form</a>
       <h3 class="mt-2">Paying from outside India</h3>
-      <p class="note">SWIFT wire. Purpose: ${escR(f.purpose)}</p>
+      <p class="note">Wire transfer, for foreign authors only. Purpose: ${escR(f.purpose)}</p>
       <dl>
         ${row('Beneficiary', f.beneficiary)}
         ${row('Bank', f.bankName)}
         ${row('Account no.', f.accountNumber, true)}
-        ${row('SWIFT', f.swift, true)}
+        ${f.branchCode ? row('Branch code', f.branchCode) : ''}
         ${row('Branch IFSC', f.ifsc)}
-        ${row('Branch address', f.address)}
+        ${row('SWIFT', f.swift, true)}
+        ${row('Account type', f.accountType || 'Savings')}
+        ${row('Address', f.address)}
       </dl>`;
   } catch {
     box.innerHTML = '<p class="muted">Payment details couldn’t be loaded. They are also listed under <a href="/#fees">Registration fees</a> on the home page.</p>';
@@ -68,11 +66,17 @@ function initRegistration() {
   if (params.get('cat') && select) select.value = params.get('cat');
 
   function update() {
-    const price = PRICING_TABLE[currentCurrency][select.value] || PRICING_TABLE[currentCurrency]['Regular Author'];
-    amountEl.textContent = fmtMoney(currentCurrency, price);
-    hidden.value = `${currentCurrency} ${price.toLocaleString(currentCurrency === 'INR' ? 'en-IN' : 'en-US')}`;
+    const price = PRICING_TABLE[currentCurrency][select.value];
+    if (price) {
+      amountEl.textContent = fmtMoney(currentCurrency, price);
+      hidden.value = `${currentCurrency} ${price.toLocaleString(currentCurrency === 'INR' ? 'en-IN' : 'en-US')}`;
+    } else {
+      amountEl.textContent = 'Indian delegates only';
+      hidden.value = '';
+    }
     document.querySelectorAll('.tier .price[data-inr]').forEach(el => {
-      el.textContent = fmtMoney(currentCurrency, Number(el.dataset[currentCurrency.toLowerCase()]));
+      const v = el.dataset[currentCurrency.toLowerCase()];
+      el.textContent = v ? fmtMoney(currentCurrency, Number(v)) : 'Indian delegates only';
     });
   }
 
@@ -87,6 +91,15 @@ function initRegistration() {
   if (!form) return;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Registration closed on 15 November 2026. Remove data-closed (and the fieldsets' disabled) to reopen.
+    if (form.dataset.closed === 'true') {
+      showToast('Registration for ICMLDE 2026 closed on 15 November 2026.', 'error');
+      return;
+    }
+    if (!hidden.value) {
+      showToast('This category is for Indian delegates only. Choose another category or switch the currency to ₹.', 'error');
+      return;
+    }
     const btn = document.getElementById('submitRegBtn');
     const label = btn.textContent;
     btn.disabled = true; btn.textContent = 'Registering…';

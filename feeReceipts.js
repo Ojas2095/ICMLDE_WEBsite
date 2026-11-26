@@ -25,21 +25,26 @@ const COLUMN_ALIASES = {
   paper_id: ['paperid', 'paperno', 'papernumber', 'paper', 'id', 'submissionid'],
   email: ['email', 'gmail', 'emailid', 'emailaddress', 'mail', 'mailid', 'authoremail', 'correspondingemail'],
   name: ['name', 'fullname', 'authorname', 'receivedfrom', 'payername', 'delegatename', 'participantname'],
-  amount: ['amount', 'amountpaid', 'fee', 'feepaid', 'fees', 'sum', 'amountrs', 'amountinr', 'totalamount'],
+  amount: ['registrationfees', 'registrationfee', 'amount', 'amountpaid', 'fee', 'feepaid', 'fees', 'sum', 'amountrs', 'amountinr', 'totalamount', 'txnamount', 'transactionamount'],
   currency: ['currency'],
   reference: ['transactionid', 'transactionno', 'utr', 'utrno', 'utrnumber', 'reference', 'referenceno', 'neftupino', 'neftupinoch', 'neftupino/ch', 'chequeno', 'txnid', 'neftno', 'upino', 'upiref'],
   mode: ['paymentmode', 'mode', 'paymentmethod', 'paidvia', 'via'],
-  date: ['date', 'paymentdate', 'dated', 'dateofpayment', 'receiptdate'],
+  date: ['date', 'paymentdate', 'dated', 'dateofpayment', 'receiptdate', 'payoutdate', 'txndate', 'transactiondate'],
   receipt_no: ['receiptno', 'receiptnumber', 'receiptid'],
-  paper_title: ['papertitle', 'title'],
+  paper_title: ['papertitle', 'title', 'titleofthepaper', 'titleofpaper', 'papername'],
   category: ['category', 'registrationcategory', 'regcategory', 'registrationtype'],
   affiliation: ['affiliation', 'institution', 'organisation', 'organization', 'university', 'college'],
   status: ['status', 'paymentstatus', 'verified']
 };
 
-const normHeader = (h) => String(h || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-const normId = (v) => String(v || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-const normEmail = (v) => String(v || '').trim().toLowerCase();
+// Columns that never belong on a receipt (personal phone numbers, internal amounts and IDs)
+const IGNORED_COLUMNS = ['contactno', 'contact', 'phone', 'phoneno', 'phonenumber', 'mobile', 'mobileno', 'cbamt', 'invoiceid', 'sno', 'srno', 'serialno'];
+
+// Payment exports often prefix or suffix cells with an apostrophe ('913', 913') to keep them as text
+const clean = (v) => String(v ?? '').trim().replace(/^'+|'+$/g, '').trim();
+const normHeader = (h) => clean(h).toLowerCase().replace(/[^a-z0-9]/g, '');
+const normId = (v) => clean(v).replace(/\.0+$/, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+const normEmail = (v) => clean(v).toLowerCase();
 
 /** Minimal RFC 4180 CSV parser (handles quotes, escaped quotes, newlines in cells). */
 function parseCsv(text) {
@@ -84,13 +89,13 @@ function toCsvUrl(raw) {
   }
   const idMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
   if (idMatch) {
+    // Only pass gid when the link names a tab: uploaded .xlsx files reject gid=0
     const gidMatch = url.match(/[#&?]gid=(\d+)/);
-    const gid = gidMatch ? gidMatch[1] : '0';
-    return `https://docs.google.com/spreadsheets/d/${idMatch[1]}/export?format=csv&gid=${gid}`;
+    return `https://docs.google.com/spreadsheets/d/${idMatch[1]}/export?format=csv${gidMatch ? `&gid=${gidMatch[1]}` : ''}`;
   }
   // Bare sheet ID
   if (/^[a-zA-Z0-9-_]{30,}$/.test(url)) {
-    return `https://docs.google.com/spreadsheets/d/${url}/export?format=csv&gid=0`;
+    return `https://docs.google.com/spreadsheets/d/${url}/export?format=csv`;
   }
   return url;
 }
@@ -130,19 +135,28 @@ async function loadSheet() {
   });
   if (headerIdx === -1) throw new Error('The fee sheet needs a "Paper ID" column and an "Email" column.');
 
-  const headers = table[headerIdx].map(h => String(h).trim());
+  const headers = table[headerIdx].map(h => clean(h));
   const keyFor = headers.map(h => {
     const n = normHeader(h);
+    if (IGNORED_COLUMNS.includes(n)) return 'ignore';
+    // pick the first alias group that matches, in the priority order of each list
     return Object.keys(COLUMN_ALIASES).find(k => COLUMN_ALIASES[k].includes(n)) || null;
   });
+  // when two columns map to the same field, prefer the one listed earlier in its alias list
+  const rank = headers.map((h, i) => keyFor[i] && keyFor[i] !== 'ignore' ? COLUMN_ALIASES[keyFor[i]].indexOf(normHeader(h)) : -1);
 
   const rows = table.slice(headerIdx + 1).map(cells => {
     const rec = { extra: [] };
+    const best = {};
     headers.forEach((h, i) => {
-      const value = String(cells[i] ?? '').trim();
+      const value = clean(cells[i]).replace(/^(\d+)\.0+$/, '$1');
       const key = keyFor[i];
-      if (key && rec[key] === undefined) rec[key] = value;
-      else if (value && h) rec.extra.push({ label: h, value });
+      if (key === 'ignore') return;
+      if (key) {
+        if (best[key] === undefined || (rank[i] < best[key] && value)) { rec[key] = value; best[key] = rank[i]; }
+      } else if (value && h) {
+        rec.extra.push({ label: h, value });
+      }
     });
     return rec;
   });
@@ -158,8 +172,8 @@ function idsMatch(sheetValue, typed) {
   if (a === b) return true;
   // "913" should match "ICMLDE-2026-913" and vice versa: compare the trailing number
   // (taken from the raw value so "ICMLDE-2026-913" gives 913, not 2026913)
-  const numA = (String(sheetValue).trim().match(/(\d+)\D*$/) || [])[1];
-  const numB = (String(typed).trim().match(/(\d+)\D*$/) || [])[1];
+  const numA = (clean(sheetValue).replace(/\.0+$/, '').match(/(\d+)\D*$/) || [])[1];
+  const numB = (clean(typed).replace(/\.0+$/, '').match(/(\d+)\D*$/) || [])[1];
   const aIsNum = /^\d+$/.test(a);
   const bIsNum = /^\d+$/.test(b);
   if ((aIsNum || bIsNum) && numA && numB) return Number(numA) === Number(numB);
@@ -169,11 +183,13 @@ function idsMatch(sheetValue, typed) {
 function emailsMatch(sheetValue, typed) {
   const want = normEmail(typed);
   if (!want) return false;
-  return String(sheetValue || '')
-    .split(/[,;\s/]+/)
-    .map(normEmail)
-    .filter(Boolean)
-    .includes(want);
+  const cell = clean(sheetValue);
+  const candidates = cell.split(/[,;\s/]+/).map(normEmail);
+  // also accept addresses typed with stray spaces around the dots, e.g. "name@uni. ac. in"
+  for (const m of cell.matchAll(/[^\s,;:@<>()]+@[a-z0-9-]+(?:\s*\.\s*[a-z0-9-]+)+/gi)) {
+    candidates.push(normEmail(m[0].replace(/\s+/g, '')));
+  }
+  return candidates.filter(Boolean).includes(want);
 }
 
 /** Returns an array of matching receipts (a paper can have more than one payment). */

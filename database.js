@@ -329,7 +329,7 @@ module.exports = {
       data.paper_title || '',
       data.paper_id || '',
       data.affiliation,
-      data.issue_date || 'November 28, 2026'
+      data.issue_date || '28 November 2026'
     );
     return this.getCertificateById(data.cert_id);
   },

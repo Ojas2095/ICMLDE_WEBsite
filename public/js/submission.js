@@ -46,6 +46,11 @@ function initSubmissionForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // ICMLDE 2026 submissions closed on 30 August 2026. Remove data-closed from the form to reopen it.
+    if (form.dataset.closed === 'true') {
+      showToast('Submissions for ICMLDE 2026 closed on 30 August 2026.', 'error');
+      return;
+    }
     if (!fileInput.files || !fileInput.files.length) {
       showToast('Attach your manuscript (PDF or DOCX) before submitting.', 'error');
       dropzone.focus();
@@ -141,8 +146,7 @@ function initTracker() {
             <div class="feedback"><b>Reviewer comments</b>${p.reviewer_feedback ? esc(p.reviewer_feedback) : 'Your paper is with the reviewers. Comments will appear here once the review is complete.'}</div>
             ${p.status === 'Accepted' ? `
               <div class="actions">
-                <a href="/register.html?paperId=${encodeURIComponent(p.paper_id)}" class="btn btn-primary btn-sm">Register for this paper</a>
-                <a href="/fee-receipt.html?paper=${encodeURIComponent(p.paper_id)}" class="btn btn-outline btn-sm">Get fee receipt</a>
+                <a href="/fee-receipt.html?paper=${encodeURIComponent(p.paper_id)}" class="btn btn-primary btn-sm">Get your fee receipt</a>
               </div>` : ''}
           </div>`;
       } else {

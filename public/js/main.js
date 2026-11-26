@@ -88,15 +88,15 @@ function initRibbon() {
     if (nextIdx > -1 && nextIdx < n - 1) {
       subEl.textContent = `Next: ${items[nextIdx].querySelector('.what').textContent.toLowerCase()} on ${fmt(dates[nextIdx].start)}`;
     } else {
-      subEl.textContent = 'Friday 27 November. Registration desk opens at 08:30 IST, inaugural at 09:30.';
+      subEl.innerHTML = '27–28 November 2026 at UPES, Dehradun. <a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a>';
     }
   } else if (now <= confEnd) {
     const dayNo = istDay(now) - istDay(confStart) + 1;
     statusEl.textContent = `Day ${dayNo} is under way`;
-    subEl.innerHTML = '<a href="/schedule.html" style="color:inherit">Today’s programme</a>';
+    subEl.innerHTML = 'At UPES, Dehradun. <a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a>';
   } else {
     statusEl.textContent = 'That’s a wrap. Thank you, authors and delegates.';
-    subEl.innerHTML = '<a href="/fee-receipt.html" style="color:inherit">Fee receipts</a> and <a href="/certificate.html" style="color:inherit">certificates</a> remain available.';
+    subEl.innerHTML = '<a href="/fee-receipt.html">Fee receipts</a> and <a href="/certificate.html">certificates</a> remain available.';
   }
 }
 

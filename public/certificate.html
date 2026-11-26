@@ -187,27 +187,27 @@
       <nav class="main-nav" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <a href="/fee-receipt.html" class="btn btn-primary btn-sm header-cta">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html">Fee receipt</a>
         <a href="/certificate.html" aria-current="page">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/fee-receipt.html" class="btn btn-primary">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
@@ -252,7 +252,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="inputDate">Date of issue</label>
-              <input type="text" id="inputDate" class="form-control" value="November 28, 2026">
+              <input type="text" id="inputDate" class="form-control" value="28 November 2026">
             </div>
           </div>
           <div class="inline-actions">
@@ -270,9 +270,9 @@
         <div class="cert-corner-decor corner-bl"></div>
         <div class="cert-corner-decor corner-br"></div>
 
-        <div class="cert-institution">School of Computer Science &bull; UPES Dehradun, India</div>
-        <div class="cert-conference-title">5th International Conference on Machine Learning & Data Engineering</div>
-        <div class="cert-publisher-sub">Proceedings published in Elsevier Procedia Computer Science &bull; Scopus Indexed</div>
+        <div class="cert-institution">School of Computer Science &bull; UPES, Dehradun, India</div>
+        <div class="cert-conference-title">5th International Conference on Machine Learning and Data Engineering (ICMLDE 5.0)</div>
+        <div class="cert-publisher-sub">Proceedings: Procedia Computer Science, Elsevier</div>
 
         <div class="cert-headline" id="dispCertType">Certificate of Presentation</div>
 
@@ -282,7 +282,7 @@
         <div class="cert-body-text" id="dispBodyText">
           from <strong id="dispAffiliation">Indian Institute of Technology, Roorkee</strong> for successfully presenting the peer-reviewed research paper titled:
           <span class="cert-paper-title" id="dispPaperTitle">"Self-Supervised Contrastive Learning for Multi-Modal Remote Sensing Data"</span>
-          at the <em>5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)</em> held in hybrid mode at Dehradun, Uttarakhand, India on November 27th & 28th, 2026.
+          at the <em>5th International Conference on Machine Learning and Data Engineering (ICMLDE 2026)</em> held at the School of Computer Science, UPES, Dehradun, India, on 27–28 November 2026.
         </div>
 
         <!-- Signatures & Verification Seal -->
@@ -290,7 +290,7 @@
           <div class="cert-sign-col">
             <div style="font-family:'Great Vibes', cursive; font-size:2rem; color:#1e1b4b; height:45px;">Vijendra Singh</div>
             <div class="cert-sign-line">Dr. Vijendra Singh</div>
-            <div class="cert-sign-role">Organizing Chair &bull; UPES Dehradun</div>
+            <div class="cert-sign-role">Organising Chair &bull; UPES, Dehradun</div>
           </div>
 
           <div class="cert-seal">
@@ -302,7 +302,7 @@
           <div class="cert-sign-col">
             <div style="font-family:'Great Vibes', cursive; font-size:2rem; color:#1e1b4b; height:45px;">Panos Liatsis</div>
             <div class="cert-sign-line">Prof. Panos Liatsis</div>
-            <div class="cert-sign-role">Advisory Chair &bull; Khalifa Univ, UAE</div>
+            <div class="cert-sign-role">Advisory Committee Chair &bull; Khalifa University, UAE</div>
           </div>
         </div>
 
@@ -312,7 +312,7 @@
           <div id="dispQrContainer">
             <span style="font-size:0.7rem; color:#64748b;">Verification URL: https://icmlde-website.vercel.app/certificate.html</span>
           </div>
-          <div>Date: <strong id="dispDate">November 28, 2026</strong></div>
+          <div>Date: <strong id="dispDate">28 November 2026</strong></div>
         </div>
       </div>
     </div>
@@ -333,7 +333,7 @@
       document.getElementById('dispRecipientName').textContent = inputRecipient.value || 'Participant Name';
       document.getElementById('dispAffiliation').textContent = inputAffiliation.value || 'University / Institution';
       document.getElementById('dispCertType').textContent = inputCertType.value;
-      document.getElementById('dispDate').textContent = inputDate.value || 'November 28, 2026';
+      document.getElementById('dispDate').textContent = inputDate.value || '28 November 2026';
 
       const paperTitle = inputPaperTitle.value.trim();
       const dispTitle = document.getElementById('dispPaperTitle');
@@ -360,7 +360,7 @@
       inputCertType.value = "Certificate of Paper Presentation";
       inputPaperTitle.value = "Distributed Stream Processing in Real-Time Urban Mobility Data Lakes";
       inputPaperId.value = "ICMLDE-2026-1088";
-      inputDate.value = "November 28, 2026";
+      inputDate.value = "28 November 2026";
       updateLivePreview();
       showToast('Loaded sample presenter certificate!', 'success');
     }
@@ -430,23 +430,24 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <b>ICMLDE 2026</b>
-          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+          <p>The 5th International Conference on Machine Learning and Data Engineering (ICMLDE 5.0), 27–28 November 2026, School of Computer Science, UPES, Dehradun, India.</p>
         </div>
         <div>
           <h2>Conference</h2>
           <ul>
             <li><a href="/#about">About</a></li>
             <li><a href="/papers.html">Call for papers</a></li>
-            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/schedule.html">Programme and speakers</a></li>
             <li><a href="/committee.html">Committee</a></li>
+            <li><a href="https://icmlde.org/" rel="noopener">Official website, icmlde.org</a></li>
           </ul>
         </div>
         <div>
           <h2>Authors</h2>
           <ul>
-            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a></li>
             <li><a href="/papers.html#tracker">Check review status</a></li>
-            <li><a href="/register.html">Register</a></li>
+            <li><a href="/register.html">Registration (closed)</a></li>
             <li><a href="/fee-receipt.html">Fee receipt</a></li>
             <li><a href="/certificate.html">Certificates</a></li>
           </ul>
@@ -454,15 +455,16 @@
         <div>
           <h2>Secretariat</h2>
           <ul>
-            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li>Dr Vijendra Singh, Organising Chair</li>
+            <li>School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India</li>
             <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
             <li><a href="/admin.html">Organiser sign-in</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
-        <span>Dehradun, Uttarakhand, India</span>
+        <span>&copy; 2026 ICMLDE. Proceedings: Procedia Computer Science, Elsevier.</span>
+        <span>27–28 November 2026 · Dehradun, India</span>
       </div>
     </div>
   </footer>

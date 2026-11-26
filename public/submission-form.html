@@ -23,27 +23,27 @@
       <nav class="main-nav" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html" aria-current="page">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html" class="nav-receipt">Fee receipt</a>
         <a href="/#contact">Contact</a>
       </nav>
-      <a href="/register.html" class="btn btn-primary btn-sm header-cta">Register <span class="arr" aria-hidden="true">→</span></a>
+      <a href="/fee-receipt.html" class="btn btn-primary btn-sm header-cta">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu-btn" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
   </header>
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
         <a href="/#about">About</a>
         <a href="/papers.html">Call for papers</a>
-        <a href="/submission-form.html" aria-current="page">Submit</a>
         <a href="/schedule.html">Programme</a>
         <a href="/committee.html">Committee</a>
+        <a href="/register.html">Registration</a>
         <a href="/fee-receipt.html">Fee receipt</a>
         <a href="/certificate.html">Certificates</a>
         <a href="/papers.html#tracker">Check review status</a>
         <a href="/#contact">Contact</a>
-        <a href="/register.html" class="btn btn-primary">Register <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/fee-receipt.html" class="btn btn-primary">Fee receipt <span class="arr" aria-hidden="true">→</span></a>
   </nav>
 
   <main id="main">
@@ -51,13 +51,15 @@
       <div class="container">
         <p class="crumbs"><a href="/">ICMLDE 2026</a> / <a href="/papers.html">Call for papers</a></p>
         <h1>Submit a paper</h1>
-        <p>Your paper goes to double-blind review as soon as you submit. You’ll get a Paper ID on screen and by email; keep it to track the decision.</p>
+        <p>Papers for ICMLDE 2026 were submitted through Microsoft CMT.</p>
+        <div class="callout mt-1" style="max-width:62ch"><strong>Submissions are closed.</strong> The portal closed on 30 August 2026 (Pacific time). This form no longer accepts papers. Accepted authors can <a href="/register.html">register</a> and <a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">find their presentation slot</a>.</div>
       </div>
     </section>
 
     <section class="section">
       <div class="container split">
-        <form id="standaloneSubmissionForm" enctype="multipart/form-data">
+        <form id="standaloneSubmissionForm" enctype="multipart/form-data" data-closed="true" aria-describedby="closedNote">
+          <p class="callout info mb-1" id="closedNote">The form below is kept for reference. Submissions closed on 30 August 2026.</p>
           <fieldset class="fieldset">
             <legend><span class="step">Step 1 of 4</span> Corresponding author</legend>
             <div class="grid-2">
@@ -95,21 +97,19 @@
             </div>
             <div class="grid-2">
               <div class="form-group">
-                <label class="form-label" for="sf_track">Track</label>
+                <label class="form-label" for="sf_track">Theme</label>
                 <select id="sf_track" name="track" class="form-control" required>
-                  <option value="">Choose a track</option>
-                  <option value="Track 1: Advances in Machine Learning & Deep Learning">1. Machine learning foundations and deep learning</option>
-                  <option value="Track 2: Big Data Engineering & Cloud-Edge Infrastructure">2. Data engineering and distributed computing</option>
-                  <option value="Track 3: Generative AI, LLMs & Agentic Systems">3. Generative AI, LLMs and agentic systems</option>
-                  <option value="Track 4: Applied AI in Healthcare, Bioinformatics & Climate Science">4. AI in healthcare, climate and remote sensing</option>
-                  <option value="Track 5: Computer Vision, Robotics & IoT">5. Computer vision, robotics and IoT</option>
-                  <option value="Track 6: Trustworthy AI, Security & Ethics">6. Trustworthy AI, security and ethics</option>
+                  <option value="">Choose a theme</option>
+                  <option value="Machine Learning Foundations">Machine learning foundations</option>
+                  <option value="Deep Learning and Data Engineering">Deep learning and data engineering</option>
+                  <option value="Machine Learning and Data Engineering">Machine learning and data engineering</option>
+                  <option value="Applications">Applications</option>
                 </select>
               </div>
               <div class="form-group">
                 <label class="form-label" for="sf_pages">Number of pages</label>
-                <input id="sf_pages" type="number" name="page_count" class="form-control" min="4" max="15" value="8" required>
-                <span class="form-hint">Up to 10 included; extra pages are charged.</span>
+                <input id="sf_pages" type="number" name="page_count" class="form-control" min="3" max="15" value="8" required>
+                <span class="form-hint">3 to 10 pages. Each page beyond 10 costs ₹1,100 (Indian authors) or $15 (international authors).</span>
               </div>
             </div>
             <div class="form-group">
@@ -131,26 +131,26 @@
               <input type="file" id="paperFileStandalone" name="paperFile" accept=".pdf,.doc,.docx" tabindex="-1">
             </div>
             <div id="fileDisplayStandalone"></div>
-            <p class="callout mt-1">Remove author names, emails and affiliations from the file. Reviewers see only the manuscript.</p>
+            <p class="callout mt-1">Use the <a href="https://icmlde.org/Template_PROCS_ICMLDE_2026.zip" rel="noopener">ICMLDE 2026 template</a> and remove author names, emails and affiliations from the file for double-blind review.</p>
           </fieldset>
 
           <fieldset class="fieldset">
             <legend><span class="step">Step 4 of 4</span> Declarations</legend>
             <label class="check"><input type="checkbox" required><span><strong>Original work.</strong> This paper is unpublished and not under review anywhere else.</span></label>
-            <label class="check"><input type="checkbox" required><span><strong>Similarity.</strong> The similarity index (Turnitin or iThenticate) is 15% or less.</span></label>
-            <label class="check"><input type="checkbox" required><span><strong>Presentation.</strong> If accepted, at least one author will register and present the paper so it can be published in Elsevier Procedia Computer Science.</span></label>
+            <label class="check"><input type="checkbox" required><span><strong>Similarity.</strong> Overall similarity, checked with a licensed tool such as Turnitin, is 10% or less.</span></label>
+            <label class="check"><input type="checkbox" required><span><strong>Presentation.</strong> If accepted, at least one author will register and present the paper in person so it can be published in Procedia Computer Science (Elsevier).</span></label>
           </fieldset>
 
-          <button type="submit" id="submitStandaloneBtn" class="btn btn-primary btn-lg">Submit paper</button>
+          <button type="submit" id="submitStandaloneBtn" class="btn btn-primary btn-lg" disabled>Submissions closed</button>
         </form>
 
         <aside class="panel" style="position:sticky; top:88px">
           <h2 style="font-size:1.35rem" class="mb-1">Checklist</h2>
           <dl class="facts small">
-            <div><dt>Template</dt><dd>Elsevier Procedia</dd></div>
-            <div><dt>Length</dt><dd>6–10 pages (short papers 4–5)</dd></div>
-            <div><dt>Review</dt><dd>Double-blind, anonymised PDF</dd></div>
-            <div><dt>Similarity</dt><dd>15% or less</dd></div>
+            <div><dt>Template</dt><dd>ICMLDE 2026 (Procedia)</dd></div>
+            <div><dt>Length</dt><dd>3–10 pages</dd></div>
+            <div><dt>Review</dt><dd>Double-blind, at least 3 reviewers</dd></div>
+            <div><dt>Similarity</dt><dd>10% or less</dd></div>
             <div><dt>File</dt><dd>PDF or DOCX, up to 25 MB</dd></div>
           </dl>
           <p class="small muted mt-1">Already submitted? <a href="/papers.html#tracker">Check your review status</a>.</p>
@@ -172,23 +172,24 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <b>ICMLDE 2026</b>
-          <p>5th International Conference on Machine Learning and Data Engineering. 27–28 November 2026, School of Computer Science, UPES, Dehradun, and online.</p>
+          <p>The 5th International Conference on Machine Learning and Data Engineering (ICMLDE 5.0), 27–28 November 2026, School of Computer Science, UPES, Dehradun, India.</p>
         </div>
         <div>
           <h2>Conference</h2>
           <ul>
             <li><a href="/#about">About</a></li>
             <li><a href="/papers.html">Call for papers</a></li>
-            <li><a href="/schedule.html">Programme</a></li>
+            <li><a href="/schedule.html">Programme and speakers</a></li>
             <li><a href="/committee.html">Committee</a></li>
+            <li><a href="https://icmlde.org/" rel="noopener">Official website, icmlde.org</a></li>
           </ul>
         </div>
         <div>
           <h2>Authors</h2>
           <ul>
-            <li><a href="/submission-form.html">Submit a paper</a></li>
+            <li><a href="https://icmlde.org/icmlde-2026-schedule-search.html" rel="noopener">Find your presentation slot</a></li>
             <li><a href="/papers.html#tracker">Check review status</a></li>
-            <li><a href="/register.html">Register</a></li>
+            <li><a href="/register.html">Registration (closed)</a></li>
             <li><a href="/fee-receipt.html">Fee receipt</a></li>
             <li><a href="/certificate.html">Certificates</a></li>
           </ul>
@@ -196,15 +197,16 @@
         <div>
           <h2>Secretariat</h2>
           <ul>
-            <li>School of Computer Science, UPES, Bidholi, Dehradun 248007</li>
+            <li>Dr Vijendra Singh, Organising Chair</li>
+            <li>School of Computer Science, UPES, Bidholi Via–Prem Nagar, Dehradun 248007, India</li>
             <li><a href="mailto:info@icmlde.org">info@icmlde.org</a></li>
             <li><a href="/admin.html">Organiser sign-in</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 ICMLDE. Proceedings in Elsevier Procedia Computer Science.</span>
-        <span>Dehradun, Uttarakhand, India</span>
+        <span>&copy; 2026 ICMLDE. Proceedings: Procedia Computer Science, Elsevier.</span>
+        <span>27–28 November 2026 · Dehradun, India</span>
       </div>
     </div>
   </footer>
