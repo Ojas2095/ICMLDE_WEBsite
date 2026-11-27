@@ -71,11 +71,11 @@
     let m;
     if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return { y: +m[1], m: +m[2], d: +m[3] };
     if ((m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/))) {
-      let a = +m[1], b = +m[2];
-      // the payment export writes month/day; fall back to day/month when that is impossible
-      let month = a, day = b;
-      if (a > 12 && b <= 12) { month = b; day = a; }
-      return { y: +m[3], m: month, d: day };
+      // The sheet writes dates day first (DD-MM-YYYY or DD/MM/YYYY).
+      // Only read it month first when the day-first reading is impossible (e.g. 10/13/2025).
+      const a = +m[1], b = +m[2];
+      if (b > 12 && a <= 12) return { y: +m[3], m: a, d: b };
+      return { y: +m[3], m: b, d: a };
     }
     if ((m = s.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/))) {
       const mi = MONTHS.findIndex(x => x.toLowerCase().startsWith(m[2].toLowerCase().slice(0, 3)));
