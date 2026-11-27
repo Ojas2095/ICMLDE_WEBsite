@@ -177,7 +177,8 @@
     const amountText = money ? money.plain : (r.amount || '');
     const currencyWord = money && money.cur === 'USD' ? 'US Dollars' : 'Rupees';
     const name = String(r.name || '').replace(/\.+$/, '');
-    const dateText = r.date ? formatDate(r.date) : '';
+    // Print the Payout Date exactly as written in the sheet (only a trailing time like "00:00:00" is dropped)
+    const dateText = String(r.date || '').trim().replace(/\s+\d{1,2}:\d{2}(:\d{2})?$/, '');
 
     const LEFT = 111, RIGHT = 1450, LINE = 73;
     let shift = 0;
